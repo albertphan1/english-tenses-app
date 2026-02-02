@@ -461,7 +461,29 @@ var QUESTIONS = {
     { question: 'She didn\'t ___ her homework last night.', options: ['do', 'does', 'did'], correct: 0, explanation: 'Sau didn\'t → động từ GỐC!' },
     { question: 'They didn\'t ___ the test yesterday.', options: ['took', 'take', 'takes'], correct: 1, explanation: 'Sau didn\'t → động từ GỐC!' },
     { question: 'He didn\'t ___ me a gift.', options: ['give', 'gives', 'gave'], correct: 0, explanation: 'Sau didn\'t → động từ GỐC!' },
-    { question: 'We didn\'t ___ to music last night.', options: ['listen', 'listens', 'listened'], correct: 0, explanation: 'Sau didn\'t → động từ GỐC!' }
+    { question: 'We didn\'t ___ to music last night.', options: ['listen', 'listens', 'listened'], correct: 0, explanation: 'Sau didn\'t → động từ GỐC!' },
+    
+    // === CÂU HỎI - HIỆN TẠI (Do/Does) ===
+    { question: '___ you like pizza?', options: ['Do', 'Does', 'Did'], correct: 0, explanation: 'You → Do' },
+    { question: '___ she go to school every day?', options: ['Do', 'Does', 'Did'], correct: 1, explanation: 'She → Does' },
+    { question: '___ he play football?', options: ['Do', 'Does', 'Did'], correct: 1, explanation: 'He → Does' },
+    { question: '___ they watch TV every night?', options: ['Do', 'Does', 'Did'], correct: 0, explanation: 'They → Do' },
+    { question: '___ your cat like fish?', options: ['Do', 'Does', 'Did'], correct: 1, explanation: 'Your cat (it) → Does' },
+    { question: '___ we have homework today?', options: ['Do', 'Does', 'Did'], correct: 0, explanation: 'We → Do' },
+    { question: 'Does she ___ English?', options: ['speak', 'speaks', 'spoke'], correct: 0, explanation: 'Sau Does → động từ GỐC!' },
+    { question: 'Do they ___ coffee every morning?', options: ['drink', 'drinks', 'drank'], correct: 0, explanation: 'Sau Do → động từ GỐC!' },
+    { question: 'Does he ___ to school by bus?', options: ['go', 'goes', 'went'], correct: 0, explanation: 'Sau Does → động từ GỐC!' },
+    { question: 'Do you ___ vegetables?', options: ['like', 'likes', 'liked'], correct: 0, explanation: 'Sau Do → động từ GỐC!' },
+    
+    // === CÂU HỎI - QUÁ KHỨ (Did) ===
+    { question: '___ you go to school yesterday?', options: ['Do', 'Does', 'Did'], correct: 2, explanation: '"Yesterday" → quá khứ → Did' },
+    { question: '___ she watch TV last night?', options: ['Do', 'Does', 'Did'], correct: 2, explanation: '"Last night" → quá khứ → Did' },
+    { question: '___ they play football last Sunday?', options: ['Do', 'Does', 'Did'], correct: 2, explanation: '"Last Sunday" → quá khứ → Did' },
+    { question: '___ he eat breakfast this morning?', options: ['Do', 'Does', 'Did'], correct: 2, explanation: '"This morning" đã qua → Did' },
+    { question: 'Did you ___ to the party yesterday?', options: ['go', 'goes', 'went'], correct: 0, explanation: 'Sau Did → động từ GỐC!' },
+    { question: 'Did she ___ her homework last night?', options: ['do', 'does', 'did'], correct: 0, explanation: 'Sau Did → động từ GỐC!' },
+    { question: 'Did they ___ the movie last week?', options: ['see', 'sees', 'saw'], correct: 0, explanation: 'Sau Did → động từ GỐC!' },
+    { question: 'Did he ___ you a gift?', options: ['give', 'gives', 'gave'], correct: 0, explanation: 'Sau Did → động từ GỐC!' }
   ],
   fill: [
     // === QUÁ KHỨ - ĐỘNG TỪ CÓ QUY TẮC ===
@@ -522,7 +544,19 @@ var QUESTIONS = {
     { sentence: 'She ___ (not watch) TV last night.', answer: 'didn\'t watch', hint: '"Last night" → didn\'t + động từ gốc!' },
     { sentence: 'They ___ (not play) games yesterday.', answer: 'didn\'t play', hint: '"Yesterday" → didn\'t + động từ gốc!' },
     { sentence: 'He ___ (not eat) breakfast this morning.', answer: 'didn\'t eat', hint: '"This morning" → didn\'t + động từ gốc!' },
-    { sentence: 'We ___ (not see) the movie last week.', answer: 'didn\'t see', hint: '"Last week" → didn\'t + động từ gốc!' }
+    { sentence: 'We ___ (not see) the movie last week.', answer: 'didn\'t see', hint: '"Last week" → didn\'t + động từ gốc!' },
+    
+    // === CÂU HỎI ===
+    { sentence: '___ you like ice cream? (do/does)', answer: 'Do', hint: 'You → Do' },
+    { sentence: '___ she go to school every day? (do/does)', answer: 'Does', hint: 'She → Does' },
+    { sentence: '___ he play football? (do/does)', answer: 'Does', hint: 'He → Does' },
+    { sentence: '___ they watch TV? (do/does)', answer: 'Do', hint: 'They → Do' },
+    { sentence: '___ you go to school yesterday? (do/does/did)', answer: 'Did', hint: '"Yesterday" → Did' },
+    { sentence: '___ she eat breakfast this morning? (do/does/did)', answer: 'Did', hint: '"This morning" đã qua → Did' },
+    { sentence: 'Does she ___ (speak) English?', answer: 'speak', hint: 'Sau Does → động từ GỐC!' },
+    { sentence: 'Did you ___ (go) to the party?', answer: 'go', hint: 'Sau Did → động từ GỐC!' },
+    { sentence: 'Did he ___ (eat) lunch yesterday?', answer: 'eat', hint: 'Sau Did → động từ GỐC!' },
+    { sentence: 'Do they ___ (like) pizza?', answer: 'like', hint: 'Sau Do → động từ GỐC!' }
   ],
   truefalse: [
     // === VỀ TỪ NHẬN BIẾT THÌ ===
@@ -569,7 +603,17 @@ var QUESTIONS = {
     { statement: 'Câu "She doesn\'t likes cats" là đúng', correct: false, explanation: 'Sai! Sau doesn\'t → like (dạng gốc)' },
     { statement: '"Don\'t" dùng với I, You, We, They', correct: true, explanation: 'Đúng! I don\'t, You don\'t, We don\'t, They don\'t' },
     { statement: '"Doesn\'t" dùng với He, She, It', correct: true, explanation: 'Đúng! He doesn\'t, She doesn\'t, It doesn\'t' },
-    { statement: '"Didn\'t" dùng cho tất cả chủ ngữ ở quá khứ', correct: true, explanation: 'Đúng! I/You/He/She/We/They didn\'t' }
+    { statement: '"Didn\'t" dùng cho tất cả chủ ngữ ở quá khứ', correct: true, explanation: 'Đúng! I/You/He/She/We/They didn\'t' },
+    
+    // === VỀ CÂU HỎI ===
+    { statement: 'Câu "Does you like pizza?" là đúng', correct: false, explanation: 'Sai! You → Do (không phải Does)' },
+    { statement: 'Câu "Do she go to school?" là đúng', correct: false, explanation: 'Sai! She → Does (không phải Do)' },
+    { statement: '"Do" dùng với I, You, We, They trong câu hỏi', correct: true, explanation: 'Đúng! Do you/we/they...?' },
+    { statement: '"Does" dùng với He, She, It trong câu hỏi', correct: true, explanation: 'Đúng! Does he/she/it...?' },
+    { statement: '"Did" dùng cho tất cả chủ ngữ ở câu hỏi quá khứ', correct: true, explanation: 'Đúng! Did I/you/he/she/we/they...?' },
+    { statement: 'Câu "Did you went to school?" là đúng', correct: false, explanation: 'Sai! Sau Did → go (dạng gốc)' },
+    { statement: 'Câu "Does she speaks English?" là đúng', correct: false, explanation: 'Sai! Sau Does → speak (dạng gốc)' },
+    { statement: 'Sau Do/Does/Did, động từ về dạng gốc', correct: true, explanation: 'Đúng! Do you go? Does she go? Did you go?' }
   ],
   picture: [
     // === THIÊN NHIÊN & SỰ THẬT ===
@@ -623,7 +667,17 @@ var QUESTIONS = {
     { image: '📺', question: 'Họ không xem TV tối qua:', options: ['They didn\'t watch TV.', 'They didn\'t watched TV.'], correct: 0, explanation: 'Sau didn\'t → động từ GỐC!' },
     { image: '🍔', question: 'Cô ấy không ăn sáng hôm qua:', options: ['She didn\'t ate breakfast.', 'She didn\'t eat breakfast.'], correct: 1, explanation: 'Sau didn\'t → động từ GỐC!' },
     { image: '⚽', question: 'Chúng tôi không chơi bóng tuần trước:', options: ['We didn\'t played football.', 'We didn\'t play football.'], correct: 1, explanation: 'Sau didn\'t → động từ GỐC!' },
-    { image: '🎵', question: 'Anh ấy không nghe nhạc mỗi ngày:', options: ['He don\'t listen to music.', 'He doesn\'t listen to music.'], correct: 1, explanation: 'He + doesn\'t!' }
+    { image: '🎵', question: 'Anh ấy không nghe nhạc mỗi ngày:', options: ['He don\'t listen to music.', 'He doesn\'t listen to music.'], correct: 1, explanation: 'He + doesn\'t!' },
+    
+    // === CÂU HỎI ===
+    { image: '🍕', question: 'Bạn có thích pizza không?', options: ['Does you like pizza?', 'Do you like pizza?'], correct: 1, explanation: 'You → Do!' },
+    { image: '🏫', question: 'Cô ấy có đi học mỗi ngày không?', options: ['Do she go to school?', 'Does she go to school?'], correct: 1, explanation: 'She → Does!' },
+    { image: '⚽', question: 'Anh ấy có chơi bóng đá không?', options: ['Does he plays football?', 'Does he play football?'], correct: 1, explanation: 'Sau Does → động từ GỐC!' },
+    { image: '📺', question: 'Bạn có xem TV tối qua không?', options: ['Did you watch TV?', 'Did you watched TV?'], correct: 0, explanation: 'Sau Did → động từ GỐC!' },
+    { image: '🎂', question: 'Cô ấy có đi dự tiệc hôm qua không?', options: ['Did she went to the party?', 'Did she go to the party?'], correct: 1, explanation: 'Sau Did → động từ GỐC!' },
+    { image: '📖', question: 'Họ có làm bài tập tối qua không?', options: ['Did they do homework?', 'Did they did homework?'], correct: 0, explanation: 'Sau Did → động từ GỐC (do)!' },
+    { image: '🍎', question: 'Con mèo có thích cá không?', options: ['Do your cat like fish?', 'Does your cat like fish?'], correct: 1, explanation: 'Your cat (it) → Does!' },
+    { image: '🎮', question: 'Các bạn có chơi game không?', options: ['Does they play games?', 'Do they play games?'], correct: 1, explanation: 'They → Do!' }
   ],
   sort: [
     { instruction: 'Phân loại từ thời gian!', words: ['yesterday', 'every day', 'last week', 'always', 'ago', 'now'], presentWords: ['every day', 'always', 'now'], pastWords: ['yesterday', 'last week', 'ago'] },
@@ -1126,6 +1180,26 @@ function showLesson() {
     '<p style="color:#e65100;font-weight:700">⚠️ CHÚ Ý: Sau don\'t/doesn\'t → động từ giữ NGUYÊN (không thêm s/es)</p>' +
     '<p style="color:#ef6c00">❌ Sai: She doesn\'t <s>goes</s> → ✅ Đúng: She doesn\'t <strong>go</strong></p>' +
     '</div></div>' +
+    
+    // Câu hỏi - HIỆN TẠI
+    '<div style="background:#e3f2fd;padding:20px;border-radius:15px;margin:15px 0">' +
+    '<h4 style="color:#1565c0;margin-bottom:10px">❓ Câu HỎI (Có làm không?):</h4>' +
+    '<p style="color:#0d47a1;margin-bottom:8px"><span style="background:#bbdefb;padding:2px 8px;border-radius:5px">Do</span> + <strong>I / you / we / they</strong> + động từ gốc + ...?</p>' +
+    '<p style="color:#0d47a1;margin-bottom:8px"><span style="background:#bbdefb;padding:2px 8px;border-radius:5px">Does</span> + <strong>he / she / it</strong> + động từ gốc + ...?</p>' +
+    '<div class="examples" style="background:#fff">' +
+    '<p class="example-sentence">? <strong>Do you like</strong> ice cream? <span style="color:#888">(Bạn có thích kem không?)</span></p>' +
+    '<p class="example-sentence">? <strong>Does she go</strong> to school every day? <span style="color:#888">(Cô ấy có đi học mỗi ngày không?)</span></p>' +
+    '<p class="example-sentence">? <strong>Does he play</strong> football? <span style="color:#888">(Anh ấy có chơi bóng đá không?)</span></p>' +
+    '</div>' +
+    '<div style="background:#e1f5fe;padding:12px;border-radius:10px;margin-top:10px">' +
+    '<p style="color:#0277bd;font-weight:700">⚠️ CHÚ Ý: Sau Do/Does → động từ giữ NGUYÊN (không thêm s/es)</p>' +
+    '<p style="color:#0288d1">❌ Sai: Does she <s>goes</s>? → ✅ Đúng: Does she <strong>go</strong>?</p>' +
+    '</div>' +
+    '<div style="background:#fff;padding:12px;border-radius:10px;margin-top:10px">' +
+    '<p style="font-weight:700;color:#1565c0;margin-bottom:8px">📝 Cách trả lời:</p>' +
+    '<p style="color:#1976d2">• Yes, I/you/we/they <strong>do</strong>. | No, I/you/we/they <strong>don\'t</strong>.</p>' +
+    '<p style="color:#1976d2">• Yes, he/she/it <strong>does</strong>. | No, he/she/it <strong>doesn\'t</strong>.</p>' +
+    '</div></div>' +
     '</div>' +
 
     // === THÌ QUÁ KHỨ ===
@@ -1166,26 +1240,64 @@ function showLesson() {
     '<p style="color:#ef6c00">❌ Sai: I didn\'t <s>went</s> → ✅ Đúng: I didn\'t <strong>go</strong></p>' +
     '<p style="color:#ef6c00">❌ Sai: She didn\'t <s>watched</s> → ✅ Đúng: She didn\'t <strong>watch</strong></p>' +
     '</div></div>' +
+    
+    // Câu hỏi - QUÁ KHỨ
+    '<div style="background:#f3e5f5;padding:20px;border-radius:15px;margin:15px 0">' +
+    '<h4 style="color:#7b1fa2;margin-bottom:10px">❓ Câu HỎI (Đã làm chưa?):</h4>' +
+    '<p style="color:#6a1b9a;margin-bottom:8px"><span style="background:#e1bee7;padding:2px 8px;border-radius:5px">Did</span> + <strong>tất cả chủ ngữ</strong> + động từ <strong>GỐC</strong> + ...?</p>' +
+    '<div class="examples" style="background:#fff">' +
+    '<p class="example-sentence">? <strong>Did you go</strong> to school yesterday? <span style="color:#888">(Bạn có đi học hôm qua không?)</span></p>' +
+    '<p class="example-sentence">? <strong>Did she watch</strong> TV last night? <span style="color:#888">(Cô ấy có xem TV tối qua không?)</span></p>' +
+    '<p class="example-sentence">? <strong>Did they play</strong> football last Sunday? <span style="color:#888">(Họ có chơi bóng CN trước không?)</span></p>' +
+    '</div>' +
+    '<div style="background:#f3e5f5;padding:12px;border-radius:10px;margin-top:10px">' +
+    '<p style="color:#7b1fa2;font-weight:700">⚠️ CHÚ Ý: Sau Did → động từ về DẠNG GỐC</p>' +
+    '<p style="color:#8e24aa">❌ Sai: Did you <s>went</s>? → ✅ Đúng: Did you <strong>go</strong>?</p>' +
+    '<p style="color:#8e24aa">❌ Sai: Did she <s>watched</s>? → ✅ Đúng: Did she <strong>watch</strong>?</p>' +
+    '</div>' +
+    '<div style="background:#fff;padding:12px;border-radius:10px;margin-top:10px">' +
+    '<p style="font-weight:700;color:#7b1fa2;margin-bottom:8px">📝 Cách trả lời:</p>' +
+    '<p style="color:#8e24aa">• Yes, I/you/he/she/we/they <strong>did</strong>.</p>' +
+    '<p style="color:#8e24aa">• No, I/you/he/she/we/they <strong>didn\'t</strong>.</p>' +
+    '</div></div>' +
     '</div>' +
 
     // === BẢNG SO SÁNH ===
     '<div class="lesson-card">' +
-    '<h2 class="lesson-title">📊 BẢNG SO SÁNH DỄ NHỚ</h2>' +
-    '<table class="irregular-table" style="margin-bottom:20px">' +
+    '<h2 class="lesson-title">📊 BẢNG TỔNG HỢP DỄ NHỚ</h2>' +
+    '<table class="irregular-table" style="margin-bottom:20px;font-size:0.9rem">' +
     '<thead><tr><th></th><th style="background:#4caf50">🌟 Hiện tại</th><th style="background:#ff9800">⏰ Quá khứ</th></tr></thead>' +
     '<tbody>' +
     '<tr><td style="font-weight:700">Từ nhận biết</td><td>every day, always, usually</td><td>yesterday, last..., ago</td></tr>' +
-    '<tr><td style="font-weight:700">Khẳng định (I)</td><td>I <strong>go</strong></td><td>I <strong>went</strong></td></tr>' +
-    '<tr><td style="font-weight:700">Khẳng định (She)</td><td>She <strong>goes</strong></td><td>She <strong>went</strong></td></tr>' +
-    '<tr><td style="font-weight:700">Phủ định (I)</td><td>I <strong>don\'t go</strong></td><td>I <strong>didn\'t go</strong></td></tr>' +
-    '<tr><td style="font-weight:700">Phủ định (She)</td><td>She <strong>doesn\'t go</strong></td><td>She <strong>didn\'t go</strong></td></tr>' +
+    '<tr style="background:#e8f5e9"><td style="font-weight:700">✅ Khẳng định (I)</td><td>I <strong>go</strong></td><td>I <strong>went</strong></td></tr>' +
+    '<tr style="background:#e8f5e9"><td style="font-weight:700">✅ Khẳng định (She)</td><td>She <strong>goes</strong></td><td>She <strong>went</strong></td></tr>' +
+    '<tr style="background:#ffebee"><td style="font-weight:700">❌ Phủ định (I)</td><td>I <strong>don\'t go</strong></td><td>I <strong>didn\'t go</strong></td></tr>' +
+    '<tr style="background:#ffebee"><td style="font-weight:700">❌ Phủ định (She)</td><td>She <strong>doesn\'t go</strong></td><td>She <strong>didn\'t go</strong></td></tr>' +
+    '<tr style="background:#e3f2fd"><td style="font-weight:700">❓ Câu hỏi (you)</td><td><strong>Do</strong> you <strong>go</strong>?</td><td><strong>Did</strong> you <strong>go</strong>?</td></tr>' +
+    '<tr style="background:#e3f2fd"><td style="font-weight:700">❓ Câu hỏi (she)</td><td><strong>Does</strong> she <strong>go</strong>?</td><td><strong>Did</strong> she <strong>go</strong>?</td></tr>' +
+    '<tr style="background:#f5f5f5"><td style="font-weight:700">Trả lời Yes</td><td>Yes, I <strong>do</strong> / she <strong>does</strong></td><td>Yes, I/she <strong>did</strong></td></tr>' +
+    '<tr style="background:#f5f5f5"><td style="font-weight:700">Trả lời No</td><td>No, I <strong>don\'t</strong> / she <strong>doesn\'t</strong></td><td>No, I/she <strong>didn\'t</strong></td></tr>' +
     '</tbody></table>' +
     
-    '<div style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);padding:20px;border-radius:15px">' +
-    '<h4 style="color:#1565c0;margin-bottom:10px">🎯 QUY TẮC VÀNG CHO CÂU PHỦ ĐỊNH:</h4>' +
-    '<p style="font-size:1.2rem;color:#0d47a1;font-weight:700;text-align:center">' +
-    'Sau <span style="background:#90caf9;padding:3px 10px;border-radius:8px">don\'t / doesn\'t / didn\'t</span> → Động từ luôn ở <span style="background:#fff59d;padding:3px 10px;border-radius:8px">DẠNG GỐC</span>!</p>' +
-    '</div></div>' +
+    '<div style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);padding:20px;border-radius:15px;margin-bottom:15px">' +
+    '<h4 style="color:#1565c0;margin-bottom:10px">🎯 QUY TẮC VÀNG:</h4>' +
+    '<p style="font-size:1.1rem;color:#0d47a1;font-weight:700;text-align:center;margin-bottom:10px">' +
+    'Sau <span style="background:#90caf9;padding:3px 10px;border-radius:8px">don\'t / doesn\'t / didn\'t</span></p>' +
+    '<p style="font-size:1.1rem;color:#0d47a1;font-weight:700;text-align:center;margin-bottom:10px">' +
+    'Sau <span style="background:#90caf9;padding:3px 10px;border-radius:8px">Do / Does / Did</span></p>' +
+    '<p style="font-size:1.3rem;color:#1565c0;font-weight:800;text-align:center">' +
+    '→ Động từ luôn ở <span style="background:#fff59d;padding:3px 10px;border-radius:8px">DẠNG GỐC</span>!</p>' +
+    '</div>' +
+    
+    // Bảng trợ động từ
+    '<div style="background:#fafafa;padding:20px;border-radius:15px">' +
+    '<h4 style="color:#424242;margin-bottom:15px">📋 TRỢ ĐỘNG TỪ THEO CHỦ NGỮ:</h4>' +
+    '<table style="width:100%;border-collapse:collapse">' +
+    '<tr style="background:#e8f5e9"><td style="padding:10px;border:1px solid #ddd"><strong>I / You / We / They</strong></td><td style="padding:10px;border:1px solid #ddd;text-align:center"><strong>do / don\'t</strong></td><td style="padding:10px;border:1px solid #ddd">Hiện tại</td></tr>' +
+    '<tr style="background:#fff3e0"><td style="padding:10px;border:1px solid #ddd"><strong>He / She / It</strong></td><td style="padding:10px;border:1px solid #ddd;text-align:center"><strong>does / doesn\'t</strong></td><td style="padding:10px;border:1px solid #ddd">Hiện tại</td></tr>' +
+    '<tr style="background:#f3e5f5"><td style="padding:10px;border:1px solid #ddd"><strong>Tất cả</strong></td><td style="padding:10px;border:1px solid #ddd;text-align:center"><strong>did / didn\'t</strong></td><td style="padding:10px;border:1px solid #ddd">Quá khứ</td></tr>' +
+    '</table></div>' +
+    '</div>' +
 
     // === ĐỘNG TỪ BẤT QUY TẮC ===
     '<div class="lesson-card">' +
