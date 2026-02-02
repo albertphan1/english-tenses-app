@@ -723,6 +723,77 @@
     }
     .triple-dot.done { background: #4CAF50; color: white; }
     
+    /* Context Learn */
+    .context-container {
+      background: white; border-radius: 20px;
+      padding: 20px; margin-top: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    .context-card {
+      background: linear-gradient(135deg, #FFF8E1, #FFECB3);
+      border-radius: 15px; padding: 20px;
+      margin-bottom: 15px;
+    }
+    .context-title {
+      font-size: 1.2rem; font-weight: 700;
+      color: #E65100; margin-bottom: 15px;
+      text-align: center;
+    }
+    .context-rule {
+      display: flex; align-items: center; gap: 15px;
+      padding: 12px 15px; background: white;
+      border-radius: 12px; margin-bottom: 10px;
+    }
+    .context-emoji { font-size: 2rem; }
+    .context-text { flex: 1; }
+    .context-signal {
+      font-weight: 700; color: #E65100;
+      font-size: 1.1rem;
+    }
+    .context-explain {
+      font-size: 0.85rem; color: #666;
+      margin-top: 3px;
+    }
+    .context-example-box {
+      background: white; border-radius: 12px;
+      padding: 15px; margin-top: 15px;
+    }
+    .context-example {
+      padding: 10px 15px; border-radius: 10px;
+      margin-bottom: 8px; font-size: 1.05rem;
+    }
+    .context-example.present {
+      background: #E8F5E9; border-left: 4px solid #4CAF50;
+    }
+    .context-example.past {
+      background: #FFF3E0; border-left: 4px solid #FF9800;
+    }
+    .context-example .signal-word {
+      text-decoration: underline;
+      text-decoration-color: #FF9800;
+      text-decoration-thickness: 2px;
+      font-weight: 600;
+    }
+    .context-example .verb-word {
+      font-weight: 700;
+    }
+    .context-example.present .verb-word { color: #2E7D32; }
+    .context-example.past .verb-word { color: #E65100; }
+    .context-nav {
+      display: flex; justify-content: center; gap: 10px;
+      margin-top: 20px;
+    }
+    .context-nav-btn {
+      padding: 12px 25px; border-radius: 25px;
+      border: none; font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer; font-size: 1rem;
+    }
+    .context-progress {
+      text-align: center; color: #666;
+      font-size: 0.9rem; margin-bottom: 10px;
+    }
+    
     /* Sentence Quiz */
     .sentence-quiz-card {
       background: white; border-radius: 20px;
@@ -1371,25 +1442,17 @@ function startWithLevel(numQuestions) {
   
   // Thu thập tất cả câu hỏi từ topic
   allQuestions = [];
-  var stories = STORIES[currentTopic];
   
-  stories.forEach(function(story) {
-    story.scenes.forEach(function(scene) {
-      allQuestions.push({
-        bg: story.bg,
-        image: scene.image,
-        text: scene.text,
-        question: scene.question,
-        choices: scene.choices,
-        correct: scene.correct,
-        feedback: scene.feedback,
-        tip: scene.tip
-      });
-    });
-  });
-  
-  // Trộn ngẫu nhiên và lấy số câu cần thiết
-  allQuestions = shuffle(allQuestions).slice(0, questionsPerRound);
+  if (currentTopic === 'daily') {
+    // Every Day: chỉ dùng câu hiện tại
+    allQuestions = generateStoriesFromTemplates(numQuestions, false);
+  } else if (currentTopic === 'yesterday') {
+    // Yesterday: chỉ dùng câu quá khứ
+    allQuestions = generateStoriesFromTemplates(numQuestions, true);
+  } else if (currentTopic === 'stories') {
+    // Mix Stories: mix cả hai
+    allQuestions = generateMixStoryQuestions(numQuestions);
+  }
   
   // Reset state
   currentQuestionIndex = 0;
@@ -1399,6 +1462,379 @@ function startWithLevel(numQuestions) {
   
   // Bắt đầu hiển thị câu hỏi
   showQuestion();
+}
+
+// Generate questions cho Daily hoặc Yesterday
+function generateStoriesFromTemplates(count, isPastOnly) {
+  var questions = [];
+  var usedTemplates = [];
+  
+  var signalList = isPastOnly ? SIGNAL_WORDS.past : SIGNAL_WORDS.present;
+  var bg = isPastOnly ? 'bg-night' : 'bg-sunny';
+  
+  for (var i = 0; i < count; i++) {
+    var templateIndex;
+    do {
+      templateIndex = Math.floor(Math.random() * SENTENCE_TEMPLATES.length);
+    } while (usedTemplates.indexOf(templateIndex) >= 0 && usedTemplates.length < SENTENCE_TEMPLATES.length);
+    usedTemplates.push(templateIndex);
+    
+    var template = SENTENCE_TEMPLATES[templateIndex];
+    var verbForms = getVerbForms(template.verb);
+    var sentenceType = template.type || 'affirm';
+    
+    var signalObj = signalList[Math.floor(Math.random() * signalList.length)];
+    
+    var correctAnswer, wrongAnswer;
+    var subject = template.subject.toLowerCase();
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(subject) >= 0;
+    
+    if (sentenceType === 'affirm') {
+      correctAnswer = isPastOnly ? verbForms.past : getPresentForm(verbForms.base, template.subject);
+      wrongAnswer = isPastOnly ? getPresentForm(verbForms.base, template.subject) : verbForms.past;
+    } else if (sentenceType === 'negative') {
+      if (isPastOnly) {
+        correctAnswer = "didn't";
+        wrongAnswer = isThirdPerson ? "doesn't" : "don't";
+      } else {
+        correctAnswer = isThirdPerson ? "doesn't" : "don't";
+        wrongAnswer = "didn't";
+      }
+    } else if (sentenceType === 'question') {
+      if (isPastOnly) {
+        correctAnswer = "Did";
+        wrongAnswer = isThirdPerson ? "Does" : "Do";
+      } else {
+        correctAnswer = isThirdPerson ? "Does" : "Do";
+        wrongAnswer = "Did";
+      }
+    } else if (sentenceType === 'question_verb') {
+      // Câu hỏi đã có Do/Does/Did, cần điền động từ gốc
+      correctAnswer = verbForms.base;
+      // Wrong answer: dạng quá khứ (V2) hoặc V-s/es
+      wrongAnswer = verbForms.past;
+    }
+    
+    // Hiển thị câu với chỗ trống và gạch chân dấu hiệu
+    var underlinedSignal = '<span style="text-decoration:underline;text-decoration-color:#FF9800;text-decoration-thickness:2px;font-weight:600">' + signalObj.signal + '</span>';
+    var displayText = template.template
+      .replace('{signal}', underlinedSignal)
+      .replace('___', '<span style="color:#667eea;font-weight:700;border-bottom:2px solid #667eea;padding:0 8px">____</span>');
+    
+    var choices, correctIdx;
+    
+    // Xử lý đặc biệt cho question_verb: 3 lựa chọn
+    if (sentenceType === 'question_verb') {
+      var vBase = verbForms.base;
+      var vPast = verbForms.past;
+      var vPresent = getPresentForm(verbForms.base, 'She'); // V-s/es
+      
+      choices = [
+        { text: vBase, correct: true },
+        { text: vPast, correct: false },
+        { text: vPresent, correct: false }
+      ];
+      choices = shuffle(choices);
+      correctIdx = choices.findIndex(function(c) { return c.correct; });
+      choices = choices.map(function(c) { return c.text; });
+    } else if (sentenceType === 'affirm') {
+      // Câu khẳng định: 3 lựa chọn - V gốc, V-s/es, V2
+      var vBase = verbForms.base;
+      var vPast = verbForms.past;
+      var vPresent = getPresentForm(verbForms.base, template.subject);
+      var vPresentThird = getPresentForm(verbForms.base, 'She'); // V-s/es cho ngôi 3
+      
+      choices = [
+        { text: correctAnswer, correct: true },
+        { text: wrongAnswer, correct: false },
+        { text: vBase, correct: false }
+      ];
+      
+      // Thêm các dạng khác nếu chưa có
+      if (choices.findIndex(function(c) { return c.text === vPast; }) < 0) {
+        choices.push({ text: vPast, correct: false });
+      }
+      if (choices.findIndex(function(c) { return c.text === vPresentThird; }) < 0) {
+        choices.push({ text: vPresentThird, correct: false });
+      }
+      
+      // Loại bỏ đáp án trùng
+      choices = choices.filter(function(c, idx, arr) {
+        return arr.findIndex(function(x) { return x.text === c.text; }) === idx;
+      });
+      
+      // Nếu vẫn chưa đủ 3, thêm từ động từ phổ biến khác
+      var extraVerbs = ['went', 'goes', 'go', 'ate', 'eats', 'eat', 'took', 'takes', 'take', 'saw', 'sees', 'see'];
+      var i = 0;
+      while (choices.length < 3 && i < extraVerbs.length) {
+        var extra = extraVerbs[i];
+        if (choices.findIndex(function(c) { return c.text === extra; }) < 0 && extra !== correctAnswer) {
+          choices.push({ text: extra, correct: false });
+        }
+        i++;
+      }
+      
+      // Chỉ lấy 3 đáp án (1 đúng + 2 sai)
+      var correctChoice = choices.find(function(c) { return c.correct; });
+      var wrongChoices = choices.filter(function(c) { return !c.correct; }).slice(0, 2);
+      choices = [correctChoice].concat(wrongChoices);
+      
+      choices = shuffle(choices);
+      correctIdx = choices.findIndex(function(c) { return c.correct; });
+      choices = choices.map(function(c) { return c.text; });
+    } else {
+      // negative, question: 2 lựa chọn
+      choices = isPastOnly ? 
+        [correctAnswer + ' 🌙', wrongAnswer + ' ☀️'] : 
+        [correctAnswer + ' ☀️', wrongAnswer + ' 🌙'];
+      
+      correctIdx = 0;
+      if (Math.random() > 0.5) {
+        choices = [choices[1], choices[0]];
+        correctIdx = 1;
+      }
+    }
+    
+    var feedback = '';
+    var tip = '';
+    if (sentenceType === 'affirm') {
+      feedback = 'Đúng! ' + signalObj.signal + ' → ' + correctAnswer;
+      tip = isPastOnly ? '🌙 ' + signalObj.signal + ' → quá khứ' : '☀️ ' + signalObj.signal + ' → hiện tại';
+    } else if (sentenceType === 'negative') {
+      feedback = isPastOnly ? 'Đúng! Phủ định quá khứ → didn\'t' : 'Đúng! Phủ định hiện tại → ' + correctAnswer;
+      tip = isPastOnly ? '🚫🌙 didn\'t + động từ gốc' : '🚫☀️ ' + correctAnswer + ' + động từ gốc';
+    } else if (sentenceType === 'question') {
+      feedback = isPastOnly ? 'Đúng! Câu hỏi quá khứ → Did' : 'Đúng! Câu hỏi hiện tại → ' + correctAnswer;
+      tip = isPastOnly ? '❓🌙 Did + S + V gốc?' : '❓☀️ ' + correctAnswer + ' + S + V gốc?';
+    } else if (sentenceType === 'question_verb') {
+      feedback = 'Đúng! Sau Do/Does/Did dùng V gốc: ' + correctAnswer;
+      tip = '⚠️ Do/Does/Did + V gốc (không chia)';
+    }
+    
+    // Thêm thông tin cho feedback chi tiết
+    var subjectInfo = '';
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(template.subject.toLowerCase()) >= 0;
+    if (isThirdPerson) {
+      subjectInfo = template.subject + ' (ngôi 3) → thêm s/es';
+    } else {
+      subjectInfo = template.subject + ' → giữ nguyên V gốc';
+    }
+    
+    questions.push({
+      bg: bg,
+      image: template.emoji || '',
+      text: displayText,
+      question: '',
+      choices: choices,
+      correct: correctIdx,
+      feedback: feedback,
+      tip: tip,
+      sentenceType: sentenceType,
+      subject: template.subject,
+      isThirdPerson: isThirdPerson,
+      isPast: isPastOnly,
+      signal: signalObj.signal,
+      correctAnswer: correctAnswer,
+      verb: verbForms.base
+    });
+  }
+  
+  return shuffle(questions);
+}
+
+// Generate questions for Mix Stories from SENTENCE_TEMPLATES
+function generateMixStoryQuestions(count) {
+  var questions = [];
+  var usedTemplates = [];
+  
+  var allVerbs = [];
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    group.verbs.forEach(function(verb) {
+      allVerbs.push(verb);
+    });
+  });
+  
+  for (var i = 0; i < count; i++) {
+    var templateIndex;
+    do {
+      templateIndex = Math.floor(Math.random() * SENTENCE_TEMPLATES.length);
+    } while (usedTemplates.indexOf(templateIndex) >= 0 && usedTemplates.length < SENTENCE_TEMPLATES.length);
+    usedTemplates.push(templateIndex);
+    
+    var template = SENTENCE_TEMPLATES[templateIndex];
+    var verbForms = getVerbForms(template.verb);
+    var sentenceType = template.type || 'affirm';
+    
+    var isPast = Math.random() > 0.5;
+    var signalList = isPast ? SIGNAL_WORDS.past : SIGNAL_WORDS.present;
+    var signalObj = signalList[Math.floor(Math.random() * signalList.length)];
+    
+    var correctAnswer, wrongAnswer;
+    var subject = template.subject.toLowerCase();
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(subject) >= 0;
+    
+    var bg = isPast ? 'bg-night' : 'bg-sunny';
+    
+    if (sentenceType === 'affirm') {
+      correctAnswer = isPast ? verbForms.past : getPresentForm(verbForms.base, template.subject);
+      wrongAnswer = isPast ? getPresentForm(verbForms.base, template.subject) : verbForms.past;
+    } else if (sentenceType === 'negative') {
+      if (isPast) {
+        correctAnswer = "didn't";
+        wrongAnswer = isThirdPerson ? "doesn't" : "don't";
+      } else {
+        correctAnswer = isThirdPerson ? "doesn't" : "don't";
+        wrongAnswer = "didn't";
+      }
+    } else if (sentenceType === 'question') {
+      if (isPast) {
+        correctAnswer = "Did";
+        wrongAnswer = isThirdPerson ? "Does" : "Do";
+      } else {
+        correctAnswer = isThirdPerson ? "Does" : "Do";
+        wrongAnswer = "Did";
+      }
+    } else if (sentenceType === 'question_verb') {
+      // Đã có Do/Does/Did, cần điền động từ gốc
+      correctAnswer = verbForms.base;
+      wrongAnswer = isPast ? verbForms.past : getPresentForm(verbForms.base, 'She');
+    }
+    
+    var sentence = template.template.replace('{signal}', signalObj.signal);
+    
+    // Hiển thị câu với chỗ trống và gạch chân dấu hiệu (KHÔNG hiện đáp án)
+    var underlinedSignal = '<span style="text-decoration:underline;text-decoration-color:#FF9800;text-decoration-thickness:2px;font-weight:600">' + signalObj.signal + '</span>';
+    var displayText = template.template
+      .replace('{signal}', underlinedSignal)
+      .replace('___', '<span style="color:#667eea;font-weight:700;border-bottom:2px solid #667eea;padding:0 8px">____</span>');
+    
+    var questionText = sentence;
+    var choices, correctIdx;
+    
+    // Xử lý đặc biệt cho question_verb: 3 lựa chọn
+    if (sentenceType === 'question_verb') {
+      var vBase = verbForms.base;
+      var vPast = verbForms.past;
+      var vPresent = getPresentForm(verbForms.base, 'She'); // V-s/es
+      
+      choices = [
+        { text: vBase, correct: true },
+        { text: vPast, correct: false },
+        { text: vPresent, correct: false }
+      ];
+      // Loại bỏ trùng và thêm đáp án nếu cần
+      choices = choices.filter(function(c, idx, arr) {
+        return arr.findIndex(function(x) { return x.text === c.text; }) === idx;
+      });
+      var extraVerbs = ['went', 'goes', 'go', 'ate', 'eats', 'eat'];
+      var ei = 0;
+      while (choices.length < 3 && ei < extraVerbs.length) {
+        if (choices.findIndex(function(c) { return c.text === extraVerbs[ei]; }) < 0) {
+          choices.push({ text: extraVerbs[ei], correct: false });
+        }
+        ei++;
+      }
+      choices = shuffle(choices).slice(0, 3);
+      correctIdx = choices.findIndex(function(c) { return c.correct; });
+      if (correctIdx < 0) { choices[0].correct = true; correctIdx = 0; }
+      choices = choices.map(function(c) { return c.text; });
+    } else if (sentenceType === 'affirm') {
+      // Câu khẳng định: 3 lựa chọn
+      var vBase = verbForms.base;
+      var vPast = verbForms.past;
+      var vPresent = getPresentForm(verbForms.base, template.subject);
+      var vPresentThird = getPresentForm(verbForms.base, 'She');
+      
+      choices = [
+        { text: correctAnswer, correct: true },
+        { text: wrongAnswer, correct: false },
+        { text: vBase, correct: false }
+      ];
+      
+      // Thêm các dạng khác
+      if (choices.findIndex(function(c) { return c.text === vPast; }) < 0) {
+        choices.push({ text: vPast, correct: false });
+      }
+      if (choices.findIndex(function(c) { return c.text === vPresentThird; }) < 0) {
+        choices.push({ text: vPresentThird, correct: false });
+      }
+      
+      // Loại bỏ đáp án trùng
+      choices = choices.filter(function(c, idx, arr) {
+        return arr.findIndex(function(x) { return x.text === c.text; }) === idx;
+      });
+      
+      // Thêm từ động từ khác nếu cần
+      var extraVerbs = ['went', 'goes', 'go', 'ate', 'eats', 'eat', 'took', 'takes', 'take'];
+      var i = 0;
+      while (choices.length < 3 && i < extraVerbs.length) {
+        if (choices.findIndex(function(c) { return c.text === extraVerbs[i]; }) < 0 && extraVerbs[i] !== correctAnswer) {
+          choices.push({ text: extraVerbs[i], correct: false });
+        }
+        i++;
+      }
+      
+      // Chỉ lấy 3 đáp án
+      var correctChoice = choices.find(function(c) { return c.correct; });
+      var wrongChoices = choices.filter(function(c) { return !c.correct; }).slice(0, 2);
+      choices = [correctChoice].concat(wrongChoices);
+      
+      choices = shuffle(choices);
+      correctIdx = choices.findIndex(function(c) { return c.correct; });
+      choices = choices.map(function(c) { return c.text; });
+    } else {
+      // negative, question: 2 lựa chọn
+      choices = isPast ? 
+        [correctAnswer + ' 🌙', wrongAnswer + ' ☀️'] : 
+        [correctAnswer + ' ☀️', wrongAnswer + ' 🌙'];
+      
+      correctIdx = 0;
+      if (Math.random() > 0.5) {
+        choices = [choices[1], choices[0]];
+        correctIdx = 1;
+      }
+    }
+    
+    var feedback = '';
+    var tip = '';
+    if (sentenceType === 'affirm') {
+      feedback = 'Đúng! ' + signalObj.signal + ' → ' + correctAnswer;
+      tip = isPast ? '🌙 ' + signalObj.signal + ' → quá khứ' : '☀️ ' + signalObj.signal + ' → hiện tại';
+    } else if (sentenceType === 'negative') {
+      feedback = isPast ? 'Đúng! Phủ định quá khứ → didn\'t' : 'Đúng! Phủ định hiện tại → ' + correctAnswer;
+      tip = isPast ? '🚫🌙 didn\'t + động từ gốc' : '🚫☀️ ' + correctAnswer + ' + động từ gốc';
+    } else if (sentenceType === 'question') {
+      feedback = isPast ? 'Đúng! Câu hỏi quá khứ → Did' : 'Đúng! Câu hỏi hiện tại → ' + correctAnswer;
+      tip = isPast ? '❓🌙 Did + S + V gốc?' : '❓☀️ ' + correctAnswer + ' + S + V gốc?';
+    } else if (sentenceType === 'question_verb') {
+      feedback = 'Đúng! Sau Do/Does/Did → động từ GỐC';
+      tip = '⚠️ Do/Does/Did + V gốc';
+    }
+    
+    // Thêm thông tin chi tiết
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(template.subject.toLowerCase()) >= 0;
+    
+    questions.push({
+      bg: bg,
+      image: template.emoji || '',
+      text: displayText,
+      question: '',
+      choices: choices,
+      correct: correctIdx,
+      feedback: feedback,
+      tip: tip,
+      sentenceVn: template.vn,
+      sentenceType: sentenceType,
+      subject: template.subject,
+      isThirdPerson: isThirdPerson,
+      isPast: isPast,
+      signal: signalObj.signal,
+      correctAnswer: correctAnswer,
+      verb: verbForms.base
+    });
+  }
+  
+  return shuffle(questions);
 }
 
 function showQuestion() {
@@ -1423,11 +1859,21 @@ function showQuestion() {
     '<div class="progress-dots">' + dotsHtml + '</div>' +
     '<div class="star-count">⭐ ' + stars + '</div>' +
     '</div>' +
-    '<div class="story-scene">' +
-    '<div class="scene-image">' + q.image + '</div>' +
-    '<div class="scene-text">' + q.text + '</div>' +
-    '<div class="scene-question">' + q.question + '</div>' +
-    '<div class="choice-buttons">';
+    '<div class="story-scene">';
+  
+  // Chỉ hiện image nếu có
+  if (q.image && q.image.length > 0) {
+    html += '<div class="scene-image">' + q.image + '</div>';
+  }
+  
+  html += '<div class="scene-text">' + q.text + '</div>';
+  
+  // Chỉ hiện question nếu có nội dung
+  if (q.question && q.question.length > 0) {
+    html += '<div class="scene-question">' + q.question + '</div>';
+  }
+  
+  html += '<div class="choice-buttons">';
   
   q.choices.forEach(function(choice, i) {
     html += '<button class="choice-btn" id="choice' + i + '" onclick="checkQuestionAnswer(' + i + ')">' + choice + '</button>';
@@ -1459,11 +1905,62 @@ function checkQuestionAnswer(index) {
     playSound('wrong');
   }
   
+  // Lấy đáp án đúng (bỏ emoji)
+  var correctAnswerText = q.choices[q.correct].replace(/ ?[🌙☀️]/g, '').trim();
+  
   var feedbackHtml = '<div class="feedback-box ' + (correct ? 'correct' : 'wrong') + '">' +
     '<div class="feedback-emoji">' + (correct ? '🎉' : '💪') + '</div>' +
-    '<div class="feedback-text">' + q.feedback + '</div>' +
-    '<div class="feedback-tip">' + q.tip + '</div>' +
-    '<button class="next-btn" onclick="nextQuestion()">' +
+    '<div class="feedback-text">' + (correct ? '✅ Chính xác!' : '❌ Chưa đúng!') + '</div>';
+  
+  // Tạo giải thích chi tiết
+  var explanation = '';
+  
+  if (q.sentenceType === 'affirm') {
+    if (q.isPast) {
+      explanation = '🌙 <strong>' + q.signal + '</strong> → thì QUÁ KHỨ<br>' +
+        '👉 ' + q.subject + ' + <strong>V2</strong> (' + q.verb + ' → ' + correctAnswerText + ')';
+    } else {
+      if (q.isThirdPerson) {
+        explanation = '☀️ <strong>' + q.signal + '</strong> → thì HIỆN TẠI<br>' +
+          '👉 ' + q.subject + ' (ngôi 3) + <strong>V-s/es</strong> (' + q.verb + ' → ' + correctAnswerText + ')';
+      } else {
+        explanation = '☀️ <strong>' + q.signal + '</strong> → thì HIỆN TẠI<br>' +
+          '👉 ' + q.subject + ' + <strong>V gốc</strong> (' + q.verb + ' → ' + correctAnswerText + ')';
+      }
+    }
+  } else if (q.sentenceType === 'negative') {
+    if (q.isPast) {
+      explanation = '🚫🌙 Phủ định QUÁ KHỨ<br>' +
+        '👉 ' + q.subject + ' + <strong>didn\'t</strong> + V gốc';
+    } else {
+      var helper = q.isThirdPerson ? "doesn't" : "don't";
+      explanation = '🚫☀️ Phủ định HIỆN TẠI<br>' +
+        '👉 ' + q.subject + (q.isThirdPerson ? ' (ngôi 3)' : '') + ' + <strong>' + helper + '</strong> + V gốc';
+    }
+  } else if (q.sentenceType === 'question') {
+    if (q.isPast) {
+      explanation = '❓🌙 Câu hỏi QUÁ KHỨ<br>' +
+        '👉 <strong>Did</strong> + ' + q.subject + ' + V gốc?';
+    } else {
+      var helper = q.isThirdPerson ? "Does" : "Do";
+      explanation = '❓☀️ Câu hỏi HIỆN TẠI<br>' +
+        '👉 <strong>' + helper + '</strong> + ' + q.subject + ' + V gốc?';
+    }
+  } else if (q.sentenceType === 'question_verb') {
+    explanation = '⚠️ Sau <strong>Do/Does/Did</strong> luôn dùng <strong>V gốc</strong><br>' +
+      '👉 ' + q.verb + ' (không chia thành ' + q.verb + 's hay V2)';
+  } else {
+    explanation = q.tip;
+  }
+  
+  feedbackHtml += '<div class="feedback-tip" style="text-align:left;line-height:1.6">' + explanation + '</div>';
+  
+  if (!correct) {
+    feedbackHtml += '<div style="margin-top:10px;padding:12px;background:#E8F5E9;border-radius:10px;color:#2E7D32;font-weight:600">' +
+      '✅ Đáp án đúng: <strong>' + correctAnswerText + '</strong></div>';
+  }
+  
+  feedbackHtml += '<button class="next-btn" onclick="nextQuestion()">' +
     (currentQuestionIndex < totalQuestions - 1 ? 'Tiếp theo →' : 'Xem kết quả 🏆') +
     '</button></div>';
   
@@ -1881,10 +2378,6 @@ function showGameMenu() {
     '<div class="topic-card" onclick="showLearnScreen()" style="border-color:#4CAF50">' +
     '<div class="topic-icon">📖</div>' +
     '<div class="topic-name">Horrible List</div>' +
-    '</div>' +
-    '<div class="topic-card" onclick="startVerbMemory()" style="border-color:#2196F3">' +
-    '<div class="topic-icon">🧠</div>' +
-    '<div class="topic-name">Memory</div>' +
     '</div>' +
     '</div>' +
     
@@ -2329,6 +2822,10 @@ function showLearnScreen() {
     
     // Study modes
     '<div class="study-modes">' +
+    '<button class="study-mode-btn" onclick="showContextLearn()" style="background:#FCE4EC;color:#C2185B">' +
+    '<span class="icon">📚</span>' +
+    '<span>Ngữ cảnh</span>' +
+    '</button>' +
     '<button class="study-mode-btn" onclick="startEasyMatch()" style="background:#E8F5E9;color:#2E7D32">' +
     '<span class="icon">🎯</span>' +
     '<span>Easy Match</span>' +
@@ -2340,10 +2837,6 @@ function showLearnScreen() {
     '<button class="study-mode-btn" onclick="startVerbSentenceQuiz()" style="background:#FFF3E0;color:#E65100">' +
     '<span class="icon">📝</span>' +
     '<span>Trắc nghiệm</span>' +
-    '</button>' +
-    '<button class="study-mode-btn speed" onclick="startSpeedChallenge()">' +
-    '<span class="icon">⚡</span>' +
-    '<span>Thử thách</span>' +
     '</button>' +
     '</div>' +
     
@@ -2815,30 +3308,44 @@ function startEasyMatch() {
     '<div class="easy-match-container">' +
     '<div class="easy-match-header">' +
     '<div style="font-size:50px;margin-bottom:10px">🎯</div>' +
-    '<div class="easy-match-title">Chọn mức độ</div>' +
+    '<div class="easy-match-title">Easy Match</div>' +
     '<div class="easy-match-hint">Ghép từ gốc với từ quá khứ</div>' +
     '</div>' +
     
     '<div class="easy-match-level-select">' +
-    '<div class="easy-match-level easy" onclick="startEasyMatchGame(4)">' +
+    '<div class="easy-match-level easy" onclick="startEasyMatchGame(5)">' +
     '<div class="level-icon">🌱</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Dễ</div>' +
-    '<div class="level-desc">4 cặp từ - Có gợi ý nghĩa</div>' +
+    '<div class="level-name">5 từ</div>' +
+    '<div class="level-desc">Khởi động</div>' +
     '</div></div>' +
     
-    '<div class="easy-match-level medium" onclick="startEasyMatchGame(6)">' +
+    '<div class="easy-match-level" style="border-color:#8BC34A" onclick="startEasyMatchGame(10)">' +
     '<div class="level-icon">🌿</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Vừa</div>' +
-    '<div class="level-desc">6 cặp từ - Có gợi ý nghĩa</div>' +
+    '<div class="level-name">10 từ</div>' +
+    '<div class="level-desc">Cơ bản</div>' +
     '</div></div>' +
     
-    '<div class="easy-match-level hard" onclick="startEasyMatchGame(8)">' +
+    '<div class="easy-match-level medium" onclick="startEasyMatchGame(15)">' +
     '<div class="level-icon">🌳</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Khó</div>' +
-    '<div class="level-desc">8 cặp từ - Không gợi ý</div>' +
+    '<div class="level-name">15 từ</div>' +
+    '<div class="level-desc">Trung bình</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level" style="border-color:#FF9800" onclick="startEasyMatchGame(20)">' +
+    '<div class="level-icon">🔥</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">20 từ</div>' +
+    '<div class="level-desc">Nâng cao</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level hard" onclick="startEasyMatchGame(25)">' +
+    '<div class="level-icon">💪</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">25 từ</div>' +
+    '<div class="level-desc">Thử thách</div>' +
     '</div></div>' +
     '</div></div>';
   
@@ -3038,25 +3545,39 @@ function startTripleMatch() {
     '</div>' +
     
     '<div class="easy-match-level-select">' +
-    '<div class="easy-match-level easy" onclick="startTripleMatchGame(4)">' +
+    '<div class="easy-match-level easy" onclick="startTripleMatchGame(5)">' +
     '<div class="level-icon">🌱</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Dễ</div>' +
-    '<div class="level-desc">4 bộ từ - Có gợi ý nghĩa</div>' +
+    '<div class="level-name">5 từ</div>' +
+    '<div class="level-desc">Khởi động</div>' +
     '</div></div>' +
     
-    '<div class="easy-match-level medium" onclick="startTripleMatchGame(5)">' +
+    '<div class="easy-match-level" style="border-color:#8BC34A" onclick="startTripleMatchGame(10)">' +
     '<div class="level-icon">🌿</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Vừa</div>' +
-    '<div class="level-desc">5 bộ từ - Có gợi ý nghĩa</div>' +
+    '<div class="level-name">10 từ</div>' +
+    '<div class="level-desc">Cơ bản</div>' +
     '</div></div>' +
     
-    '<div class="easy-match-level hard" onclick="startTripleMatchGame(6)">' +
+    '<div class="easy-match-level medium" onclick="startTripleMatchGame(15)">' +
     '<div class="level-icon">🌳</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Khó</div>' +
-    '<div class="level-desc">6 bộ từ - Không gợi ý</div>' +
+    '<div class="level-name">15 từ</div>' +
+    '<div class="level-desc">Trung bình</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level" style="border-color:#FF9800" onclick="startTripleMatchGame(20)">' +
+    '<div class="level-icon">🔥</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">20 từ</div>' +
+    '<div class="level-desc">Nâng cao</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level hard" onclick="startTripleMatchGame(25)">' +
+    '<div class="level-icon">💪</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">25 từ</div>' +
+    '<div class="level-desc">Thử thách</div>' +
     '</div></div>' +
     '</div></div>';
   
@@ -3292,7 +3813,10 @@ var sentenceQuizState = {
   currentIndex: 0,
   score: 0,
   answered: false,
-  level: 10
+  level: 10,
+  step: 1, // 1 = chọn Do/Does/Did, 2 = chọn động từ
+  firstAnswer: null,
+  mode: 'normal' // 'normal' hoặc 'twostep'
 };
 
 // Signal words for generating questions
@@ -3320,340 +3844,275 @@ var SIGNAL_WORDS = {
 var SENTENCE_TEMPLATES = [
   // =============== AFFIRMATIVE (Câu khẳng định) ===============
   // GO
-  { template: 'I ___ to school {signal}.', subject: 'I', verb: 'go', vn: 'Tôi đi học', type: 'affirm' },
-  { template: 'She ___ to the park {signal}.', subject: 'She', verb: 'go', vn: 'Cô ấy đi công viên', type: 'affirm' },
-  { template: 'They ___ shopping {signal}.', subject: 'They', verb: 'go', vn: 'Họ đi mua sắm', type: 'affirm' },
-  { template: 'We ___ to church {signal}.', subject: 'We', verb: 'go', vn: 'Chúng tôi đi nhà thờ', type: 'affirm' },
+  { template: 'I ___ to school {signal}.', subject: 'I', verb: 'go', vn: 'Tôi đi học', type: 'affirm', emoji: '🏫🚶' },
+  { template: 'She ___ to the park {signal}.', subject: 'She', verb: 'go', vn: 'Cô ấy đi công viên', type: 'affirm', emoji: '👧🌳' },
+  { template: 'They ___ shopping {signal}.', subject: 'They', verb: 'go', vn: 'Họ đi mua sắm', type: 'affirm', emoji: '👨‍👩‍👧🛒' },
+  { template: 'We ___ to church {signal}.', subject: 'We', verb: 'go', vn: 'Chúng tôi đi nhà thờ', type: 'affirm', emoji: '👨‍👩‍👧⛪' },
   
   // EAT
-  { template: 'She ___ breakfast {signal}.', subject: 'She', verb: 'eat', vn: 'Cô ấy ăn sáng', type: 'affirm' },
-  { template: 'I ___ lunch at school {signal}.', subject: 'I', verb: 'eat', vn: 'Tôi ăn trưa ở trường', type: 'affirm' },
-  { template: 'He ___ dinner with family {signal}.', subject: 'He', verb: 'eat', vn: 'Anh ấy ăn tối với gia đình', type: 'affirm' },
-  { template: 'They ___ pizza {signal}.', subject: 'They', verb: 'eat', vn: 'Họ ăn pizza', type: 'affirm' },
+  { template: 'She ___ breakfast {signal}.', subject: 'She', verb: 'eat', vn: 'Cô ấy ăn sáng', type: 'affirm', emoji: '👧🍳' },
+  { template: 'I ___ lunch at school {signal}.', subject: 'I', verb: 'eat', vn: 'Tôi ăn trưa ở trường', type: 'affirm', emoji: '🧑🍱' },
+  { template: 'He ___ dinner with family {signal}.', subject: 'He', verb: 'eat', vn: 'Anh ấy ăn tối với gia đình', type: 'affirm', emoji: '👦🍽️' },
+  { template: 'They ___ pizza {signal}.', subject: 'They', verb: 'eat', vn: 'Họ ăn pizza', type: 'affirm', emoji: '👨‍👩‍👧🍕' },
   
   // READ
-  { template: 'He ___ a book {signal}.', subject: 'He', verb: 'read', vn: 'Anh ấy đọc sách', type: 'affirm' },
-  { template: 'She ___ the newspaper {signal}.', subject: 'She', verb: 'read', vn: 'Cô ấy đọc báo', type: 'affirm' },
-  { template: 'I ___ comics {signal}.', subject: 'I', verb: 'read', vn: 'Tôi đọc truyện tranh', type: 'affirm' },
+  { template: 'He ___ a book {signal}.', subject: 'He', verb: 'read', vn: 'Anh ấy đọc sách', type: 'affirm', emoji: '👦📖' },
+  { template: 'She ___ the newspaper {signal}.', subject: 'She', verb: 'read', vn: 'Cô ấy đọc báo', type: 'affirm', emoji: '👩📰' },
+  { template: 'I ___ comics {signal}.', subject: 'I', verb: 'read', vn: 'Tôi đọc truyện tranh', type: 'affirm', emoji: '🧑📚' },
   
   // MAKE
-  { template: 'Mom ___ dinner {signal}.', subject: 'Mom', verb: 'make', vn: 'Mẹ nấu bữa tối', type: 'affirm' },
-  { template: 'She ___ a cake {signal}.', subject: 'She', verb: 'make', vn: 'Cô ấy làm bánh', type: 'affirm' },
-  { template: 'I ___ my bed {signal}.', subject: 'I', verb: 'make', vn: 'Tôi dọn giường', type: 'affirm' },
+  { template: 'Mom ___ dinner {signal}.', subject: 'Mom', verb: 'make', vn: 'Mẹ nấu bữa tối', type: 'affirm', emoji: '👩‍🍳🍲' },
+  { template: 'She ___ a cake {signal}.', subject: 'She', verb: 'make', vn: 'Cô ấy làm bánh', type: 'affirm', emoji: '👧🎂' },
+  { template: 'I ___ my bed {signal}.', subject: 'I', verb: 'make', vn: 'Tôi dọn giường', type: 'affirm', emoji: '🧑🛏️' },
   
   // DRINK
-  { template: 'I ___ milk {signal}.', subject: 'I', verb: 'drink', vn: 'Tôi uống sữa', type: 'affirm' },
-  { template: 'He ___ coffee {signal}.', subject: 'He', verb: 'drink', vn: 'Anh ấy uống cà phê', type: 'affirm' },
-  { template: 'She ___ orange juice {signal}.', subject: 'She', verb: 'drink', vn: 'Cô ấy uống nước cam', type: 'affirm' },
+  { template: 'I ___ milk {signal}.', subject: 'I', verb: 'drink', vn: 'Tôi uống sữa', type: 'affirm', emoji: '🧑🥛' },
+  { template: 'He ___ coffee {signal}.', subject: 'He', verb: 'drink', vn: 'Anh ấy uống cà phê', type: 'affirm', emoji: '👨☕' },
+  { template: 'She ___ orange juice {signal}.', subject: 'She', verb: 'drink', vn: 'Cô ấy uống nước cam', type: 'affirm', emoji: '👧🧃' },
   
   // SING
-  { template: 'He ___ a song {signal}.', subject: 'He', verb: 'sing', vn: 'Anh ấy hát một bài', type: 'affirm' },
-  { template: 'She ___ beautifully {signal}.', subject: 'She', verb: 'sing', vn: 'Cô ấy hát hay', type: 'affirm' },
-  { template: 'They ___ together {signal}.', subject: 'They', verb: 'sing', vn: 'Họ hát cùng nhau', type: 'affirm' },
+  { template: 'He ___ a song {signal}.', subject: 'He', verb: 'sing', vn: 'Anh ấy hát một bài', type: 'affirm', emoji: '👦🎤' },
+  { template: 'She ___ beautifully {signal}.', subject: 'She', verb: 'sing', vn: 'Cô ấy hát hay', type: 'affirm', emoji: '👧🎵' },
+  { template: 'They ___ together {signal}.', subject: 'They', verb: 'sing', vn: 'Họ hát cùng nhau', type: 'affirm', emoji: '👨‍👩‍👧🎶' },
   
   // SWIM
-  { template: 'They ___ in the pool {signal}.', subject: 'They', verb: 'swim', vn: 'Họ bơi trong hồ', type: 'affirm' },
-  { template: 'I ___ at the beach {signal}.', subject: 'I', verb: 'swim', vn: 'Tôi bơi ở biển', type: 'affirm' },
-  { template: 'He ___ very fast {signal}.', subject: 'He', verb: 'swim', vn: 'Anh ấy bơi rất nhanh', type: 'affirm' },
+  { template: 'They ___ in the pool {signal}.', subject: 'They', verb: 'swim', vn: 'Họ bơi trong hồ', type: 'affirm', emoji: '👨‍👩‍👧🏊' },
+  { template: 'I ___ at the beach {signal}.', subject: 'I', verb: 'swim', vn: 'Tôi bơi ở biển', type: 'affirm', emoji: '🧑🏖️' },
+  { template: 'He ___ very fast {signal}.', subject: 'He', verb: 'swim', vn: 'Anh ấy bơi rất nhanh', type: 'affirm', emoji: '👦💨' },
   
   // DO
-  { template: 'I ___ my homework {signal}.', subject: 'I', verb: 'do', vn: 'Tôi làm bài tập', type: 'affirm' },
-  { template: 'She ___ the dishes {signal}.', subject: 'She', verb: 'do', vn: 'Cô ấy rửa bát', type: 'affirm' },
-  { template: 'They ___ exercise {signal}.', subject: 'They', verb: 'do', vn: 'Họ tập thể dục', type: 'affirm' },
+  { template: 'I ___ my homework {signal}.', subject: 'I', verb: 'do', vn: 'Tôi làm bài tập', type: 'affirm', emoji: '🧑📝' },
+  { template: 'She ___ the dishes {signal}.', subject: 'She', verb: 'do', vn: 'Cô ấy rửa bát', type: 'affirm', emoji: '👧🍽️' },
+  { template: 'They ___ exercise {signal}.', subject: 'They', verb: 'do', vn: 'Họ tập thể dục', type: 'affirm', emoji: '👨‍👩‍👧🏃' },
   
   // BUY
-  { template: 'She ___ a new dress {signal}.', subject: 'She', verb: 'buy', vn: 'Cô ấy mua váy mới', type: 'affirm' },
-  { template: 'I ___ some books {signal}.', subject: 'I', verb: 'buy', vn: 'Tôi mua vài quyển sách', type: 'affirm' },
-  { template: 'He ___ a gift {signal}.', subject: 'He', verb: 'buy', vn: 'Anh ấy mua quà', type: 'affirm' },
+  { template: 'She ___ a new dress {signal}.', subject: 'She', verb: 'buy', vn: 'Cô ấy mua váy mới', type: 'affirm', emoji: '👧👗' },
+  { template: 'I ___ some books {signal}.', subject: 'I', verb: 'buy', vn: 'Tôi mua vài quyển sách', type: 'affirm', emoji: '🧑📚' },
+  { template: 'He ___ a gift {signal}.', subject: 'He', verb: 'buy', vn: 'Anh ấy mua quà', type: 'affirm', emoji: '👦🎁' },
   
   // WRITE
-  { template: 'We ___ a letter {signal}.', subject: 'We', verb: 'write', vn: 'Chúng tôi viết thư', type: 'affirm' },
-  { template: 'She ___ in her diary {signal}.', subject: 'She', verb: 'write', vn: 'Cô ấy viết nhật ký', type: 'affirm' },
-  { template: 'I ___ an email {signal}.', subject: 'I', verb: 'write', vn: 'Tôi viết email', type: 'affirm' },
+  { template: 'We ___ a letter {signal}.', subject: 'We', verb: 'write', vn: 'Chúng tôi viết thư', type: 'affirm', emoji: '👨‍👩‍👧✉️' },
+  { template: 'She ___ in her diary {signal}.', subject: 'She', verb: 'write', vn: 'Cô ấy viết nhật ký', type: 'affirm', emoji: '👧📔' },
+  { template: 'I ___ an email {signal}.', subject: 'I', verb: 'write', vn: 'Tôi viết email', type: 'affirm', emoji: '🧑💻' },
   
   // MEET
-  { template: 'I ___ my friend {signal}.', subject: 'I', verb: 'meet', vn: 'Tôi gặp bạn', type: 'affirm' },
-  { template: 'She ___ her teacher {signal}.', subject: 'She', verb: 'meet', vn: 'Cô ấy gặp cô giáo', type: 'affirm' },
-  { template: 'They ___ at the cafe {signal}.', subject: 'They', verb: 'meet', vn: 'Họ gặp nhau ở quán', type: 'affirm' },
+  { template: 'I ___ my friend {signal}.', subject: 'I', verb: 'meet', vn: 'Tôi gặp bạn', type: 'affirm', emoji: '🧑🤝' },
+  { template: 'She ___ her teacher {signal}.', subject: 'She', verb: 'meet', vn: 'Cô ấy gặp cô giáo', type: 'affirm', emoji: '👧👩‍🏫' },
+  { template: 'They ___ at the cafe {signal}.', subject: 'They', verb: 'meet', vn: 'Họ gặp nhau ở quán', type: 'affirm', emoji: '👨‍👩‍👧☕' },
   
   // RUN
-  { template: 'He ___ fast {signal}.', subject: 'He', verb: 'run', vn: 'Anh ấy chạy nhanh', type: 'affirm' },
-  { template: 'I ___ in the morning {signal}.', subject: 'I', verb: 'run', vn: 'Tôi chạy buổi sáng', type: 'affirm' },
-  { template: 'They ___ in the park {signal}.', subject: 'They', verb: 'run', vn: 'Họ chạy trong công viên', type: 'affirm' },
+  { template: 'He ___ fast {signal}.', subject: 'He', verb: 'run', vn: 'Anh ấy chạy nhanh', type: 'affirm', emoji: '👦🏃' },
+  { template: 'I ___ in the morning {signal}.', subject: 'I', verb: 'run', vn: 'Tôi chạy buổi sáng', type: 'affirm', emoji: '🧑🌅' },
+  { template: 'They ___ in the park {signal}.', subject: 'They', verb: 'run', vn: 'Họ chạy trong công viên', type: 'affirm', emoji: '👨‍👩‍👧🌳' },
   
   // GIVE
-  { template: 'I ___ a gift to mom {signal}.', subject: 'I', verb: 'give', vn: 'Tôi tặng quà cho mẹ', type: 'affirm' },
-  { template: 'She ___ me a book {signal}.', subject: 'She', verb: 'give', vn: 'Cô ấy cho tôi sách', type: 'affirm' },
-  { template: 'He ___ flowers to her {signal}.', subject: 'He', verb: 'give', vn: 'Anh ấy tặng hoa cho cô ấy', type: 'affirm' },
+  { template: 'I ___ a gift to mom {signal}.', subject: 'I', verb: 'give', vn: 'Tôi tặng quà cho mẹ', type: 'affirm', emoji: '🧑🎁' },
+  { template: 'She ___ me a book {signal}.', subject: 'She', verb: 'give', vn: 'Cô ấy cho tôi sách', type: 'affirm', emoji: '👧📖' },
+  { template: 'He ___ flowers to her {signal}.', subject: 'He', verb: 'give', vn: 'Anh ấy tặng hoa cho cô ấy', type: 'affirm', emoji: '👦💐' },
   
   // TAKE
-  { template: 'She ___ the bus {signal}.', subject: 'She', verb: 'take', vn: 'Cô ấy đi xe buýt', type: 'affirm' },
-  { template: 'I ___ a shower {signal}.', subject: 'I', verb: 'take', vn: 'Tôi tắm', type: 'affirm' },
-  { template: 'He ___ photos {signal}.', subject: 'He', verb: 'take', vn: 'Anh ấy chụp ảnh', type: 'affirm' },
+  { template: 'She ___ the bus {signal}.', subject: 'She', verb: 'take', vn: 'Cô ấy đi xe buýt', type: 'affirm', emoji: '👧🚌' },
+  { template: 'I ___ a shower {signal}.', subject: 'I', verb: 'take', vn: 'Tôi tắm', type: 'affirm', emoji: '🧑🚿' },
+  { template: 'He ___ photos {signal}.', subject: 'He', verb: 'take', vn: 'Anh ấy chụp ảnh', type: 'affirm', emoji: '👦📷' },
   
   // COME
-  { template: 'We ___ home late {signal}.', subject: 'We', verb: 'come', vn: 'Chúng tôi về nhà muộn', type: 'affirm' },
-  { template: 'She ___ to my house {signal}.', subject: 'She', verb: 'come', vn: 'Cô ấy đến nhà tôi', type: 'affirm' },
-  { template: 'They ___ to the party {signal}.', subject: 'They', verb: 'come', vn: 'Họ đến bữa tiệc', type: 'affirm' },
+  { template: 'We ___ home late {signal}.', subject: 'We', verb: 'come', vn: 'Chúng tôi về nhà muộn', type: 'affirm', emoji: '👨‍👩‍👧🏠' },
+  { template: 'She ___ to my house {signal}.', subject: 'She', verb: 'come', vn: 'Cô ấy đến nhà tôi', type: 'affirm', emoji: '👧🏡' },
+  { template: 'They ___ to the party {signal}.', subject: 'They', verb: 'come', vn: 'Họ đến bữa tiệc', type: 'affirm', emoji: '👨‍👩‍👧🎉' },
   
   // SEE
-  { template: 'They ___ a movie {signal}.', subject: 'They', verb: 'see', vn: 'Họ xem phim', type: 'affirm' },
-  { template: 'I ___ my grandma {signal}.', subject: 'I', verb: 'see', vn: 'Tôi gặp bà', type: 'affirm' },
-  { template: 'She ___ a bird {signal}.', subject: 'She', verb: 'see', vn: 'Cô ấy nhìn thấy con chim', type: 'affirm' },
+  { template: 'They ___ a movie {signal}.', subject: 'They', verb: 'see', vn: 'Họ xem phim', type: 'affirm', emoji: '👨‍👩‍👧🎬' },
+  { template: 'I ___ my grandma {signal}.', subject: 'I', verb: 'see', vn: 'Tôi gặp bà', type: 'affirm', emoji: '🧑👵' },
+  { template: 'She ___ a bird {signal}.', subject: 'She', verb: 'see', vn: 'Cô ấy nhìn thấy con chim', type: 'affirm', emoji: '👧🐦' },
   
   // SLEEP
-  { template: 'I ___ early {signal}.', subject: 'I', verb: 'sleep', vn: 'Tôi ngủ sớm', type: 'affirm' },
-  { template: 'She ___ late {signal}.', subject: 'She', verb: 'sleep', vn: 'Cô ấy ngủ muộn', type: 'affirm' },
-  { template: 'The baby ___ well {signal}.', subject: 'The baby', verb: 'sleep', vn: 'Em bé ngủ ngon', type: 'affirm' },
+  { template: 'I ___ early {signal}.', subject: 'I', verb: 'sleep', vn: 'Tôi ngủ sớm', type: 'affirm', emoji: '🧒😴' },
+  { template: 'She ___ late {signal}.', subject: 'She', verb: 'sleep', vn: 'Cô ấy ngủ muộn', type: 'affirm', emoji: '👧🌙' },
+  { template: 'The baby ___ well {signal}.', subject: 'The baby', verb: 'sleep', vn: 'Em bé ngủ ngon', type: 'affirm', emoji: '👶💤' },
   
   // HAVE
-  { template: 'I ___ breakfast {signal}.', subject: 'I', verb: 'have', vn: 'Tôi ăn sáng', type: 'affirm' },
-  { template: 'She ___ a dog {signal}.', subject: 'She', verb: 'have', vn: 'Cô ấy có con chó', type: 'affirm' },
-  { template: 'We ___ a party {signal}.', subject: 'We', verb: 'have', vn: 'Chúng tôi có bữa tiệc', type: 'affirm' },
+  { template: 'I ___ breakfast {signal}.', subject: 'I', verb: 'have', vn: 'Tôi ăn sáng', type: 'affirm', emoji: '🧑🍳' },
+  { template: 'She ___ a dog {signal}.', subject: 'She', verb: 'have', vn: 'Cô ấy có con chó', type: 'affirm', emoji: '👧🐕' },
+  { template: 'We ___ a party {signal}.', subject: 'We', verb: 'have', vn: 'Chúng tôi có bữa tiệc', type: 'affirm', emoji: '👨‍👩‍👧🎊' },
   
   // GET
-  { template: 'I ___ a present {signal}.', subject: 'I', verb: 'get', vn: 'Tôi được quà', type: 'affirm' },
-  { template: 'She ___ good grades {signal}.', subject: 'She', verb: 'get', vn: 'Cô ấy được điểm cao', type: 'affirm' },
-  { template: 'He ___ up early {signal}.', subject: 'He', verb: 'get', vn: 'Anh ấy dậy sớm', type: 'affirm' },
+  { template: 'I ___ a present {signal}.', subject: 'I', verb: 'get', vn: 'Tôi được quà', type: 'affirm', emoji: '🧑🎁' },
+  { template: 'She ___ good grades {signal}.', subject: 'She', verb: 'get', vn: 'Cô ấy được điểm cao', type: 'affirm', emoji: '👧💯' },
+  { template: 'He ___ up early {signal}.', subject: 'He', verb: 'get', vn: 'Anh ấy dậy sớm', type: 'affirm', emoji: '👦⏰' },
   
   // FEEL
-  { template: 'I ___ happy {signal}.', subject: 'I', verb: 'feel', vn: 'Tôi cảm thấy vui', type: 'affirm' },
-  { template: 'She ___ tired {signal}.', subject: 'She', verb: 'feel', vn: 'Cô ấy cảm thấy mệt', type: 'affirm' },
-  { template: 'He ___ sick {signal}.', subject: 'He', verb: 'feel', vn: 'Anh ấy cảm thấy ốm', type: 'affirm' },
+  { template: 'I ___ happy {signal}.', subject: 'I', verb: 'feel', vn: 'Tôi cảm thấy vui', type: 'affirm', emoji: '🧑😊' },
+  { template: 'She ___ tired {signal}.', subject: 'She', verb: 'feel', vn: 'Cô ấy cảm thấy mệt', type: 'affirm', emoji: '👧😫' },
+  { template: 'He ___ sick {signal}.', subject: 'He', verb: 'feel', vn: 'Anh ấy cảm thấy ốm', type: 'affirm', emoji: '👦🤒' },
   
   // FIND
-  { template: 'I ___ my keys {signal}.', subject: 'I', verb: 'find', vn: 'Tôi tìm thấy chìa khóa', type: 'affirm' },
-  { template: 'She ___ a new job {signal}.', subject: 'She', verb: 'find', vn: 'Cô ấy tìm được việc mới', type: 'affirm' },
-  { template: 'He ___ the answer {signal}.', subject: 'He', verb: 'find', vn: 'Anh ấy tìm ra đáp án', type: 'affirm' },
+  { template: 'I ___ my keys {signal}.', subject: 'I', verb: 'find', vn: 'Tôi tìm thấy chìa khóa', type: 'affirm', emoji: '🧑🔑' },
+  { template: 'She ___ a new job {signal}.', subject: 'She', verb: 'find', vn: 'Cô ấy tìm được việc mới', type: 'affirm', emoji: '👩💼' },
+  { template: 'He ___ the answer {signal}.', subject: 'He', verb: 'find', vn: 'Anh ấy tìm ra đáp án', type: 'affirm', emoji: '👦💡' },
   
   // LOSE
-  { template: 'He ___ his phone {signal}.', subject: 'He', verb: 'lose', vn: 'Anh ấy mất điện thoại', type: 'affirm' },
-  { template: 'I ___ my wallet {signal}.', subject: 'I', verb: 'lose', vn: 'Tôi mất ví', type: 'affirm' },
-  { template: 'She ___ her keys {signal}.', subject: 'She', verb: 'lose', vn: 'Cô ấy mất chìa khóa', type: 'affirm' },
+  { template: 'He ___ his phone {signal}.', subject: 'He', verb: 'lose', vn: 'Anh ấy mất điện thoại', type: 'affirm', emoji: '👦📱' },
+  { template: 'I ___ my wallet {signal}.', subject: 'I', verb: 'lose', vn: 'Tôi mất ví', type: 'affirm', emoji: '🧑👛' },
+  { template: 'She ___ her keys {signal}.', subject: 'She', verb: 'lose', vn: 'Cô ấy mất chìa khóa', type: 'affirm', emoji: '👧🔑' },
   
   // TEACH
-  { template: 'She ___ English {signal}.', subject: 'She', verb: 'teach', vn: 'Cô ấy dạy tiếng Anh', type: 'affirm' },
-  { template: 'He ___ me math {signal}.', subject: 'He', verb: 'teach', vn: 'Anh ấy dạy tôi toán', type: 'affirm' },
+  { template: 'She ___ English {signal}.', subject: 'She', verb: 'teach', vn: 'Cô ấy dạy tiếng Anh', type: 'affirm', emoji: '👩‍🏫📚' },
+  { template: 'He ___ me math {signal}.', subject: 'He', verb: 'teach', vn: 'Anh ấy dạy tôi toán', type: 'affirm', emoji: '👨‍🏫🔢' },
   
   // THINK
-  { template: 'I ___ about you {signal}.', subject: 'I', verb: 'think', vn: 'Tôi nghĩ về bạn', type: 'affirm' },
-  { template: 'She ___ hard {signal}.', subject: 'She', verb: 'think', vn: 'Cô ấy suy nghĩ nhiều', type: 'affirm' },
+  { template: 'I ___ about you {signal}.', subject: 'I', verb: 'think', vn: 'Tôi nghĩ về bạn', type: 'affirm', emoji: '🧑💭' },
+  { template: 'She ___ hard {signal}.', subject: 'She', verb: 'think', vn: 'Cô ấy suy nghĩ nhiều', type: 'affirm', emoji: '👧🤔' },
   
   // BRING
-  { template: 'I ___ my book {signal}.', subject: 'I', verb: 'bring', vn: 'Tôi mang sách', type: 'affirm' },
-  { template: 'She ___ food {signal}.', subject: 'She', verb: 'bring', vn: 'Cô ấy mang đồ ăn', type: 'affirm' },
+  { template: 'I ___ my book {signal}.', subject: 'I', verb: 'bring', vn: 'Tôi mang sách', type: 'affirm', emoji: '🧑📖' },
+  { template: 'She ___ food {signal}.', subject: 'She', verb: 'bring', vn: 'Cô ấy mang đồ ăn', type: 'affirm', emoji: '👧🍱' },
   
   // WIN
-  { template: 'He ___ the game {signal}.', subject: 'He', verb: 'win', vn: 'Anh ấy thắng trận', type: 'affirm' },
-  { template: 'She ___ a prize {signal}.', subject: 'She', verb: 'win', vn: 'Cô ấy thắng giải', type: 'affirm' },
+  { template: 'He ___ the game {signal}.', subject: 'He', verb: 'win', vn: 'Anh ấy thắng trận', type: 'affirm', emoji: '👦🏆' },
+  { template: 'She ___ a prize {signal}.', subject: 'She', verb: 'win', vn: 'Cô ấy thắng giải', type: 'affirm', emoji: '👧🥇' },
   
   // WEAR
-  { template: 'She ___ a dress {signal}.', subject: 'She', verb: 'wear', vn: 'Cô ấy mặc váy', type: 'affirm' },
-  { template: 'He ___ a hat {signal}.', subject: 'He', verb: 'wear', vn: 'Anh ấy đội mũ', type: 'affirm' },
+  { template: 'She ___ a dress {signal}.', subject: 'She', verb: 'wear', vn: 'Cô ấy mặc váy', type: 'affirm', emoji: '👧👗' },
+  { template: 'He ___ a hat {signal}.', subject: 'He', verb: 'wear', vn: 'Anh ấy đội mũ', type: 'affirm', emoji: '👦🎩' },
   
   // =============== NEGATIVE (Câu phủ định) ===============
   // GO
-  { template: 'I ___ go to school {signal}.', subject: 'I', verb: 'go', vn: 'Tôi không đi học', type: 'negative' },
-  { template: 'She ___ go to the park {signal}.', subject: 'She', verb: 'go', vn: 'Cô ấy không đi công viên', type: 'negative' },
-  { template: 'They ___ go shopping {signal}.', subject: 'They', verb: 'go', vn: 'Họ không đi mua sắm', type: 'negative' },
-  { template: 'He ___ go to work {signal}.', subject: 'He', verb: 'go', vn: 'Anh ấy không đi làm', type: 'negative' },
+  { template: 'I ___ go to school {signal}.', subject: 'I', verb: 'go', vn: 'Tôi không đi học', type: 'negative', emoji: '🧑🚫🏫' },
+  { template: 'She ___ go to the park {signal}.', subject: 'She', verb: 'go', vn: 'Cô ấy không đi công viên', type: 'negative', emoji: '👧🚫🌳' },
+  { template: 'They ___ go shopping {signal}.', subject: 'They', verb: 'go', vn: 'Họ không đi mua sắm', type: 'negative', emoji: '👨‍👩‍👧🚫🛒' },
+  { template: 'He ___ go to work {signal}.', subject: 'He', verb: 'go', vn: 'Anh ấy không đi làm', type: 'negative', emoji: '👨🚫💼' },
   
   // EAT
-  { template: 'She ___ eat breakfast {signal}.', subject: 'She', verb: 'eat', vn: 'Cô ấy không ăn sáng', type: 'negative' },
-  { template: 'I ___ eat meat {signal}.', subject: 'I', verb: 'eat', vn: 'Tôi không ăn thịt', type: 'negative' },
-  { template: 'He ___ eat vegetables {signal}.', subject: 'He', verb: 'eat', vn: 'Anh ấy không ăn rau', type: 'negative' },
-  { template: 'They ___ eat fast food {signal}.', subject: 'They', verb: 'eat', vn: 'Họ không ăn đồ ăn nhanh', type: 'negative' },
+  { template: 'She ___ eat breakfast {signal}.', subject: 'She', verb: 'eat', vn: 'Cô ấy không ăn sáng', type: 'negative', emoji: '👧🚫🍳' },
+  { template: 'I ___ eat meat {signal}.', subject: 'I', verb: 'eat', vn: 'Tôi không ăn thịt', type: 'negative', emoji: '🧑🚫🥩' },
+  { template: 'He ___ eat vegetables {signal}.', subject: 'He', verb: 'eat', vn: 'Anh ấy không ăn rau', type: 'negative', emoji: '👦🚫🥬' },
+  { template: 'They ___ eat fast food {signal}.', subject: 'They', verb: 'eat', vn: 'Họ không ăn đồ ăn nhanh', type: 'negative', emoji: '👨‍👩‍👧🚫🍔' },
   
   // DRINK
-  { template: 'I ___ drink coffee {signal}.', subject: 'I', verb: 'drink', vn: 'Tôi không uống cà phê', type: 'negative' },
-  { template: 'She ___ drink soda {signal}.', subject: 'She', verb: 'drink', vn: 'Cô ấy không uống nước ngọt', type: 'negative' },
-  { template: 'He ___ drink alcohol {signal}.', subject: 'He', verb: 'drink', vn: 'Anh ấy không uống rượu', type: 'negative' },
+  { template: 'I ___ drink coffee {signal}.', subject: 'I', verb: 'drink', vn: 'Tôi không uống cà phê', type: 'negative', emoji: '🧑🚫☕' },
+  { template: 'She ___ drink soda {signal}.', subject: 'She', verb: 'drink', vn: 'Cô ấy không uống nước ngọt', type: 'negative', emoji: '👧🚫🥤' },
+  { template: 'He ___ drink alcohol {signal}.', subject: 'He', verb: 'drink', vn: 'Anh ấy không uống rượu', type: 'negative', emoji: '👨🚫🍺' },
   
   // DO
-  { template: 'I ___ do my homework {signal}.', subject: 'I', verb: 'do', vn: 'Tôi không làm bài tập', type: 'negative' },
-  { template: 'She ___ do the dishes {signal}.', subject: 'She', verb: 'do', vn: 'Cô ấy không rửa bát', type: 'negative' },
-  { template: 'They ___ do exercise {signal}.', subject: 'They', verb: 'do', vn: 'Họ không tập thể dục', type: 'negative' },
+  { template: 'I ___ do my homework {signal}.', subject: 'I', verb: 'do', vn: 'Tôi không làm bài tập', type: 'negative', emoji: '🧑🚫📝' },
+  { template: 'She ___ do the dishes {signal}.', subject: 'She', verb: 'do', vn: 'Cô ấy không rửa bát', type: 'negative', emoji: '👧🚫🍽️' },
+  { template: 'They ___ do exercise {signal}.', subject: 'They', verb: 'do', vn: 'Họ không tập thể dục', type: 'negative', emoji: '👨‍👩‍👧🚫🏃' },
   
   // HAVE
-  { template: 'I ___ have breakfast {signal}.', subject: 'I', verb: 'have', vn: 'Tôi không ăn sáng', type: 'negative' },
-  { template: 'She ___ have time {signal}.', subject: 'She', verb: 'have', vn: 'Cô ấy không có thời gian', type: 'negative' },
-  { template: 'We ___ have money {signal}.', subject: 'We', verb: 'have', vn: 'Chúng tôi không có tiền', type: 'negative' },
+  { template: 'I ___ have breakfast {signal}.', subject: 'I', verb: 'have', vn: 'Tôi không ăn sáng', type: 'negative', emoji: '🧑🚫🍳' },
+  { template: 'She ___ have time {signal}.', subject: 'She', verb: 'have', vn: 'Cô ấy không có thời gian', type: 'negative', emoji: '👧🚫⏰' },
+  { template: 'We ___ have money {signal}.', subject: 'We', verb: 'have', vn: 'Chúng tôi không có tiền', type: 'negative', emoji: '👨‍👩‍👧🚫💰' },
   
   // SLEEP
-  { template: 'I ___ sleep well {signal}.', subject: 'I', verb: 'sleep', vn: 'Tôi không ngủ ngon', type: 'negative' },
-  { template: 'She ___ sleep late {signal}.', subject: 'She', verb: 'sleep', vn: 'Cô ấy không ngủ muộn', type: 'negative' },
-  { template: 'He ___ sleep enough {signal}.', subject: 'He', verb: 'sleep', vn: 'Anh ấy không ngủ đủ', type: 'negative' },
+  { template: 'I ___ sleep well {signal}.', subject: 'I', verb: 'sleep', vn: 'Tôi không ngủ ngon', type: 'negative', emoji: '🧑🚫😴' },
+  { template: 'She ___ sleep late {signal}.', subject: 'She', verb: 'sleep', vn: 'Cô ấy không ngủ muộn', type: 'negative', emoji: '👧🚫🌙' },
+  { template: 'He ___ sleep enough {signal}.', subject: 'He', verb: 'sleep', vn: 'Anh ấy không ngủ đủ', type: 'negative', emoji: '👦🚫💤' },
   
   // COME
-  { template: 'She ___ come to the party {signal}.', subject: 'She', verb: 'come', vn: 'Cô ấy không đến tiệc', type: 'negative' },
-  { template: 'He ___ come home early {signal}.', subject: 'He', verb: 'come', vn: 'Anh ấy không về nhà sớm', type: 'negative' },
-  { template: 'They ___ come to school {signal}.', subject: 'They', verb: 'come', vn: 'Họ không đến trường', type: 'negative' },
+  { template: 'She ___ come to the party {signal}.', subject: 'She', verb: 'come', vn: 'Cô ấy không đến tiệc', type: 'negative', emoji: '👧🚫🎉' },
+  { template: 'He ___ come home early {signal}.', subject: 'He', verb: 'come', vn: 'Anh ấy không về nhà sớm', type: 'negative', emoji: '👦🚫🏠' },
+  { template: 'They ___ come to school {signal}.', subject: 'They', verb: 'come', vn: 'Họ không đến trường', type: 'negative', emoji: '👨‍👩‍👧🚫🏫' },
   
   // SEE
-  { template: 'I ___ see the movie {signal}.', subject: 'I', verb: 'see', vn: 'Tôi không xem phim', type: 'negative' },
-  { template: 'She ___ see him {signal}.', subject: 'She', verb: 'see', vn: 'Cô ấy không gặp anh ấy', type: 'negative' },
-  { template: 'They ___ see anything {signal}.', subject: 'They', verb: 'see', vn: 'Họ không thấy gì', type: 'negative' },
+  { template: 'I ___ see the movie {signal}.', subject: 'I', verb: 'see', vn: 'Tôi không xem phim', type: 'negative', emoji: '🧑🚫🎬' },
+  { template: 'She ___ see him {signal}.', subject: 'She', verb: 'see', vn: 'Cô ấy không gặp anh ấy', type: 'negative', emoji: '👧🚫👦' },
+  { template: 'They ___ see anything {signal}.', subject: 'They', verb: 'see', vn: 'Họ không thấy gì', type: 'negative', emoji: '👨‍👩‍👧🚫👀' },
   
   // KNOW
-  { template: 'I ___ know the answer {signal}.', subject: 'I', verb: 'know', vn: 'Tôi không biết câu trả lời', type: 'negative' },
-  { template: 'She ___ know him {signal}.', subject: 'She', verb: 'know', vn: 'Cô ấy không biết anh ấy', type: 'negative' },
-  { template: 'They ___ know the way {signal}.', subject: 'They', verb: 'know', vn: 'Họ không biết đường', type: 'negative' },
-  
-  // MAKE
-  { template: 'I ___ make mistakes {signal}.', subject: 'I', verb: 'make', vn: 'Tôi không mắc lỗi', type: 'negative' },
-  { template: 'She ___ make dinner {signal}.', subject: 'She', verb: 'make', vn: 'Cô ấy không nấu bữa tối', type: 'negative' },
-  { template: 'He ___ make noise {signal}.', subject: 'He', verb: 'make', vn: 'Anh ấy không làm ồn', type: 'negative' },
-  
-  // TAKE
-  { template: 'I ___ take the bus {signal}.', subject: 'I', verb: 'take', vn: 'Tôi không đi xe buýt', type: 'negative' },
-  { template: 'She ___ take photos {signal}.', subject: 'She', verb: 'take', vn: 'Cô ấy không chụp ảnh', type: 'negative' },
-  { template: 'He ___ take a break {signal}.', subject: 'He', verb: 'take', vn: 'Anh ấy không nghỉ ngơi', type: 'negative' },
-  
-  // WRITE
-  { template: 'I ___ write letters {signal}.', subject: 'I', verb: 'write', vn: 'Tôi không viết thư', type: 'negative' },
-  { template: 'She ___ write emails {signal}.', subject: 'She', verb: 'write', vn: 'Cô ấy không viết email', type: 'negative' },
-  
-  // READ
-  { template: 'I ___ read books {signal}.', subject: 'I', verb: 'read', vn: 'Tôi không đọc sách', type: 'negative' },
-  { template: 'He ___ read newspapers {signal}.', subject: 'He', verb: 'read', vn: 'Anh ấy không đọc báo', type: 'negative' },
-  
-  // SPEAK
-  { template: 'I ___ speak French {signal}.', subject: 'I', verb: 'speak', vn: 'Tôi không nói tiếng Pháp', type: 'negative' },
-  { template: 'She ___ speak loudly {signal}.', subject: 'She', verb: 'speak', vn: 'Cô ấy không nói to', type: 'negative' },
-  
-  // BUY
-  { template: 'I ___ buy expensive things {signal}.', subject: 'I', verb: 'buy', vn: 'Tôi không mua đồ đắt', type: 'negative' },
-  { template: 'She ___ buy clothes {signal}.', subject: 'She', verb: 'buy', vn: 'Cô ấy không mua quần áo', type: 'negative' },
-  
-  // GIVE
-  { template: 'I ___ give up {signal}.', subject: 'I', verb: 'give', vn: 'Tôi không bỏ cuộc', type: 'negative' },
-  { template: 'She ___ give money {signal}.', subject: 'She', verb: 'give', vn: 'Cô ấy không cho tiền', type: 'negative' },
-  
-  // FIND
-  { template: 'I ___ find my keys {signal}.', subject: 'I', verb: 'find', vn: 'Tôi không tìm thấy chìa khóa', type: 'negative' },
-  { template: 'She ___ find the answer {signal}.', subject: 'She', verb: 'find', vn: 'Cô ấy không tìm ra đáp án', type: 'negative' },
-  
-  // FEEL
-  { template: 'I ___ feel good {signal}.', subject: 'I', verb: 'feel', vn: 'Tôi không cảm thấy tốt', type: 'negative' },
-  { template: 'She ___ feel tired {signal}.', subject: 'She', verb: 'feel', vn: 'Cô ấy không thấy mệt', type: 'negative' },
+  { template: 'I ___ know the answer {signal}.', subject: 'I', verb: 'know', vn: 'Tôi không biết câu trả lời', type: 'negative', emoji: '🧑🚫❓' },
+  { template: 'She ___ know him {signal}.', subject: 'She', verb: 'know', vn: 'Cô ấy không biết anh ấy', type: 'negative', emoji: '👧🚫👦' },
+  { template: 'They ___ know the way {signal}.', subject: 'They', verb: 'know', vn: 'Họ không biết đường', type: 'negative', emoji: '👨‍👩‍👧🚫🗺️' },
   
   // WIN
-  { template: 'We ___ win the game {signal}.', subject: 'We', verb: 'win', vn: 'Chúng tôi không thắng', type: 'negative' },
-  { template: 'He ___ win the match {signal}.', subject: 'He', verb: 'win', vn: 'Anh ấy không thắng trận', type: 'negative' },
+  { template: 'We ___ win the game {signal}.', subject: 'We', verb: 'win', vn: 'Chúng tôi không thắng', type: 'negative', emoji: '👨‍👩‍👧🚫🏆' },
+  { template: 'He ___ win the match {signal}.', subject: 'He', verb: 'win', vn: 'Anh ấy không thắng trận', type: 'negative', emoji: '👦🚫🥇' },
   
-  // =============== QUESTION (Câu hỏi) ===============
+  // =============== QUESTION (Câu hỏi) - Yêu cầu chọn chia động từ ===============
   // GO
-  { template: '___ you go to school {signal}?', subject: 'you', verb: 'go', vn: 'Bạn có đi học không?', type: 'question' },
-  { template: '___ she go to the park {signal}?', subject: 'she', verb: 'go', vn: 'Cô ấy có đi công viên không?', type: 'question' },
-  { template: '___ they go shopping {signal}?', subject: 'they', verb: 'go', vn: 'Họ có đi mua sắm không?', type: 'question' },
-  { template: '___ he go to work {signal}?', subject: 'he', verb: 'go', vn: 'Anh ấy có đi làm không?', type: 'question' },
+  { template: 'Does she ___ to the park {signal}?', subject: 'she', verb: 'go', vn: 'Cô ấy có đi công viên không?', type: 'question_verb', emoji: '❓👧🌳' },
+  { template: 'Do they ___ shopping {signal}?', subject: 'they', verb: 'go', vn: 'Họ có đi mua sắm không?', type: 'question_verb', emoji: '❓👨‍👩‍👧🛒' },
+  { template: 'Did he ___ to work {signal}?', subject: 'he', verb: 'go', vn: 'Anh ấy có đi làm không?', type: 'question_verb', emoji: '❓👨💼' },
+  { template: 'Did you ___ to school {signal}?', subject: 'you', verb: 'go', vn: 'Bạn có đi học không?', type: 'question_verb', emoji: '❓🧑🏫' },
   
   // EAT
-  { template: '___ she eat breakfast {signal}?', subject: 'she', verb: 'eat', vn: 'Cô ấy có ăn sáng không?', type: 'question' },
-  { template: '___ you eat lunch {signal}?', subject: 'you', verb: 'eat', vn: 'Bạn có ăn trưa không?', type: 'question' },
-  { template: '___ he eat dinner {signal}?', subject: 'he', verb: 'eat', vn: 'Anh ấy có ăn tối không?', type: 'question' },
-  { template: '___ they eat pizza {signal}?', subject: 'they', verb: 'eat', vn: 'Họ có ăn pizza không?', type: 'question' },
+  { template: 'Does she ___ breakfast {signal}?', subject: 'she', verb: 'eat', vn: 'Cô ấy có ăn sáng không?', type: 'question_verb', emoji: '❓👧🍳' },
+  { template: 'Do you ___ lunch {signal}?', subject: 'you', verb: 'eat', vn: 'Bạn có ăn trưa không?', type: 'question_verb', emoji: '❓🧑🍱' },
+  { template: 'Did he ___ dinner {signal}?', subject: 'he', verb: 'eat', vn: 'Anh ấy có ăn tối không?', type: 'question_verb', emoji: '❓👦🍽️' },
+  { template: 'Did they ___ pizza {signal}?', subject: 'they', verb: 'eat', vn: 'Họ có ăn pizza không?', type: 'question_verb', emoji: '❓👨‍👩‍👧🍕' },
   
   // DRINK
-  { template: '___ you drink milk {signal}?', subject: 'you', verb: 'drink', vn: 'Bạn có uống sữa không?', type: 'question' },
-  { template: '___ she drink coffee {signal}?', subject: 'she', verb: 'drink', vn: 'Cô ấy có uống cà phê không?', type: 'question' },
-  { template: '___ he drink tea {signal}?', subject: 'he', verb: 'drink', vn: 'Anh ấy có uống trà không?', type: 'question' },
+  { template: 'Do you ___ milk {signal}?', subject: 'you', verb: 'drink', vn: 'Bạn có uống sữa không?', type: 'question_verb', emoji: '❓🧑🥛' },
+  { template: 'Does she ___ coffee {signal}?', subject: 'she', verb: 'drink', vn: 'Cô ấy có uống cà phê không?', type: 'question_verb', emoji: '❓👧☕' },
+  { template: 'Did he ___ tea {signal}?', subject: 'he', verb: 'drink', vn: 'Anh ấy có uống trà không?', type: 'question_verb', emoji: '❓👦🍵' },
   
   // DO
-  { template: '___ you do homework {signal}?', subject: 'you', verb: 'do', vn: 'Bạn có làm bài tập không?', type: 'question' },
-  { template: '___ she do exercise {signal}?', subject: 'she', verb: 'do', vn: 'Cô ấy có tập thể dục không?', type: 'question' },
-  { template: '___ they do the dishes {signal}?', subject: 'they', verb: 'do', vn: 'Họ có rửa bát không?', type: 'question' },
+  { template: 'Do you ___ homework {signal}?', subject: 'you', verb: 'do', vn: 'Bạn có làm bài tập không?', type: 'question_verb', emoji: '❓🧑📝' },
+  { template: 'Does she ___ exercise {signal}?', subject: 'she', verb: 'do', vn: 'Cô ấy có tập thể dục không?', type: 'question_verb', emoji: '❓👧🏃' },
+  { template: 'Did they ___ the dishes {signal}?', subject: 'they', verb: 'do', vn: 'Họ có rửa bát không?', type: 'question_verb', emoji: '❓👨‍👩‍👧🍽️' },
   
   // HAVE
-  { template: '___ you have breakfast {signal}?', subject: 'you', verb: 'have', vn: 'Bạn có ăn sáng không?', type: 'question' },
-  { template: '___ she have a car {signal}?', subject: 'she', verb: 'have', vn: 'Cô ấy có xe hơi không?', type: 'question' },
-  { template: '___ they have fun {signal}?', subject: 'they', verb: 'have', vn: 'Họ có vui không?', type: 'question' },
+  { template: 'Do you ___ breakfast {signal}?', subject: 'you', verb: 'have', vn: 'Bạn có ăn sáng không?', type: 'question_verb', emoji: '❓🧑🍳' },
+  { template: 'Does she ___ a car {signal}?', subject: 'she', verb: 'have', vn: 'Cô ấy có xe hơi không?', type: 'question_verb', emoji: '❓👧🚗' },
+  { template: 'Did they ___ fun {signal}?', subject: 'they', verb: 'have', vn: 'Họ có vui không?', type: 'question_verb', emoji: '❓👨‍👩‍👧😄' },
   
   // SLEEP
-  { template: '___ you sleep well {signal}?', subject: 'you', verb: 'sleep', vn: 'Bạn có ngủ ngon không?', type: 'question' },
-  { template: '___ she sleep early {signal}?', subject: 'she', verb: 'sleep', vn: 'Cô ấy có ngủ sớm không?', type: 'question' },
-  { template: '___ he sleep late {signal}?', subject: 'he', verb: 'sleep', vn: 'Anh ấy có ngủ muộn không?', type: 'question' },
-  
-  // COME
-  { template: '___ she come to the party {signal}?', subject: 'she', verb: 'come', vn: 'Cô ấy có đến tiệc không?', type: 'question' },
-  { template: '___ he come home early {signal}?', subject: 'he', verb: 'come', vn: 'Anh ấy có về sớm không?', type: 'question' },
-  { template: '___ they come to school {signal}?', subject: 'they', verb: 'come', vn: 'Họ có đến trường không?', type: 'question' },
+  { template: 'Do you ___ well {signal}?', subject: 'you', verb: 'sleep', vn: 'Bạn có ngủ ngon không?', type: 'question_verb', emoji: '❓🧑😴' },
+  { template: 'Does she ___ early {signal}?', subject: 'she', verb: 'sleep', vn: 'Cô ấy có ngủ sớm không?', type: 'question_verb', emoji: '❓👧🌙' },
+  { template: 'Did he ___ late {signal}?', subject: 'he', verb: 'sleep', vn: 'Anh ấy có ngủ muộn không?', type: 'question_verb', emoji: '❓👦💤' },
   
   // SEE
-  { template: '___ you see the movie {signal}?', subject: 'you', verb: 'see', vn: 'Bạn có xem phim không?', type: 'question' },
-  { template: '___ she see him {signal}?', subject: 'she', verb: 'see', vn: 'Cô ấy có gặp anh ấy không?', type: 'question' },
-  { template: '___ they see the show {signal}?', subject: 'they', verb: 'see', vn: 'Họ có xem show không?', type: 'question' },
-  
-  // KNOW
-  { template: '___ you know the answer {signal}?', subject: 'you', verb: 'know', vn: 'Bạn có biết câu trả lời không?', type: 'question' },
-  { template: '___ she know him {signal}?', subject: 'she', verb: 'know', vn: 'Cô ấy có biết anh ấy không?', type: 'question' },
-  { template: '___ they know the truth {signal}?', subject: 'they', verb: 'know', vn: 'Họ có biết sự thật không?', type: 'question' },
-  
-  // MAKE
-  { template: '___ you make dinner {signal}?', subject: 'you', verb: 'make', vn: 'Bạn có nấu bữa tối không?', type: 'question' },
-  { template: '___ she make a cake {signal}?', subject: 'she', verb: 'make', vn: 'Cô ấy có làm bánh không?', type: 'question' },
-  { template: '___ he make mistakes {signal}?', subject: 'he', verb: 'make', vn: 'Anh ấy có mắc lỗi không?', type: 'question' },
-  
-  // TAKE
-  { template: '___ you take the bus {signal}?', subject: 'you', verb: 'take', vn: 'Bạn có đi xe buýt không?', type: 'question' },
-  { template: '___ she take photos {signal}?', subject: 'she', verb: 'take', vn: 'Cô ấy có chụp ảnh không?', type: 'question' },
-  { template: '___ he take a shower {signal}?', subject: 'he', verb: 'take', vn: 'Anh ấy có tắm không?', type: 'question' },
-  
-  // WRITE
-  { template: '___ you write a letter {signal}?', subject: 'you', verb: 'write', vn: 'Bạn có viết thư không?', type: 'question' },
-  { template: '___ she write emails {signal}?', subject: 'she', verb: 'write', vn: 'Cô ấy có viết email không?', type: 'question' },
-  
-  // READ
-  { template: '___ you read books {signal}?', subject: 'you', verb: 'read', vn: 'Bạn có đọc sách không?', type: 'question' },
-  { template: '___ he read newspapers {signal}?', subject: 'he', verb: 'read', vn: 'Anh ấy có đọc báo không?', type: 'question' },
-  
-  // SPEAK
-  { template: '___ you speak English {signal}?', subject: 'you', verb: 'speak', vn: 'Bạn có nói tiếng Anh không?', type: 'question' },
-  { template: '___ she speak French {signal}?', subject: 'she', verb: 'speak', vn: 'Cô ấy có nói tiếng Pháp không?', type: 'question' },
+  { template: 'Do you ___ the movie {signal}?', subject: 'you', verb: 'see', vn: 'Bạn có xem phim không?', type: 'question_verb', emoji: '❓🧑🎬' },
+  { template: 'Does she ___ him {signal}?', subject: 'she', verb: 'see', vn: 'Cô ấy có gặp anh ấy không?', type: 'question_verb', emoji: '❓👧👦' },
+  { template: 'Did they ___ the show {signal}?', subject: 'they', verb: 'see', vn: 'Họ có xem show không?', type: 'question_verb', emoji: '❓👨‍👩‍👧📺' },
   
   // BUY
-  { template: '___ you buy a gift {signal}?', subject: 'you', verb: 'buy', vn: 'Bạn có mua quà không?', type: 'question' },
-  { template: '___ she buy clothes {signal}?', subject: 'she', verb: 'buy', vn: 'Cô ấy có mua quần áo không?', type: 'question' },
-  
-  // GIVE
-  { template: '___ you give him money {signal}?', subject: 'you', verb: 'give', vn: 'Bạn có cho anh ấy tiền không?', type: 'question' },
-  { template: '___ she give a present {signal}?', subject: 'she', verb: 'give', vn: 'Cô ấy có tặng quà không?', type: 'question' },
+  { template: 'Do you ___ a gift {signal}?', subject: 'you', verb: 'buy', vn: 'Bạn có mua quà không?', type: 'question_verb', emoji: '❓🧑🎁' },
+  { template: 'Does she ___ clothes {signal}?', subject: 'she', verb: 'buy', vn: 'Cô ấy có mua quần áo không?', type: 'question_verb', emoji: '❓👧👗' },
+  { template: 'Did he ___ a book {signal}?', subject: 'he', verb: 'buy', vn: 'Anh ấy có mua sách không?', type: 'question_verb', emoji: '❓👦📖' },
   
   // MEET
-  { template: '___ you meet her {signal}?', subject: 'you', verb: 'meet', vn: 'Bạn có gặp cô ấy không?', type: 'question' },
-  { template: '___ they meet at school {signal}?', subject: 'they', verb: 'meet', vn: 'Họ có gặp nhau ở trường không?', type: 'question' },
+  { template: 'Do you ___ her {signal}?', subject: 'you', verb: 'meet', vn: 'Bạn có gặp cô ấy không?', type: 'question_verb', emoji: '❓🧑🤝' },
+  { template: 'Did they ___ at school {signal}?', subject: 'they', verb: 'meet', vn: 'Họ có gặp nhau ở trường không?', type: 'question_verb', emoji: '❓👨‍👩‍👧🏫' },
   
   // RUN
-  { template: '___ you run in the morning {signal}?', subject: 'you', verb: 'run', vn: 'Bạn có chạy buổi sáng không?', type: 'question' },
-  { template: '___ he run fast {signal}?', subject: 'he', verb: 'run', vn: 'Anh ấy có chạy nhanh không?', type: 'question' },
+  { template: 'Do you ___ in the morning {signal}?', subject: 'you', verb: 'run', vn: 'Bạn có chạy buổi sáng không?', type: 'question_verb', emoji: '❓🧑🏃' },
+  { template: 'Does he ___ fast {signal}?', subject: 'he', verb: 'run', vn: 'Anh ấy có chạy nhanh không?', type: 'question_verb', emoji: '❓👦💨' },
   
   // SWIM
-  { template: '___ you swim {signal}?', subject: 'you', verb: 'swim', vn: 'Bạn có bơi không?', type: 'question' },
-  { template: '___ she swim well {signal}?', subject: 'she', verb: 'swim', vn: 'Cô ấy có bơi giỏi không?', type: 'question' },
+  { template: 'Do you ___ {signal}?', subject: 'you', verb: 'swim', vn: 'Bạn có bơi không?', type: 'question_verb', emoji: '❓🧑🏊' },
+  { template: 'Does she ___ well {signal}?', subject: 'she', verb: 'swim', vn: 'Cô ấy có bơi giỏi không?', type: 'question_verb', emoji: '❓👧🏊‍♀️' },
   
   // SING
-  { template: '___ you sing songs {signal}?', subject: 'you', verb: 'sing', vn: 'Bạn có hát không?', type: 'question' },
-  { template: '___ she sing well {signal}?', subject: 'she', verb: 'sing', vn: 'Cô ấy có hát hay không?', type: 'question' },
+  { template: 'Do you ___ songs {signal}?', subject: 'you', verb: 'sing', vn: 'Bạn có hát không?', type: 'question_verb', emoji: '❓🧑🎤' },
+  { template: 'Does she ___ well {signal}?', subject: 'she', verb: 'sing', vn: 'Cô ấy có hát hay không?', type: 'question_verb', emoji: '❓👧🎵' },
   
   // WIN
-  { template: '___ you win the game {signal}?', subject: 'you', verb: 'win', vn: 'Bạn có thắng không?', type: 'question' },
-  { template: '___ they win the match {signal}?', subject: 'they', verb: 'win', vn: 'Họ có thắng trận không?', type: 'question' },
+  { template: 'Did you ___ the game {signal}?', subject: 'you', verb: 'win', vn: 'Bạn có thắng không?', type: 'question_verb', emoji: '❓🧑🏆' },
+  { template: 'Did they ___ the match {signal}?', subject: 'they', verb: 'win', vn: 'Họ có thắng trận không?', type: 'question_verb', emoji: '❓👨‍👩‍👧🥇' },
   
-  // FEEL
-  { template: '___ you feel better {signal}?', subject: 'you', verb: 'feel', vn: 'Bạn có thấy khỏe hơn không?', type: 'question' },
-  { template: '___ she feel happy {signal}?', subject: 'she', verb: 'feel', vn: 'Cô ấy có thấy vui không?', type: 'question' },
+  // WRITE
+  { template: 'Do you ___ a letter {signal}?', subject: 'you', verb: 'write', vn: 'Bạn có viết thư không?', type: 'question_verb', emoji: '❓🧑✉️' },
+  { template: 'Does she ___ emails {signal}?', subject: 'she', verb: 'write', vn: 'Cô ấy có viết email không?', type: 'question_verb', emoji: '❓👧💻' },
   
-  // FIND
-  { template: '___ you find your keys {signal}?', subject: 'you', verb: 'find', vn: 'Bạn có tìm thấy chìa khóa không?', type: 'question' },
-  { template: '___ she find the answer {signal}?', subject: 'she', verb: 'find', vn: 'Cô ấy có tìm ra đáp án không?', type: 'question' },
+  // READ
+  { template: 'Do you ___ books {signal}?', subject: 'you', verb: 'read', vn: 'Bạn có đọc sách không?', type: 'question_verb', emoji: '❓🧑📚' },
+  { template: 'Does he ___ newspapers {signal}?', subject: 'he', verb: 'read', vn: 'Anh ấy có đọc báo không?', type: 'question_verb', emoji: '❓👨📰' },
   
-  // THINK
-  { template: '___ you think about it {signal}?', subject: 'you', verb: 'think', vn: 'Bạn có nghĩ về nó không?', type: 'question' },
-  { template: '___ she think it was good {signal}?', subject: 'she', verb: 'think', vn: 'Cô ấy có nghĩ nó tốt không?', type: 'question' },
+  // SPEAK
+  { template: 'Do you ___ English {signal}?', subject: 'you', verb: 'speak', vn: 'Bạn có nói tiếng Anh không?', type: 'question_verb', emoji: '❓🧑🗣️' },
+  { template: 'Does she ___ French {signal}?', subject: 'she', verb: 'speak', vn: 'Cô ấy có nói tiếng Pháp không?', type: 'question_verb', emoji: '❓👧🇫🇷' },
+  
+  // GIVE
+  { template: 'Did you ___ him money {signal}?', subject: 'you', verb: 'give', vn: 'Bạn có cho anh ấy tiền không?', type: 'question_verb', emoji: '❓🧑💰' },
+  { template: 'Did she ___ a present {signal}?', subject: 'she', verb: 'give', vn: 'Cô ấy có tặng quà không?', type: 'question_verb', emoji: '❓👧🎁' },
+  
+  // TAKE
+  { template: 'Did you ___ the bus {signal}?', subject: 'you', verb: 'take', vn: 'Bạn có đi xe buýt không?', type: 'question_verb', emoji: '❓🧑🚌' },
+  { template: 'Did she ___ photos {signal}?', subject: 'she', verb: 'take', vn: 'Cô ấy có chụp ảnh không?', type: 'question_verb', emoji: '❓👧📷' },
   
   // BRING
-  { template: '___ you bring your book {signal}?', subject: 'you', verb: 'bring', vn: 'Bạn có mang sách không?', type: 'question' },
-  { template: '___ she bring food {signal}?', subject: 'she', verb: 'bring', vn: 'Cô ấy có mang đồ ăn không?', type: 'question' }
+  { template: 'Did you ___ your book {signal}?', subject: 'you', verb: 'bring', vn: 'Bạn có mang sách không?', type: 'question_verb', emoji: '❓🧑📖' },
+  { template: 'Did she ___ food {signal}?', subject: 'she', verb: 'bring', vn: 'Cô ấy có mang đồ ăn không?', type: 'question_verb', emoji: '❓👧🍱' }
 ];
 
 function getVerbForms(verbBase) {
@@ -3676,8 +4135,19 @@ function getPresentForm(verb, subject) {
   var thirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'tom', 'lily'];
   if (thirdPerson.indexOf(subject.toLowerCase()) >= 0) {
     if (verb === 'go' || verb === 'do') return verb + 'es';
-    if (verb === 'watch') return 'watches';
-    if (verb.endsWith('y')) return verb.slice(0, -1) + 'ies';
+    if (verb === 'have') return 'has';
+    if (verb === 'watch' || verb === 'wash' || verb === 'teach' || verb === 'catch') return verb + 'es';
+    // Chỉ đổi y→ies khi trước y là PHỤ ÂM (không phải nguyên âm a,e,i,o,u)
+    if (verb.endsWith('y')) {
+      var beforeY = verb.charAt(verb.length - 2);
+      var vowels = ['a', 'e', 'i', 'o', 'u'];
+      if (vowels.indexOf(beforeY) < 0) {
+        // Phụ âm trước y: cry → cries, fly → flies
+        return verb.slice(0, -1) + 'ies';
+      }
+      // Nguyên âm trước y: buy → buys, play → plays
+      return verb + 's';
+    }
     return verb + 's';
   }
   return verb;
@@ -3735,13 +4205,29 @@ function generateQuizQuestions(count) {
       }
       
     } else if (sentenceType === 'question') {
-      // Câu hỏi: điền Do/Does/Did
+      // Câu hỏi cũ: điền Do/Does/Did
       if (isPast) {
         correctAnswer = "Did";
         wrongAnswers = ["Do", "Does", "Is"];
       } else {
         correctAnswer = isThirdPerson ? "Does" : "Do";
         wrongAnswers = isThirdPerson ? ["Do", "Did", "Is"] : ["Does", "Did", "Are"];
+      }
+    } else if (sentenceType === 'question_verb') {
+      // Câu hỏi mới: đã có Do/Does/Did, cần điền động từ GỐC
+      correctAnswer = verbForms.base; // Luôn là V gốc sau Do/Does/Did
+      
+      // Wrong answers: V-s/es hoặc V2
+      wrongAnswers.push(verbForms.past); // V2
+      wrongAnswers.push(getPresentForm(verbForms.base, 'She')); // V-s/es
+      
+      // Thêm 1 đáp án sai khác
+      var shuffledVerbs = shuffle(allVerbs);
+      for (var k = 0; k < shuffledVerbs.length && wrongAnswers.length < 3; k++) {
+        var wv = shuffledVerbs[k];
+        if (wv.base !== template.verb && wrongAnswers.indexOf(wv.base) < 0) {
+          wrongAnswers.push(wv.past);
+        }
       }
     }
     
@@ -3777,7 +4263,8 @@ function generateQuizQuestions(count) {
       correctAnswer: correctAnswer,
       wrongAnswers: wrongAnswers.slice(0, 3),
       subject: template.subject,
-      type: sentenceType
+      type: sentenceType,
+      emoji: template.emoji || ''
     });
   }
   
@@ -3796,37 +4283,35 @@ function startVerbSentenceQuiz() {
     '<div class="easy-match-header">' +
     '<div style="font-size:50px;margin-bottom:10px">📝</div>' +
     '<div class="easy-match-title">Trắc nghiệm động từ</div>' +
-    '<div class="easy-match-hint">Chọn dạng đúng của động từ trong câu</div>' +
+    '<div class="easy-match-hint">Chọn dạng đúng để điền vào chỗ trống</div>' +
     '</div>' +
     
-    '<div class="study-tip-box" style="margin:20px 0">' +
+    '<div class="study-tip-box" style="margin:15px 0">' +
     '<div class="study-tip-icon">💡</div>' +
     '<div class="study-tip-text">' +
-    '<strong>Mẹo:</strong> Nhìn dấu hiệu thời gian!<br>' +
-    '☀️ <strong>every day, always, usually</strong> → dùng hiện tại<br>' +
-    '🌙 <strong>yesterday, last week, ...ago</strong> → dùng quá khứ' +
+    '⚠️ Sau <strong>Do/Does/Did</strong> luôn dùng <strong>động từ GỐC</strong>!' +
     '</div></div>' +
     
     '<div class="easy-match-level-select">' +
     '<div class="easy-match-level easy" onclick="startSentenceQuizGame(5)">' +
     '<div class="level-icon">🌱</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Nhanh</div>' +
-    '<div class="level-desc">5 câu hỏi</div>' +
+    '<div class="level-name">5 câu</div>' +
+    '<div class="level-desc">Luyện tập nhẹ nhàng</div>' +
     '</div></div>' +
     
     '<div class="easy-match-level medium" onclick="startSentenceQuizGame(10)">' +
     '<div class="level-icon">🌿</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Vừa phải</div>' +
-    '<div class="level-desc">10 câu hỏi</div>' +
+    '<div class="level-name">10 câu</div>' +
+    '<div class="level-desc">Ôn tập cơ bản</div>' +
     '</div></div>' +
     
     '<div class="easy-match-level hard" onclick="startSentenceQuizGame(15)">' +
     '<div class="level-icon">🌳</div>' +
     '<div class="level-info">' +
-    '<div class="level-name">Thử thách</div>' +
-    '<div class="level-desc">15 câu hỏi</div>' +
+    '<div class="level-name">15 câu</div>' +
+    '<div class="level-desc">Thử thách</div>' +
     '</div></div>' +
     '</div></div>';
   
@@ -3879,14 +4364,12 @@ function renderSentenceQuiz() {
     
     '<div class="sentence-quiz-card">' +
     
+    // Emoji
+    (q.emoji ? '<div style="font-size:3rem;text-align:center;margin-bottom:10px">' + q.emoji + '</div>' : '') +
+    
     // Sentence with blank and underlined signal
     '<div class="sentence-quiz-sentence">' +
     displaySentence +
-    '</div>' +
-    
-    // Sentence meaning
-    '<div class="sentence-quiz-meaning">' +
-    '📖 ' + q.sentenceVn +
     '</div>' +
     
     // 4 Choices
@@ -3906,7 +4389,7 @@ function renderSentenceQuiz() {
   allChoices.forEach(function(choice, idx) {
     if (choice.isCorrect) correctIdx = idx;
     html += '<button class="sentence-choice-btn" id="choice-' + idx + '" ' +
-      'onclick="checkSentenceAnswer(' + idx + ', ' + choice.isCorrect + ', ' + correctIdx + ')">' +
+      'onclick="checkSentenceAnswer(' + idx + ', ' + choice.isCorrect + ')">' +
       choice.answer +
       '</button>';
   });
@@ -3963,6 +4446,8 @@ function checkSentenceAnswer(choiceIdx, isCorrect) {
     explanation = q.isPast ?
       '❓🌙 Câu hỏi quá khứ → <strong>Did</strong> + S + động từ gốc?' :
       '❓☀️ Câu hỏi hiện tại → <strong>' + q.correctAnswer + '</strong> + S + động từ gốc?';
+  } else if (q.type === 'question_verb') {
+    explanation = '⚠️ Sau Do/Does/Did luôn dùng <strong>động từ GỐC</strong>: <strong>' + q.correctAnswer + '</strong>';
   }
   
   var feedbackHtml = '<div class="sentence-feedback ' + (isCorrect ? 'correct' : 'wrong') + '">' +
@@ -4022,6 +4507,171 @@ function showSentenceQuizResult() {
   
   document.getElementById('learnScreen').innerHTML = html;
   showScreen('learnScreen');
+}
+
+// ============ CONTEXT LEARN ============
+var contextLearnState = {
+  currentIndex: 0
+};
+
+var CONTEXT_LESSONS = [
+  {
+    title: '☀️ Dấu hiệu HIỆN TẠI',
+    signals: [
+      { word: 'every day', vn: 'mỗi ngày', emoji: '📅' },
+      { word: 'every morning', vn: 'mỗi sáng', emoji: '🌅' },
+      { word: 'every week', vn: 'mỗi tuần', emoji: '📆' },
+      { word: 'always', vn: 'luôn luôn', emoji: '💯' },
+      { word: 'usually', vn: 'thường', emoji: '🔄' },
+      { word: 'often', vn: 'thường xuyên', emoji: '🔁' },
+      { word: 'sometimes', vn: 'đôi khi', emoji: '🎲' }
+    ],
+    examples: [
+      { sentence: 'She <span class="verb-word">eats</span> breakfast <span class="signal-word">every day</span>.', type: 'present' },
+      { sentence: 'I <span class="verb-word">go</span> to school <span class="signal-word">every morning</span>.', type: 'present' },
+      { sentence: 'He <span class="verb-word">always</span> <span class="verb-word">drinks</span> milk.', type: 'present' }
+    ],
+    rule: 'Thấy những từ này → dùng THÌ HIỆN TẠI'
+  },
+  {
+    title: '🌙 Dấu hiệu QUÁ KHỨ',
+    signals: [
+      { word: 'yesterday', vn: 'hôm qua', emoji: '📆' },
+      { word: 'last night', vn: 'tối qua', emoji: '🌙' },
+      { word: 'last week', vn: 'tuần trước', emoji: '📅' },
+      { word: 'last month', vn: 'tháng trước', emoji: '🗓️' },
+      { word: 'last year', vn: 'năm ngoái', emoji: '📆' },
+      { word: '2 days ago', vn: '2 ngày trước', emoji: '⏪' },
+      { word: 'this morning', vn: 'sáng nay', emoji: '🌄' }
+    ],
+    examples: [
+      { sentence: 'She <span class="verb-word">ate</span> breakfast <span class="signal-word">yesterday</span>.', type: 'past' },
+      { sentence: 'I <span class="verb-word">went</span> to school <span class="signal-word">last week</span>.', type: 'past' },
+      { sentence: 'He <span class="verb-word">drank</span> milk <span class="signal-word">this morning</span>.', type: 'past' }
+    ],
+    rule: 'Thấy những từ này → dùng THÌ QUÁ KHỨ (Simple Past)'
+  },
+  {
+    title: '🚫 Câu PHỦ ĐỊNH',
+    signals: [
+      { word: "don't / doesn't", vn: 'không (hiện tại)', emoji: '☀️🚫' },
+      { word: "didn't", vn: 'không (quá khứ)', emoji: '🌙🚫' }
+    ],
+    examples: [
+      { sentence: 'She <span class="verb-word">doesn\'t</span> eat meat <span class="signal-word">every day</span>.', type: 'present' },
+      { sentence: 'I <span class="verb-word">don\'t</span> like coffee.', type: 'present' },
+      { sentence: 'He <span class="verb-word">didn\'t</span> go to school <span class="signal-word">yesterday</span>.', type: 'past' }
+    ],
+    rule: '☀️ Hiện tại: don\'t/doesn\'t + V gốc<br>🌙 Quá khứ: didn\'t + V gốc'
+  },
+  {
+    title: '❓ Câu HỎI',
+    signals: [
+      { word: 'Do / Does', vn: 'có...không? (hiện tại)', emoji: '☀️❓' },
+      { word: 'Did', vn: 'có...không? (quá khứ)', emoji: '🌙❓' }
+    ],
+    examples: [
+      { sentence: '<span class="verb-word">Does</span> she eat breakfast <span class="signal-word">every day</span>?', type: 'present' },
+      { sentence: '<span class="verb-word">Do</span> you like pizza?', type: 'present' },
+      { sentence: '<span class="verb-word">Did</span> he go to school <span class="signal-word">yesterday</span>?', type: 'past' }
+    ],
+    rule: '☀️ Hiện tại: Do/Does + S + V gốc?<br>🌙 Quá khứ: Did + S + V gốc?'
+  },
+  {
+    title: '⚠️ Chú ý quan trọng',
+    signals: [
+      { word: "He/She/It + V-s/es", vn: 'ngôi 3 số ít thêm s', emoji: '☀️' },
+      { word: "doesn't/didn't + V gốc", vn: 'phủ định dùng V gốc', emoji: '🚫' },
+      { word: "Do/Does/Did + V gốc", vn: 'câu hỏi dùng V gốc', emoji: '❓' }
+    ],
+    examples: [
+      { sentence: 'She <span class="verb-word">goes</span> to school. (thêm es)', type: 'present' },
+      { sentence: 'She <span class="verb-word">doesn\'t go</span> to school. (V gốc)', type: 'present' },
+      { sentence: '<span class="verb-word">Does</span> she <span class="verb-word">go</span> to school? (V gốc)', type: 'present' }
+    ],
+    rule: 'Sau don\'t/doesn\'t/didn\'t/Do/Does/Did → luôn dùng động từ GỐC!'
+  }
+];
+
+function showContextLearn() {
+  playSound('click');
+  contextLearnState.currentIndex = 0;
+  renderContextLearn();
+}
+
+function renderContextLearn() {
+  var lesson = CONTEXT_LESSONS[contextLearnState.currentIndex];
+  
+  var html = '<div class="progress-header" style="margin-bottom:15px">' +
+    '<button class="back-btn" onclick="showLearnScreen()">← Back</button>' +
+    '<div style="color:white;font-weight:700;font-size:1.1rem">📚 Ngữ cảnh</div>' +
+    '<div></div></div>' +
+    
+    '<div class="context-progress">' +
+    'Bài ' + (contextLearnState.currentIndex + 1) + ' / ' + CONTEXT_LESSONS.length +
+    '</div>' +
+    
+    '<div class="context-container">' +
+    '<div class="context-card">' +
+    '<div class="context-title">' + lesson.title + '</div>';
+  
+  // Signal words
+  lesson.signals.forEach(function(signal) {
+    html += '<div class="context-rule">' +
+      '<div class="context-emoji">' + signal.emoji + '</div>' +
+      '<div class="context-text">' +
+      '<div class="context-signal">' + signal.word + '</div>' +
+      '<div class="context-explain">' + signal.vn + '</div>' +
+      '</div></div>';
+  });
+  
+  html += '</div>' +
+    
+    // Examples
+    '<div class="context-example-box">' +
+    '<div style="font-weight:700;margin-bottom:10px;color:#333">📝 Ví dụ:</div>';
+  
+  lesson.examples.forEach(function(ex) {
+    html += '<div class="context-example ' + ex.type + '">' + ex.sentence + '</div>';
+  });
+  
+  html += '<div style="margin-top:15px;padding:12px;background:#E3F2FD;border-radius:10px;text-align:center">' +
+    '<strong>📌 Quy tắc:</strong><br>' + lesson.rule +
+    '</div></div>' +
+    
+    // Navigation
+    '<div class="context-nav">';
+  
+  if (contextLearnState.currentIndex > 0) {
+    html += '<button class="context-nav-btn" style="background:#E0E0E0;color:#333" onclick="prevContextLesson()">← Trước</button>';
+  }
+  
+  if (contextLearnState.currentIndex < CONTEXT_LESSONS.length - 1) {
+    html += '<button class="context-nav-btn" style="background:#4CAF50;color:white" onclick="nextContextLesson()">Tiếp →</button>';
+  } else {
+    html += '<button class="context-nav-btn" style="background:#667eea;color:white" onclick="showLearnScreen()">Hoàn thành ✓</button>';
+  }
+  
+  html += '</div></div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function prevContextLesson() {
+  playSound('click');
+  if (contextLearnState.currentIndex > 0) {
+    contextLearnState.currentIndex--;
+    renderContextLearn();
+  }
+}
+
+function nextContextLesson() {
+  playSound('click');
+  if (contextLearnState.currentIndex < CONTEXT_LESSONS.length - 1) {
+    contextLearnState.currentIndex++;
+    renderContextLearn();
+  }
 }
 </script>
 </body>
