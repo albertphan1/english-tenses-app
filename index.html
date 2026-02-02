@@ -980,6 +980,16 @@
         <h1 class="app-title">Fun English!</h1>
         <p class="app-tagline">Học tiếng Anh vui vẻ mỗi ngày</p>
         
+        <!-- Hiển thị tổng sao -->
+        <div id="starDisplay" style="display:flex;justify-content:center;gap:15px;margin:15px 0;flex-wrap:wrap">
+          <div style="background:linear-gradient(135deg,#FFD700,#FFA000);padding:10px 20px;border-radius:20px;color:white;font-weight:700;box-shadow:0 3px 10px rgba(255,152,0,0.3)">
+            ⭐ Tổng: <span id="totalStarsDisplay">0</span>
+          </div>
+          <div style="background:linear-gradient(135deg,#4CAF50,#2E7D32);padding:10px 20px;border-radius:20px;color:white;font-weight:700;box-shadow:0 3px 10px rgba(76,175,80,0.3)">
+            📅 Hôm nay: <span id="todayStarsDisplay">0</span>
+          </div>
+        </div>
+        
         <div class="topic-grid">
           <div class="topic-card daily" onclick="showLevelSelect('daily')">
             <div class="topic-icon">☀️</div>
@@ -1001,11 +1011,6 @@
             <div class="topic-icon">🎮</div>
             <div class="topic-name">Word Games</div>
           </div>
-        </div>
-        
-        <div class="streak-banner" id="streakBanner">
-          <span>🔥</span>
-          <span id="streakText">Bắt đầu học nào!</span>
         </div>
       </div>
     </div>
@@ -1370,6 +1375,67 @@ var questionsPerRound = 6; // Số câu mỗi lượt
 var allQuestions = []; // Mảng chứa câu hỏi đã trộn
 var currentQuestionIndex = 0;
 
+// Hệ thống tích lũy sao
+var totalStars = 0;
+var todayStars = 0;
+var streakDays = 0;
+
+// Load sao từ localStorage
+function loadStarData() {
+  try {
+    var saved = localStorage.getItem('verbStarData');
+    if (saved) {
+      var data = JSON.parse(saved);
+      totalStars = data.totalStars || 0;
+      
+      // Kiểm tra ngày hôm nay
+      var today = new Date().toDateString();
+      if (data.lastDate === today) {
+        todayStars = data.todayStars || 0;
+      } else {
+        todayStars = 0;
+        // Kiểm tra streak
+        var lastDate = new Date(data.lastDate);
+        var todayDate = new Date(today);
+        var diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+        if (diffDays === 1) {
+          streakDays = (data.streakDays || 0) + 1;
+        } else if (diffDays > 1) {
+          streakDays = 1;
+        } else {
+          streakDays = data.streakDays || 1;
+        }
+      }
+      streakDays = data.streakDays || 1;
+    }
+  } catch(e) {
+    console.log('Cannot load star data');
+  }
+}
+
+// Lưu sao vào localStorage
+function saveStarData() {
+  try {
+    var data = {
+      totalStars: totalStars,
+      todayStars: todayStars,
+      lastDate: new Date().toDateString(),
+      streakDays: streakDays
+    };
+    localStorage.setItem('verbStarData', JSON.stringify(data));
+  } catch(e) {
+    console.log('Cannot save star data');
+  }
+}
+
+// Thêm sao
+function addStars(count) {
+  stars += count;
+  totalStars += count;
+  todayStars += count;
+  saveStarData();
+}
+
 // Matching game state
 var matchCards = [];
 var selectedCard = null;
@@ -1454,11 +1520,14 @@ function startWithLevel(numQuestions) {
     allQuestions = generateMixStoryQuestions(numQuestions);
   }
   
+  // Đảm bảo chỉ lấy đúng số câu hỏi yêu cầu
+  allQuestions = allQuestions.slice(0, numQuestions);
+  
   // Reset state
   currentQuestionIndex = 0;
   stars = 0;
   correctAnswers = 0;
-  totalQuestions = questionsPerRound;
+  totalQuestions = numQuestions;
   
   // Bắt đầu hiển thị câu hỏi
   showQuestion();
@@ -1854,12 +1923,17 @@ function generateMixStoryQuestions(count) {
 }
 
 function showQuestion() {
-  if (currentQuestionIndex >= allQuestions.length) {
+  if (currentQuestionIndex >= totalQuestions) {
     showResult();
     return;
   }
   
   var q = allQuestions[currentQuestionIndex];
+  if (!q) {
+    showResult();
+    return;
+  }
+  
   document.getElementById('appContainer').className = 'app-container ' + q.bg;
   
   var dotsHtml = '';
@@ -1913,7 +1987,7 @@ function checkQuestionAnswer(index) {
   });
   
   if (correct) {
-    stars++;
+    addStars(1);
     correctAnswers++;
     playSound('correct');
     if (stars % 3 === 0) showConfetti();
@@ -2073,8 +2147,39 @@ function showScreen(id) {
 
 function goHome() {
   document.getElementById('appContainer').className = 'app-container bg-fun';
+  updateStarDisplay();
   showScreen('homeScreen');
 }
+
+// Cập nhật hiển thị sao
+function updateStarDisplay() {
+  var totalEl = document.getElementById('totalStarsDisplay');
+  var todayEl = document.getElementById('todayStarsDisplay');
+  if (totalEl) totalEl.textContent = totalStars;
+  if (todayEl) todayEl.textContent = todayStars;
+  
+  // Cập nhật streak banner
+  var streakText = document.getElementById('streakText');
+  if (streakText) {
+    if (todayStars === 0) {
+      streakText.textContent = 'Bắt đầu học nào!';
+    } else if (todayStars < 10) {
+      streakText.textContent = 'Tốt lắm! Cố thêm nào! 💪';
+    } else if (todayStars < 30) {
+      streakText.textContent = 'Giỏi quá! ' + todayStars + ' sao hôm nay! ⭐';
+    } else if (todayStars < 50) {
+      streakText.textContent = 'Xuất sắc! ' + todayStars + ' sao! 🌟';
+    } else {
+      streakText.textContent = 'Siêu sao! ' + todayStars + ' sao! 🏆👑';
+    }
+  }
+}
+
+// Khởi tạo khi load trang
+window.addEventListener('load', function() {
+  loadStarData();
+  updateStarDisplay();
+});
 
 // ============ SHUFFLE ============
 function shuffle(arr) {
@@ -2303,7 +2408,7 @@ function checkAnswer(index) {
   });
   
   if (correct) {
-    stars++;
+    addStars(1);
     correctAnswers++;
     playSound('correct');
     if (stars % 3 === 0) showConfetti();
@@ -2345,6 +2450,14 @@ function showResult() {
     starsHtml += i < starCount ? '⭐' : '☆';
   }
   
+  // Bonus sao khi hoàn thành
+  var bonusStars = 0;
+  if (percentage >= 80) bonusStars = 5;
+  else if (percentage >= 60) bonusStars = 3;
+  else if (percentage >= 40) bonusStars = 2;
+  else bonusStars = 1;
+  addStars(bonusStars);
+  
   var emoji = percentage >= 80 ? '🏆' : percentage >= 50 ? '🌟' : '💪';
   var title = percentage >= 80 ? 'Xuất sắc!' : percentage >= 50 ? 'Tốt lắm!' : 'Cố gắng thêm!';
   var message = percentage >= 80 ? 'Con làm giỏi lắm! 🎉' : 
@@ -2357,6 +2470,9 @@ function showResult() {
     '<div class="result-emoji">' + emoji + '</div>' +
     '<div class="result-title">' + title + '</div>' +
     '<div class="result-stars">' + starsHtml + '</div>' +
+    '<div style="background:linear-gradient(135deg,#FFD700,#FFA000);padding:12px;border-radius:12px;margin:10px 0;color:white;font-weight:700;text-align:center">' +
+    '🎁 Bonus: +' + bonusStars + ' sao! (Tổng: ' + totalStars + ' ⭐)' +
+    '</div>' +
     '<div style="background:#f5f5f5;padding:15px;border-radius:12px;margin:15px 0">' +
     '<div style="display:flex;justify-content:space-around;text-align:center">' +
     '<div><div style="font-size:1.5rem;font-weight:700;color:#4CAF50">' + correctAnswers + '</div><div style="font-size:0.85rem;color:#666">Đúng ✓</div></div>' +
@@ -4443,6 +4559,7 @@ function checkSentenceAnswer(choiceIdx, isCorrect) {
   
   if (isCorrect) {
     sentenceQuizState.score++;
+    addStars(1);
     playSound('correct');
   } else {
     playSound('wrong');
