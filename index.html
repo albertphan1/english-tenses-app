@@ -1556,7 +1556,7 @@ function generateStoriesFromTemplates(count, isPastOnly) {
     
     var correctAnswer, wrongAnswer;
     var subject = template.subject.toLowerCase();
-    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(subject) >= 0;
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane'].indexOf(subject) >= 0;
     
     if (sentenceType === 'affirm') {
       correctAnswer = isPastOnly ? verbForms.past : getPresentForm(verbForms.base, template.subject);
@@ -1696,7 +1696,7 @@ function generateStoriesFromTemplates(count, isPastOnly) {
     
     // Thêm thông tin cho feedback chi tiết
     var subjectInfo = '';
-    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(template.subject.toLowerCase()) >= 0;
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane'].indexOf(template.subject.toLowerCase()) >= 0;
     if (isThirdPerson) {
       subjectInfo = template.subject + ' (ngôi 3) → thêm s/es';
     } else {
@@ -1754,7 +1754,7 @@ function generateMixStoryQuestions(count) {
     
     var correctAnswer, wrongAnswer;
     var subject = template.subject.toLowerCase();
-    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(subject) >= 0;
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane'].indexOf(subject) >= 0;
     
     var bg = isPast ? 'bg-night' : 'bg-sunny';
     
@@ -1893,7 +1893,7 @@ function generateMixStoryQuestions(count) {
     }
     
     // Thêm thông tin chi tiết
-    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(template.subject.toLowerCase()) >= 0;
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane'].indexOf(template.subject.toLowerCase()) >= 0;
     
     questions.push({
       bg: bg,
@@ -4240,7 +4240,402 @@ var SENTENCE_TEMPLATES = [
   
   // BRING
   { template: 'Did you ___ your book {signal}?', subject: 'you', verb: 'bring', vn: 'Bạn có mang sách không?', type: 'question_verb', emoji: '❓🧑📖' },
-  { template: 'Did she ___ food {signal}?', subject: 'she', verb: 'bring', vn: 'Cô ấy có mang đồ ăn không?', type: 'question_verb', emoji: '❓👧🍱' }
+  { template: 'Did she ___ food {signal}?', subject: 'she', verb: 'bring', vn: 'Cô ấy có mang đồ ăn không?', type: 'question_verb', emoji: '❓👧🍱' },
+
+  // =============== BỔ SUNG ĐỘNG TỪ PHỔ BIẾN (theo thứ tự từ phổ biến → ít phổ biến) ===============
+  
+  // === NHÓM 1: CỰC KỲ PHỔ BIẾN ===
+  
+  // SAY (nói)
+  { template: 'He ___ hello {signal}.', subject: 'He', verb: 'say', vn: 'Anh ấy nói xin chào', type: 'affirm', emoji: '👦👋' },
+  { template: 'She ___ goodbye {signal}.', subject: 'She', verb: 'say', vn: 'Cô ấy nói tạm biệt', type: 'affirm', emoji: '👧👋' },
+  { template: 'I ___ thank you {signal}.', subject: 'I', verb: 'say', vn: 'Tôi nói cảm ơn', type: 'affirm', emoji: '🧑🙏' },
+  { template: 'She ___ say sorry {signal}.', subject: 'She', verb: 'say', vn: 'Cô ấy không nói xin lỗi', type: 'negative', emoji: '👧🚫' },
+  { template: 'Did he ___ anything {signal}?', subject: 'he', verb: 'say', vn: 'Anh ấy có nói gì không?', type: 'question_verb', emoji: '❓👦💬' },
+
+  // TELL (kể, nói với)
+  { template: 'Mom ___ me a story {signal}.', subject: 'Mom', verb: 'tell', vn: 'Mẹ kể tôi một câu chuyện', type: 'affirm', emoji: '👩📖' },
+  { template: 'He ___ the truth {signal}.', subject: 'He', verb: 'tell', vn: 'Anh ấy nói sự thật', type: 'affirm', emoji: '👦✓' },
+  { template: 'She ___ tell lies {signal}.', subject: 'She', verb: 'tell', vn: 'Cô ấy không nói dối', type: 'negative', emoji: '👧🚫🤥' },
+  { template: 'Did you ___ her {signal}?', subject: 'you', verb: 'tell', vn: 'Bạn có nói với cô ấy không?', type: 'question_verb', emoji: '❓🧑👧' },
+
+  // PUT (đặt, để)
+  { template: 'I ___ my bag on the chair {signal}.', subject: 'I', verb: 'put', vn: 'Tôi đặt cặp lên ghế', type: 'affirm', emoji: '🧑🎒🪑' },
+  { template: 'She ___ the book on the table {signal}.', subject: 'She', verb: 'put', vn: 'Cô ấy đặt sách lên bàn', type: 'affirm', emoji: '👧📚🪑' },
+  { template: 'He ___ put his toys away {signal}.', subject: 'He', verb: 'put', vn: 'Anh ấy không cất đồ chơi', type: 'negative', emoji: '👦🚫🧸' },
+  { template: 'Did you ___ it here {signal}?', subject: 'you', verb: 'put', vn: 'Bạn có để nó ở đây không?', type: 'question_verb', emoji: '❓🧑📍' },
+
+  // SEND (gửi)
+  { template: 'I ___ an email {signal}.', subject: 'I', verb: 'send', vn: 'Tôi gửi email', type: 'affirm', emoji: '🧑📧' },
+  { template: 'She ___ a letter {signal}.', subject: 'She', verb: 'send', vn: 'Cô ấy gửi thư', type: 'affirm', emoji: '👧✉️' },
+  { template: 'He ___ send a message {signal}.', subject: 'He', verb: 'send', vn: 'Anh ấy không gửi tin nhắn', type: 'negative', emoji: '👦🚫💬' },
+  { template: 'Did you ___ the package {signal}?', subject: 'you', verb: 'send', vn: 'Bạn có gửi gói hàng không?', type: 'question_verb', emoji: '❓🧑📦' },
+
+  // LEAVE (rời đi, để lại)
+  { template: 'I ___ home at 7 AM {signal}.', subject: 'I', verb: 'leave', vn: 'Tôi rời nhà lúc 7 giờ', type: 'affirm', emoji: '🧑🏠⏰' },
+  { template: 'She ___ her bag at school {signal}.', subject: 'She', verb: 'leave', vn: 'Cô ấy để cặp ở trường', type: 'affirm', emoji: '👧🎒🏫' },
+  { template: 'He ___ leave early {signal}.', subject: 'He', verb: 'leave', vn: 'Anh ấy không rời đi sớm', type: 'negative', emoji: '👦🚫🚪' },
+  { template: 'Did you ___ the door open {signal}?', subject: 'you', verb: 'leave', vn: 'Bạn có để cửa mở không?', type: 'question_verb', emoji: '❓🧑🚪' },
+
+  // === NHÓM 2: RẤT PHỔ BIẾN ===
+
+  // STAND (đứng)
+  { template: 'I ___ in line {signal}.', subject: 'I', verb: 'stand', vn: 'Tôi đứng xếp hàng', type: 'affirm', emoji: '🧑🧍' },
+  { template: 'She ___ near the window {signal}.', subject: 'She', verb: 'stand', vn: 'Cô ấy đứng gần cửa sổ', type: 'affirm', emoji: '👧🪟' },
+  { template: 'He ___ stand up {signal}.', subject: 'He', verb: 'stand', vn: 'Anh ấy không đứng dậy', type: 'negative', emoji: '👦🚫🧍' },
+  { template: 'Did she ___ there {signal}?', subject: 'she', verb: 'stand', vn: 'Cô ấy có đứng ở đó không?', type: 'question_verb', emoji: '❓👧📍' },
+
+  // SIT (ngồi)
+  { template: 'I ___ on the sofa {signal}.', subject: 'I', verb: 'sit', vn: 'Tôi ngồi trên ghế sofa', type: 'affirm', emoji: '🧑🛋️' },
+  { template: 'She ___ next to me {signal}.', subject: 'She', verb: 'sit', vn: 'Cô ấy ngồi cạnh tôi', type: 'affirm', emoji: '👧🧑' },
+  { template: 'The cat ___ on the chair {signal}.', subject: 'The cat', verb: 'sit', vn: 'Con mèo ngồi trên ghế', type: 'affirm', emoji: '🐱🪑' },
+  { template: 'He ___ sit down {signal}.', subject: 'He', verb: 'sit', vn: 'Anh ấy không ngồi xuống', type: 'negative', emoji: '👦🚫🪑' },
+  { template: 'Did you ___ here {signal}?', subject: 'you', verb: 'sit', vn: 'Bạn có ngồi ở đây không?', type: 'question_verb', emoji: '❓🧑🪑' },
+
+  // FALL (ngã, rơi)
+  { template: 'I ___ down {signal}.', subject: 'I', verb: 'fall', vn: 'Tôi bị ngã', type: 'affirm', emoji: '🧑💥' },
+  { template: 'The leaves ___ from the tree {signal}.', subject: 'The leaves', verb: 'fall', vn: 'Lá rơi từ cây', type: 'affirm', emoji: '🍂🌳' },
+  { template: 'She ___ fall asleep {signal}.', subject: 'She', verb: 'fall', vn: 'Cô ấy không ngủ thiếp đi', type: 'negative', emoji: '👧🚫😴' },
+  { template: 'Did he ___ off the bike {signal}?', subject: 'he', verb: 'fall', vn: 'Anh ấy có ngã xe không?', type: 'question_verb', emoji: '❓👦🚲' },
+
+  // CATCH (bắt)
+  { template: 'I ___ the ball {signal}.', subject: 'I', verb: 'catch', vn: 'Tôi bắt bóng', type: 'affirm', emoji: '🧑⚽' },
+  { template: 'The cat ___ a mouse {signal}.', subject: 'The cat', verb: 'catch', vn: 'Con mèo bắt chuột', type: 'affirm', emoji: '🐱🐭' },
+  { template: 'He ___ catch the bus {signal}.', subject: 'He', verb: 'catch', vn: 'Anh ấy không bắt kịp xe buýt', type: 'negative', emoji: '👦🚫🚌' },
+  { template: 'Did you ___ a cold {signal}?', subject: 'you', verb: 'catch', vn: 'Bạn có bị cảm không?', type: 'question_verb', emoji: '❓🧑🤧' },
+
+  // BREAK (làm vỡ)
+  { template: 'I ___ the glass {signal}.', subject: 'I', verb: 'break', vn: 'Tôi làm vỡ ly', type: 'affirm', emoji: '🧑🥛💔' },
+  { template: 'He ___ his toy {signal}.', subject: 'He', verb: 'break', vn: 'Anh ấy làm hỏng đồ chơi', type: 'affirm', emoji: '👦🧸💔' },
+  { template: 'She ___ break the rules {signal}.', subject: 'She', verb: 'break', vn: 'Cô ấy không phá luật', type: 'negative', emoji: '👧🚫📜' },
+  { template: 'Did you ___ it {signal}?', subject: 'you', verb: 'break', vn: 'Bạn có làm vỡ nó không?', type: 'question_verb', emoji: '❓🧑💔' },
+
+  // === NHÓM 3: PHỔ BIẾN ===
+
+  // HOLD (cầm, giữ)
+  { template: 'I ___ the baby {signal}.', subject: 'I', verb: 'hold', vn: 'Tôi bế em bé', type: 'affirm', emoji: '🧑👶' },
+  { template: 'She ___ my hand {signal}.', subject: 'She', verb: 'hold', vn: 'Cô ấy nắm tay tôi', type: 'affirm', emoji: '👧🤝' },
+  { template: 'He ___ hold the door {signal}.', subject: 'He', verb: 'hold', vn: 'Anh ấy không giữ cửa', type: 'negative', emoji: '👦🚫🚪' },
+  { template: 'Did you ___ it tight {signal}?', subject: 'you', verb: 'hold', vn: 'Bạn có giữ chặt nó không?', type: 'question_verb', emoji: '❓🧑✊' },
+
+  // DRAW (vẽ)
+  { template: 'I ___ a picture {signal}.', subject: 'I', verb: 'draw', vn: 'Tôi vẽ một bức tranh', type: 'affirm', emoji: '🧑🎨' },
+  { template: 'She ___ a cat {signal}.', subject: 'She', verb: 'draw', vn: 'Cô ấy vẽ con mèo', type: 'affirm', emoji: '👧🐱' },
+  { template: 'He ___ draw well {signal}.', subject: 'He', verb: 'draw', vn: 'Anh ấy không vẽ giỏi', type: 'negative', emoji: '👦🚫🎨' },
+  { template: 'Did you ___ this {signal}?', subject: 'you', verb: 'draw', vn: 'Bạn có vẽ cái này không?', type: 'question_verb', emoji: '❓🧑🖼️' },
+
+  // THROW (ném)
+  { template: 'I ___ the ball {signal}.', subject: 'I', verb: 'throw', vn: 'Tôi ném bóng', type: 'affirm', emoji: '🧑⚾' },
+  { template: 'He ___ the trash away {signal}.', subject: 'He', verb: 'throw', vn: 'Anh ấy vứt rác', type: 'affirm', emoji: '👦🗑️' },
+  { template: 'She ___ throw things {signal}.', subject: 'She', verb: 'throw', vn: 'Cô ấy không ném đồ', type: 'negative', emoji: '👧🚫' },
+  { template: 'Did you ___ it away {signal}?', subject: 'you', verb: 'throw', vn: 'Bạn có vứt nó đi không?', type: 'question_verb', emoji: '❓🧑🗑️' },
+
+  // FLY (bay)
+  { template: 'Birds ___ in the sky {signal}.', subject: 'Birds', verb: 'fly', vn: 'Chim bay trên trời', type: 'affirm', emoji: '🐦☁️' },
+  { template: 'The plane ___ to Paris {signal}.', subject: 'The plane', verb: 'fly', vn: 'Máy bay bay tới Paris', type: 'affirm', emoji: '✈️🗼' },
+  { template: 'Penguins ___ fly {signal}.', subject: 'Penguins', verb: 'fly', vn: 'Chim cánh cụt không bay', type: 'negative', emoji: '🐧🚫' },
+  { template: 'Did the bird ___ away {signal}?', subject: 'the bird', verb: 'fly', vn: 'Con chim có bay đi không?', type: 'question_verb', emoji: '❓🐦' },
+
+  // GROW (lớn lên, trồng)
+  { template: 'The tree ___ fast {signal}.', subject: 'The tree', verb: 'grow', vn: 'Cây mọc nhanh', type: 'affirm', emoji: '🌳📈' },
+  { template: 'I ___ vegetables {signal}.', subject: 'I', verb: 'grow', vn: 'Tôi trồng rau', type: 'affirm', emoji: '🧑🥬' },
+  { template: 'The flower ___ grow in winter {signal}.', subject: 'The flower', verb: 'grow', vn: 'Hoa không mọc vào mùa đông', type: 'negative', emoji: '🌸🚫❄️' },
+  { template: 'Did the plant ___ well {signal}?', subject: 'the plant', verb: 'grow', vn: 'Cây có mọc tốt không?', type: 'question_verb', emoji: '❓🌱' },
+
+  // SPEND (tiêu, dành thời gian)
+  { template: 'I ___ money on books {signal}.', subject: 'I', verb: 'spend', vn: 'Tôi tiêu tiền mua sách', type: 'affirm', emoji: '🧑💰📚' },
+  { template: 'She ___ time with her family {signal}.', subject: 'She', verb: 'spend', vn: 'Cô ấy dành thời gian với gia đình', type: 'affirm', emoji: '👧👨‍👩‍👧' },
+  { template: 'He ___ spend too much {signal}.', subject: 'He', verb: 'spend', vn: 'Anh ấy không tiêu quá nhiều', type: 'negative', emoji: '👦🚫💸' },
+  { template: 'Did you ___ all your money {signal}?', subject: 'you', verb: 'spend', vn: 'Bạn có tiêu hết tiền không?', type: 'question_verb', emoji: '❓🧑💰' },
+
+  // PAY (trả tiền)
+  { template: 'I ___ for the ticket {signal}.', subject: 'I', verb: 'pay', vn: 'Tôi trả tiền vé', type: 'affirm', emoji: '🧑🎫💵' },
+  { template: 'She ___ the bill {signal}.', subject: 'She', verb: 'pay', vn: 'Cô ấy trả hóa đơn', type: 'affirm', emoji: '👧🧾' },
+  { template: 'He ___ pay attention {signal}.', subject: 'He', verb: 'pay', vn: 'Anh ấy không chú ý', type: 'negative', emoji: '👦🚫👀' },
+  { template: 'Did you ___ him {signal}?', subject: 'you', verb: 'pay', vn: 'Bạn có trả tiền cho anh ấy không?', type: 'question_verb', emoji: '❓🧑💵' },
+
+  // SELL (bán)
+  { template: 'I ___ my old phone {signal}.', subject: 'I', verb: 'sell', vn: 'Tôi bán điện thoại cũ', type: 'affirm', emoji: '🧑📱💵' },
+  { template: 'She ___ cookies {signal}.', subject: 'She', verb: 'sell', vn: 'Cô ấy bán bánh quy', type: 'affirm', emoji: '👧🍪' },
+  { template: 'He ___ sell his car {signal}.', subject: 'He', verb: 'sell', vn: 'Anh ấy không bán xe', type: 'negative', emoji: '👦🚫🚗' },
+  { template: 'Did they ___ everything {signal}?', subject: 'they', verb: 'sell', vn: 'Họ có bán hết không?', type: 'question_verb', emoji: '❓👨‍👩‍👧💯' },
+
+  // BUILD (xây)
+  { template: 'I ___ a house {signal}.', subject: 'I', verb: 'build', vn: 'Tôi xây nhà', type: 'affirm', emoji: '🧑🏠' },
+  { template: 'He ___ a robot {signal}.', subject: 'He', verb: 'build', vn: 'Anh ấy lắp robot', type: 'affirm', emoji: '👦🤖' },
+  { template: 'They ___ build a bridge {signal}.', subject: 'They', verb: 'build', vn: 'Họ không xây cầu', type: 'negative', emoji: '👨‍👩‍👧🚫🌉' },
+  { template: 'Did you ___ it yourself {signal}?', subject: 'you', verb: 'build', vn: 'Bạn có tự xây không?', type: 'question_verb', emoji: '❓🧑🔧' },
+
+  // CUT (cắt)
+  { template: 'I ___ the paper {signal}.', subject: 'I', verb: 'cut', vn: 'Tôi cắt giấy', type: 'affirm', emoji: '🧑📄✂️' },
+  { template: 'She ___ her hair {signal}.', subject: 'She', verb: 'cut', vn: 'Cô ấy cắt tóc', type: 'affirm', emoji: '👧💇' },
+  { template: 'He ___ cut the cake {signal}.', subject: 'He', verb: 'cut', vn: 'Anh ấy không cắt bánh', type: 'negative', emoji: '👦🚫🎂' },
+  { template: 'Did you ___ it {signal}?', subject: 'you', verb: 'cut', vn: 'Bạn có cắt nó không?', type: 'question_verb', emoji: '❓🧑✂️' },
+
+  // FORGET (quên)
+  { template: 'I ___ my homework {signal}.', subject: 'I', verb: 'forget', vn: 'Tôi quên bài tập', type: 'affirm', emoji: '🧑📝❓' },
+  { template: 'She ___ her keys {signal}.', subject: 'She', verb: 'forget', vn: 'Cô ấy quên chìa khóa', type: 'affirm', emoji: '👧🔑❓' },
+  { template: 'He ___ forget her birthday {signal}.', subject: 'He', verb: 'forget', vn: 'Anh ấy không quên sinh nhật cô ấy', type: 'negative', emoji: '👦🚫🎂' },
+  { template: 'Did you ___ to call {signal}?', subject: 'you', verb: 'forget', vn: 'Bạn có quên gọi không?', type: 'question_verb', emoji: '❓🧑📞' },
+
+  // CHOOSE (chọn)
+  { template: 'I ___ the red one {signal}.', subject: 'I', verb: 'choose', vn: 'Tôi chọn cái màu đỏ', type: 'affirm', emoji: '🧑🔴' },
+  { template: 'She ___ a new dress {signal}.', subject: 'She', verb: 'choose', vn: 'Cô ấy chọn váy mới', type: 'affirm', emoji: '👧👗' },
+  { template: 'He ___ choose wisely {signal}.', subject: 'He', verb: 'choose', vn: 'Anh ấy không chọn khôn ngoan', type: 'negative', emoji: '👦🚫🤔' },
+  { template: 'Did you ___ already {signal}?', subject: 'you', verb: 'choose', vn: 'Bạn có chọn rồi không?', type: 'question_verb', emoji: '❓🧑✓' },
+
+  // DRIVE (lái xe)
+  { template: 'Dad ___ to work {signal}.', subject: 'Dad', verb: 'drive', vn: 'Bố lái xe đi làm', type: 'affirm', emoji: '👨🚗💼' },
+  { template: 'She ___ a bus {signal}.', subject: 'She', verb: 'drive', vn: 'Cô ấy lái xe buýt', type: 'affirm', emoji: '👩🚌' },
+  { template: 'I ___ drive fast {signal}.', subject: 'I', verb: 'drive', vn: 'Tôi không lái nhanh', type: 'negative', emoji: '🧑🚫🏎️' },
+  { template: 'Did he ___ you home {signal}?', subject: 'he', verb: 'drive', vn: 'Anh ấy có chở bạn về không?', type: 'question_verb', emoji: '❓👦🚗🏠' },
+
+  // KEEP (giữ)
+  { template: 'I ___ my promise {signal}.', subject: 'I', verb: 'keep', vn: 'Tôi giữ lời hứa', type: 'affirm', emoji: '🧑🤝' },
+  { template: 'She ___ a diary {signal}.', subject: 'She', verb: 'keep', vn: 'Cô ấy viết nhật ký', type: 'affirm', emoji: '👧📔' },
+  { template: 'He ___ keep secrets {signal}.', subject: 'He', verb: 'keep', vn: 'Anh ấy không giữ bí mật', type: 'negative', emoji: '👦🚫🤫' },
+  { template: 'Did you ___ it safe {signal}?', subject: 'you', verb: 'keep', vn: 'Bạn có giữ nó an toàn không?', type: 'question_verb', emoji: '❓🧑🔒' },
+
+  // WAKE (thức dậy)
+  { template: 'I ___ up early {signal}.', subject: 'I', verb: 'wake', vn: 'Tôi thức dậy sớm', type: 'affirm', emoji: '🧑⏰☀️' },
+  { template: 'She ___ up at 6 AM {signal}.', subject: 'She', verb: 'wake', vn: 'Cô ấy thức dậy lúc 6 giờ', type: 'affirm', emoji: '👧🌅' },
+  { template: 'He ___ wake up late {signal}.', subject: 'He', verb: 'wake', vn: 'Anh ấy không dậy muộn', type: 'negative', emoji: '👦🚫😴' },
+  { template: 'Did the alarm ___ you up {signal}?', subject: 'the alarm', verb: 'wake', vn: 'Đồng hồ báo có đánh thức bạn không?', type: 'question_verb', emoji: '❓⏰🧑' },
+
+  // UNDERSTAND (hiểu)
+  { template: 'I ___ the lesson {signal}.', subject: 'I', verb: 'understand', vn: 'Tôi hiểu bài', type: 'affirm', emoji: '🧑💡' },
+  { template: 'She ___ English {signal}.', subject: 'She', verb: 'understand', vn: 'Cô ấy hiểu tiếng Anh', type: 'affirm', emoji: '👧🇬🇧' },
+  { template: 'He ___ understand math {signal}.', subject: 'He', verb: 'understand', vn: 'Anh ấy không hiểu toán', type: 'negative', emoji: '👦🚫🔢' },
+  { template: 'Did you ___ me {signal}?', subject: 'you', verb: 'understand', vn: 'Bạn có hiểu tôi không?', type: 'question_verb', emoji: '❓🧑👂' },
+
+  // HEAR (nghe thấy)
+  { template: 'I ___ a noise {signal}.', subject: 'I', verb: 'hear', vn: 'Tôi nghe thấy tiếng động', type: 'affirm', emoji: '🧑👂🔊' },
+  { template: 'She ___ the music {signal}.', subject: 'She', verb: 'hear', vn: 'Cô ấy nghe thấy nhạc', type: 'affirm', emoji: '👧🎵' },
+  { template: 'He ___ hear anything {signal}.', subject: 'He', verb: 'hear', vn: 'Anh ấy không nghe thấy gì', type: 'negative', emoji: '👦🚫👂' },
+  { template: 'Did you ___ that {signal}?', subject: 'you', verb: 'hear', vn: 'Bạn có nghe thấy không?', type: 'question_verb', emoji: '❓🧑👂' },
+
+  // BEGIN (bắt đầu)
+  { template: 'The class ___ at 8 AM {signal}.', subject: 'The class', verb: 'begin', vn: 'Lớp học bắt đầu lúc 8 giờ', type: 'affirm', emoji: '📚⏰' },
+  { template: 'The movie ___ now {signal}.', subject: 'The movie', verb: 'begin', vn: 'Phim bắt đầu bây giờ', type: 'affirm', emoji: '🎬▶️' },
+  { template: 'The show ___ begin yet {signal}.', subject: 'The show', verb: 'begin', vn: 'Chương trình chưa bắt đầu', type: 'negative', emoji: '📺🚫' },
+  { template: 'Did the game ___ {signal}?', subject: 'the game', verb: 'begin', vn: 'Trận đấu có bắt đầu chưa?', type: 'question_verb', emoji: '❓🎮▶️' },
+
+  // BITE (cắn)
+  { template: 'The dog ___ me {signal}.', subject: 'The dog', verb: 'bite', vn: 'Con chó cắn tôi', type: 'affirm', emoji: '🐕😬' },
+  { template: 'The mosquito ___ her {signal}.', subject: 'The mosquito', verb: 'bite', vn: 'Con muỗi đốt cô ấy', type: 'affirm', emoji: '🦟👧' },
+  { template: 'My dog ___ bite people {signal}.', subject: 'My dog', verb: 'bite', vn: 'Chó của tôi không cắn người', type: 'negative', emoji: '🐕🚫' },
+  { template: 'Did it ___ you {signal}?', subject: 'it', verb: 'bite', vn: 'Nó có cắn bạn không?', type: 'question_verb', emoji: '❓😬' },
+
+  // RIDE (cưỡi, đi xe)
+  { template: 'I ___ a bike {signal}.', subject: 'I', verb: 'ride', vn: 'Tôi đạp xe', type: 'affirm', emoji: '🧑🚲' },
+  { template: 'She ___ a horse {signal}.', subject: 'She', verb: 'ride', vn: 'Cô ấy cưỡi ngựa', type: 'affirm', emoji: '👧🐎' },
+  { template: 'He ___ ride without a helmet {signal}.', subject: 'He', verb: 'ride', vn: 'Anh ấy không đi xe không mũ', type: 'negative', emoji: '👦🚫⛑️' },
+  { template: 'Did you ___ a motorcycle {signal}?', subject: 'you', verb: 'ride', vn: 'Bạn có đi xe máy không?', type: 'question_verb', emoji: '❓🧑🏍️' },
+
+  // SHAKE (lắc)
+  { template: 'I ___ hands with him {signal}.', subject: 'I', verb: 'shake', vn: 'Tôi bắt tay anh ấy', type: 'affirm', emoji: '🧑🤝' },
+  { template: 'The earthquake ___ the building {signal}.', subject: 'The earthquake', verb: 'shake', vn: 'Động đất làm rung tòa nhà', type: 'affirm', emoji: '🌍🏢' },
+  { template: 'She ___ shake the bottle {signal}.', subject: 'She', verb: 'shake', vn: 'Cô ấy không lắc chai', type: 'negative', emoji: '👧🚫🍼' },
+  { template: 'Did you ___ the tree {signal}?', subject: 'you', verb: 'shake', vn: 'Bạn có lắc cây không?', type: 'question_verb', emoji: '❓🧑🌳' },
+
+  // HIDE (giấu, trốn)
+  { template: 'I ___ under the bed {signal}.', subject: 'I', verb: 'hide', vn: 'Tôi trốn dưới giường', type: 'affirm', emoji: '🧑🛏️' },
+  { template: 'She ___ her diary {signal}.', subject: 'She', verb: 'hide', vn: 'Cô ấy giấu nhật ký', type: 'affirm', emoji: '👧📔🔒' },
+  { template: 'He ___ hide anything {signal}.', subject: 'He', verb: 'hide', vn: 'Anh ấy không giấu gì', type: 'negative', emoji: '👦🚫' },
+  { template: 'Did they ___ the treasure {signal}?', subject: 'they', verb: 'hide', vn: 'Họ có giấu kho báu không?', type: 'question_verb', emoji: '❓👨‍👩‍👧💎' },
+
+  // HURT (làm đau)
+  { template: 'I ___ my leg {signal}.', subject: 'I', verb: 'hurt', vn: 'Tôi bị đau chân', type: 'affirm', emoji: '🧑🦵😣' },
+  { template: 'She ___ her arm {signal}.', subject: 'She', verb: 'hurt', vn: 'Cô ấy bị đau tay', type: 'affirm', emoji: '👧💪😣' },
+  { template: 'I ___ hurt anyone {signal}.', subject: 'I', verb: 'hurt', vn: 'Tôi không làm đau ai', type: 'negative', emoji: '🧑🚫' },
+  { template: 'Did it ___ {signal}?', subject: 'it', verb: 'hurt', vn: 'Nó có đau không?', type: 'question_verb', emoji: '❓😣' },
+
+  // COST (tốn, giá)
+  { template: 'The book ___ $10 {signal}.', subject: 'The book', verb: 'cost', vn: 'Cuốn sách giá 10 đô', type: 'affirm', emoji: '📚💵' },
+  { template: 'The trip ___ a lot of money {signal}.', subject: 'The trip', verb: 'cost', vn: 'Chuyến đi tốn nhiều tiền', type: 'affirm', emoji: '✈️💰' },
+  { template: 'It ___ cost much {signal}.', subject: 'It', verb: 'cost', vn: 'Nó không tốn nhiều', type: 'negative', emoji: '🚫💸' },
+  { template: 'How much did it ___ {signal}?', subject: 'it', verb: 'cost', vn: 'Nó giá bao nhiêu?', type: 'question_verb', emoji: '❓💵' },
+
+  // FEED (cho ăn)
+  { template: 'I ___ the dog {signal}.', subject: 'I', verb: 'feed', vn: 'Tôi cho chó ăn', type: 'affirm', emoji: '🧑🐕🍖' },
+  { template: 'She ___ the cat {signal}.', subject: 'She', verb: 'feed', vn: 'Cô ấy cho mèo ăn', type: 'affirm', emoji: '👧🐱🐟' },
+  { template: 'He ___ feed the birds {signal}.', subject: 'He', verb: 'feed', vn: 'Anh ấy không cho chim ăn', type: 'negative', emoji: '👦🚫🐦' },
+  { template: 'Did you ___ the fish {signal}?', subject: 'you', verb: 'feed', vn: 'Bạn có cho cá ăn không?', type: 'question_verb', emoji: '❓🧑🐟' },
+
+  // LET (cho phép)
+  { template: 'Mom ___ me go out {signal}.', subject: 'Mom', verb: 'let', vn: 'Mẹ cho tôi ra ngoài', type: 'affirm', emoji: '👩🧑🚪' },
+  { template: 'She ___ him play {signal}.', subject: 'She', verb: 'let', vn: 'Cô ấy cho anh ấy chơi', type: 'affirm', emoji: '👧👦🎮' },
+  { template: 'Dad ___ let me stay up late {signal}.', subject: 'Dad', verb: 'let', vn: 'Bố không cho tôi thức khuya', type: 'negative', emoji: '👨🚫🌙' },
+  { template: 'Did she ___ you in {signal}?', subject: 'she', verb: 'let', vn: 'Cô ấy có cho bạn vào không?', type: 'question_verb', emoji: '❓👧🚪' },
+
+  // MEAN (có nghĩa là)
+  { template: 'This word ___ "happy" {signal}.', subject: 'This word', verb: 'mean', vn: 'Từ này có nghĩa là "vui"', type: 'affirm', emoji: '📝😊' },
+  { template: 'I ___ what I said {signal}.', subject: 'I', verb: 'mean', vn: 'Tôi nói thật lòng', type: 'affirm', emoji: '🧑💬' },
+  { template: 'I ___ mean to hurt you {signal}.', subject: 'I', verb: 'mean', vn: 'Tôi không cố ý làm bạn đau', type: 'negative', emoji: '🧑🚫😢' },
+  { template: 'What did you ___ {signal}?', subject: 'you', verb: 'mean', vn: 'Bạn muốn nói gì?', type: 'question_verb', emoji: '❓🧑❔' },
+
+  // LEARN (học)
+  { template: 'I ___ English {signal}.', subject: 'I', verb: 'learn', vn: 'Tôi học tiếng Anh', type: 'affirm', emoji: '🧑🇬🇧' },
+  { template: 'She ___ to swim {signal}.', subject: 'She', verb: 'learn', vn: 'Cô ấy học bơi', type: 'affirm', emoji: '👧🏊' },
+  { template: 'He ___ learn quickly {signal}.', subject: 'He', verb: 'learn', vn: 'Anh ấy không học nhanh', type: 'negative', emoji: '👦🚫📚' },
+  { template: 'Did you ___ something new {signal}?', subject: 'you', verb: 'learn', vn: 'Bạn có học được gì mới không?', type: 'question_verb', emoji: '❓🧑💡' },
+
+  // =============== BỔ SUNG ĐỦ 93 ĐỘNG TỪ ===============
+
+  // BE (là, ở) - đặc biệt
+  { template: 'I ___ happy {signal}.', subject: 'I', verb: 'be', vn: 'Tôi vui', type: 'affirm', emoji: '🧑😊' },
+  { template: 'She ___ at home {signal}.', subject: 'She', verb: 'be', vn: 'Cô ấy ở nhà', type: 'affirm', emoji: '👧🏠' },
+  { template: 'They ___ students {signal}.', subject: 'They', verb: 'be', vn: 'Họ là học sinh', type: 'affirm', emoji: '👨‍👩‍👧📚' },
+
+  // BECOME (trở thành)
+  { template: 'He ___ a doctor {signal}.', subject: 'He', verb: 'become', vn: 'Anh ấy trở thành bác sĩ', type: 'affirm', emoji: '👦👨‍⚕️' },
+  { template: 'She ___ famous {signal}.', subject: 'She', verb: 'become', vn: 'Cô ấy trở nên nổi tiếng', type: 'affirm', emoji: '👧⭐' },
+  { template: 'I ___ become angry {signal}.', subject: 'I', verb: 'become', vn: 'Tôi không trở nên tức giận', type: 'negative', emoji: '🧑🚫😠' },
+  { template: 'Did he ___ a teacher {signal}?', subject: 'he', verb: 'become', vn: 'Anh ấy có trở thành giáo viên không?', type: 'question_verb', emoji: '❓👦👨‍🏫' },
+
+  // BLEED (chảy máu)
+  { template: 'My finger ___ {signal}.', subject: 'My finger', verb: 'bleed', vn: 'Ngón tay tôi chảy máu', type: 'affirm', emoji: '🩸👆' },
+  { template: 'His nose ___ {signal}.', subject: 'His nose', verb: 'bleed', vn: 'Mũi anh ấy chảy máu', type: 'affirm', emoji: '👃🩸' },
+  { template: 'The wound ___ bleed anymore {signal}.', subject: 'The wound', verb: 'bleed', vn: 'Vết thương không chảy máu nữa', type: 'negative', emoji: '🩹🚫🩸' },
+  { template: 'Did it ___ a lot {signal}?', subject: 'it', verb: 'bleed', vn: 'Nó có chảy máu nhiều không?', type: 'question_verb', emoji: '❓🩸' },
+
+  // BLOW (thổi)
+  { template: 'The wind ___ hard {signal}.', subject: 'The wind', verb: 'blow', vn: 'Gió thổi mạnh', type: 'affirm', emoji: '💨🌬️' },
+  { template: 'She ___ out the candles {signal}.', subject: 'She', verb: 'blow', vn: 'Cô ấy thổi tắt nến', type: 'affirm', emoji: '👧🎂🕯️' },
+  { template: 'I ___ blow bubbles {signal}.', subject: 'I', verb: 'blow', vn: 'Tôi không thổi bong bóng', type: 'negative', emoji: '🧑🚫🫧' },
+  { template: 'Did the wind ___ your hat away {signal}?', subject: 'the wind', verb: 'blow', vn: 'Gió có thổi bay mũ không?', type: 'question_verb', emoji: '❓💨🎩' },
+
+  // BURN (đốt, cháy)
+  { template: 'The fire ___ brightly {signal}.', subject: 'The fire', verb: 'burn', vn: 'Lửa cháy sáng', type: 'affirm', emoji: '🔥✨' },
+  { template: 'I ___ the toast {signal}.', subject: 'I', verb: 'burn', vn: 'Tôi làm cháy bánh mì', type: 'affirm', emoji: '🧑🍞🔥' },
+  { template: 'She ___ burn the food {signal}.', subject: 'She', verb: 'burn', vn: 'Cô ấy không làm cháy đồ ăn', type: 'negative', emoji: '👧🚫🔥' },
+  { template: 'Did you ___ yourself {signal}?', subject: 'you', verb: 'burn', vn: 'Bạn có bị bỏng không?', type: 'question_verb', emoji: '❓🧑🔥' },
+
+  // DREAM (mơ)
+  { template: 'I ___ about flying {signal}.', subject: 'I', verb: 'dream', vn: 'Tôi mơ về việc bay', type: 'affirm', emoji: '🧑💭✈️' },
+  { template: 'She ___ of becoming a singer {signal}.', subject: 'She', verb: 'dream', vn: 'Cô ấy mơ trở thành ca sĩ', type: 'affirm', emoji: '👧💭🎤' },
+  { template: 'He ___ dream last night {signal}.', subject: 'He', verb: 'dream', vn: 'Anh ấy không mơ tối qua', type: 'negative', emoji: '👦🚫💭' },
+  { template: 'Did you ___ about me {signal}?', subject: 'you', verb: 'dream', vn: 'Bạn có mơ về tôi không?', type: 'question_verb', emoji: '❓🧑💭' },
+
+  // FIGHT (đánh nhau, chiến đấu)
+  { template: 'The boys ___ at school {signal}.', subject: 'The boys', verb: 'fight', vn: 'Các cậu bé đánh nhau ở trường', type: 'affirm', emoji: '👦👦💥' },
+  { template: 'They ___ for freedom {signal}.', subject: 'They', verb: 'fight', vn: 'Họ chiến đấu vì tự do', type: 'affirm', emoji: '👨‍👩‍👧✊' },
+  { template: 'I ___ fight with my sister {signal}.', subject: 'I', verb: 'fight', vn: 'Tôi không cãi nhau với chị', type: 'negative', emoji: '🧑🚫👧' },
+  { template: 'Did they ___ again {signal}?', subject: 'they', verb: 'fight', vn: 'Họ có đánh nhau lại không?', type: 'question_verb', emoji: '❓👦👦' },
+
+  // FORGIVE (tha thứ)
+  { template: 'I ___ him {signal}.', subject: 'I', verb: 'forgive', vn: 'Tôi tha thứ cho anh ấy', type: 'affirm', emoji: '🧑🤝👦' },
+  { template: 'She ___ her friend {signal}.', subject: 'She', verb: 'forgive', vn: 'Cô ấy tha thứ cho bạn', type: 'affirm', emoji: '👧🤝' },
+  { template: 'He ___ forgive easily {signal}.', subject: 'He', verb: 'forgive', vn: 'Anh ấy không tha thứ dễ dàng', type: 'negative', emoji: '👦🚫' },
+  { template: 'Did she ___ you {signal}?', subject: 'she', verb: 'forgive', vn: 'Cô ấy có tha thứ cho bạn không?', type: 'question_verb', emoji: '❓👧🤝' },
+
+  // FREEZE (đông lại)
+  { template: 'Water ___ at 0°C {signal}.', subject: 'Water', verb: 'freeze', vn: 'Nước đóng băng ở 0°C', type: 'affirm', emoji: '💧❄️' },
+  { template: 'I ___ in the cold {signal}.', subject: 'I', verb: 'freeze', vn: 'Tôi bị lạnh cóng', type: 'affirm', emoji: '🧑🥶' },
+  { template: 'The lake ___ freeze this winter {signal}.', subject: 'The lake', verb: 'freeze', vn: 'Hồ không đóng băng mùa đông này', type: 'negative', emoji: '🏞️🚫❄️' },
+  { template: 'Did the pipes ___ {signal}?', subject: 'the pipes', verb: 'freeze', vn: 'Ống nước có bị đóng băng không?', type: 'question_verb', emoji: '❓🚰❄️' },
+
+  // HANG (treo)
+  { template: 'I ___ the picture on the wall {signal}.', subject: 'I', verb: 'hang', vn: 'Tôi treo tranh lên tường', type: 'affirm', emoji: '🧑🖼️' },
+  { template: 'She ___ her coat {signal}.', subject: 'She', verb: 'hang', vn: 'Cô ấy treo áo khoác', type: 'affirm', emoji: '👧🧥' },
+  { template: 'He ___ hang out with friends {signal}.', subject: 'He', verb: 'hang', vn: 'Anh ấy không đi chơi với bạn', type: 'negative', emoji: '👦🚫👫' },
+  { template: 'Did you ___ the clothes {signal}?', subject: 'you', verb: 'hang', vn: 'Bạn có phơi quần áo không?', type: 'question_verb', emoji: '❓🧑👕' },
+
+  // HIT (đánh, va chạm)
+  { template: 'The ball ___ the window {signal}.', subject: 'The ball', verb: 'hit', vn: 'Bóng va vào cửa sổ', type: 'affirm', emoji: '⚽🪟' },
+  { template: 'He ___ the ball hard {signal}.', subject: 'He', verb: 'hit', vn: 'Anh ấy đánh bóng mạnh', type: 'affirm', emoji: '👦⚾' },
+  { template: 'I ___ hit anyone {signal}.', subject: 'I', verb: 'hit', vn: 'Tôi không đánh ai', type: 'negative', emoji: '🧑🚫👊' },
+  { template: 'Did the car ___ the tree {signal}?', subject: 'the car', verb: 'hit', vn: 'Xe có đâm vào cây không?', type: 'question_verb', emoji: '❓🚗🌳' },
+
+  // LAY (đặt, để)
+  { template: 'I ___ the book on the desk {signal}.', subject: 'I', verb: 'lay', vn: 'Tôi đặt sách lên bàn', type: 'affirm', emoji: '🧑📚' },
+  { template: 'The hen ___ eggs {signal}.', subject: 'The hen', verb: 'lay', vn: 'Con gà mái đẻ trứng', type: 'affirm', emoji: '🐔🥚' },
+  { template: 'She ___ lay the table {signal}.', subject: 'She', verb: 'lay', vn: 'Cô ấy không dọn bàn', type: 'negative', emoji: '👧🚫🍽️' },
+  { template: 'Did you ___ the baby down {signal}?', subject: 'you', verb: 'lay', vn: 'Bạn có đặt em bé xuống không?', type: 'question_verb', emoji: '❓🧑👶' },
+
+  // LEND (cho mượn)
+  { template: 'I ___ him my bike {signal}.', subject: 'I', verb: 'lend', vn: 'Tôi cho anh ấy mượn xe', type: 'affirm', emoji: '🧑🚲👦' },
+  { template: 'She ___ me money {signal}.', subject: 'She', verb: 'lend', vn: 'Cô ấy cho tôi mượn tiền', type: 'affirm', emoji: '👧💵🧑' },
+  { template: 'He ___ lend his phone {signal}.', subject: 'He', verb: 'lend', vn: 'Anh ấy không cho mượn điện thoại', type: 'negative', emoji: '👦🚫📱' },
+  { template: 'Did you ___ her your book {signal}?', subject: 'you', verb: 'lend', vn: 'Bạn có cho cô ấy mượn sách không?', type: 'question_verb', emoji: '❓🧑📚👧' },
+
+  // LIE (nằm)
+  { template: 'I ___ on the bed {signal}.', subject: 'I', verb: 'lie', vn: 'Tôi nằm trên giường', type: 'affirm', emoji: '🧑🛏️' },
+  { template: 'The cat ___ on the sofa {signal}.', subject: 'The cat', verb: 'lie', vn: 'Con mèo nằm trên ghế sofa', type: 'affirm', emoji: '🐱🛋️' },
+  { template: 'He ___ lie down {signal}.', subject: 'He', verb: 'lie', vn: 'Anh ấy không nằm xuống', type: 'negative', emoji: '👦🚫🛏️' },
+  { template: 'Did she ___ on the grass {signal}?', subject: 'she', verb: 'lie', vn: 'Cô ấy có nằm trên cỏ không?', type: 'question_verb', emoji: '❓👧🌿' },
+
+  // LIGHT (thắp, bật đèn)
+  { template: 'I ___ the candle {signal}.', subject: 'I', verb: 'light', vn: 'Tôi thắp nến', type: 'affirm', emoji: '🧑🕯️' },
+  { template: 'She ___ the fire {signal}.', subject: 'She', verb: 'light', vn: 'Cô ấy nhóm lửa', type: 'affirm', emoji: '👧🔥' },
+  { template: 'He ___ light a match {signal}.', subject: 'He', verb: 'light', vn: 'Anh ấy không đốt diêm', type: 'negative', emoji: '👦🚫🔥' },
+  { template: 'Did you ___ the lamp {signal}?', subject: 'you', verb: 'light', vn: 'Bạn có bật đèn không?', type: 'question_verb', emoji: '❓🧑💡' },
+
+  // RING (reo, rung chuông)
+  { template: 'The phone ___ {signal}.', subject: 'The phone', verb: 'ring', vn: 'Điện thoại reo', type: 'affirm', emoji: '📱🔔' },
+  { template: 'The doorbell ___ {signal}.', subject: 'The doorbell', verb: 'ring', vn: 'Chuông cửa reo', type: 'affirm', emoji: '🚪🔔' },
+  { template: 'The alarm ___ ring this morning {signal}.', subject: 'The alarm', verb: 'ring', vn: 'Đồng hồ báo không reo sáng nay', type: 'negative', emoji: '⏰🚫🔔' },
+  { template: 'Did the bell ___ {signal}?', subject: 'the bell', verb: 'ring', vn: 'Chuông có reo không?', type: 'question_verb', emoji: '❓🔔' },
+
+  // RISE (mọc lên, tăng)
+  { template: 'The sun ___ in the east {signal}.', subject: 'The sun', verb: 'rise', vn: 'Mặt trời mọc ở phía đông', type: 'affirm', emoji: '🌅☀️' },
+  { template: 'Prices ___ every year {signal}.', subject: 'Prices', verb: 'rise', vn: 'Giá tăng mỗi năm', type: 'affirm', emoji: '💵📈' },
+  { template: 'The temperature ___ rise much {signal}.', subject: 'The temperature', verb: 'rise', vn: 'Nhiệt độ không tăng nhiều', type: 'negative', emoji: '🌡️🚫📈' },
+  { template: 'Did the water level ___ {signal}?', subject: 'the water level', verb: 'rise', vn: 'Mực nước có tăng không?', type: 'question_verb', emoji: '❓💧📈' },
+
+  // SHINE (tỏa sáng)
+  { template: 'The sun ___ brightly {signal}.', subject: 'The sun', verb: 'shine', vn: 'Mặt trời chiếu sáng', type: 'affirm', emoji: '☀️✨' },
+  { template: 'The stars ___ at night {signal}.', subject: 'The stars', verb: 'shine', vn: 'Sao sáng vào ban đêm', type: 'affirm', emoji: '⭐🌙' },
+  { template: 'The moon ___ shine tonight {signal}.', subject: 'The moon', verb: 'shine', vn: 'Trăng không sáng tối nay', type: 'negative', emoji: '🌙🚫✨' },
+  { template: 'Did the light ___ through the window {signal}?', subject: 'the light', verb: 'shine', vn: 'Ánh sáng có chiếu qua cửa sổ không?', type: 'question_verb', emoji: '❓💡🪟' },
+
+  // SHOOT (bắn)
+  { template: 'He ___ the ball into the goal {signal}.', subject: 'He', verb: 'shoot', vn: 'Anh ấy sút bóng vào gôn', type: 'affirm', emoji: '👦⚽🥅' },
+  { template: 'The hunter ___ the arrow {signal}.', subject: 'The hunter', verb: 'shoot', vn: 'Thợ săn bắn mũi tên', type: 'affirm', emoji: '🏹🎯' },
+  { template: 'I ___ shoot well {signal}.', subject: 'I', verb: 'shoot', vn: 'Tôi không bắn giỏi', type: 'negative', emoji: '🧑🚫🎯' },
+  { template: 'Did he ___ the basket {signal}?', subject: 'he', verb: 'shoot', vn: 'Anh ấy có ném rổ không?', type: 'question_verb', emoji: '❓👦🏀' },
+
+  // SHOW (cho xem, chỉ)
+  { template: 'I ___ him my photos {signal}.', subject: 'I', verb: 'show', vn: 'Tôi cho anh ấy xem ảnh', type: 'affirm', emoji: '🧑📸👦' },
+  { template: 'She ___ me the way {signal}.', subject: 'She', verb: 'show', vn: 'Cô ấy chỉ đường cho tôi', type: 'affirm', emoji: '👧🗺️🧑' },
+  { template: 'He ___ show his feelings {signal}.', subject: 'He', verb: 'show', vn: 'Anh ấy không bộc lộ cảm xúc', type: 'negative', emoji: '👦🚫😶' },
+  { template: 'Did you ___ her the gift {signal}?', subject: 'you', verb: 'show', vn: 'Bạn có cho cô ấy xem quà không?', type: 'question_verb', emoji: '❓🧑🎁👧' },
+
+  // SHUT (đóng)
+  { template: 'I ___ the door {signal}.', subject: 'I', verb: 'shut', vn: 'Tôi đóng cửa', type: 'affirm', emoji: '🧑🚪' },
+  { template: 'She ___ the window {signal}.', subject: 'She', verb: 'shut', vn: 'Cô ấy đóng cửa sổ', type: 'affirm', emoji: '👧🪟' },
+  { template: 'He ___ shut his eyes {signal}.', subject: 'He', verb: 'shut', vn: 'Anh ấy không nhắm mắt', type: 'negative', emoji: '👦🚫👀' },
+  { template: 'Did you ___ the gate {signal}?', subject: 'you', verb: 'shut', vn: 'Bạn có đóng cổng không?', type: 'question_verb', emoji: '❓🧑🚧' },
+
+  // SMELL (ngửi, có mùi)
+  { template: 'The flower ___ nice {signal}.', subject: 'The flower', verb: 'smell', vn: 'Hoa có mùi thơm', type: 'affirm', emoji: '🌸👃' },
+  { template: 'The food ___ delicious {signal}.', subject: 'The food', verb: 'smell', vn: 'Đồ ăn có mùi thơm ngon', type: 'affirm', emoji: '🍲👃' },
+  { template: 'The milk ___ smell good {signal}.', subject: 'The milk', verb: 'smell', vn: 'Sữa không có mùi tốt', type: 'negative', emoji: '🥛🚫👃' },
+  { template: 'Did you ___ something burning {signal}?', subject: 'you', verb: 'smell', vn: 'Bạn có ngửi thấy mùi cháy không?', type: 'question_verb', emoji: '❓👃🔥' },
+
+  // SPELL (đánh vần)
+  { template: 'I ___ my name {signal}.', subject: 'I', verb: 'spell', vn: 'Tôi đánh vần tên', type: 'affirm', emoji: '🧑🔤' },
+  { template: 'She ___ the word correctly {signal}.', subject: 'She', verb: 'spell', vn: 'Cô ấy đánh vần đúng', type: 'affirm', emoji: '👧✓🔤' },
+  { template: 'He ___ spell that word {signal}.', subject: 'He', verb: 'spell', vn: 'Anh ấy không đánh vần được từ đó', type: 'negative', emoji: '👦🚫🔤' },
+  { template: 'Can you ___ this word {signal}?', subject: 'you', verb: 'spell', vn: 'Bạn có thể đánh vần từ này không?', type: 'question_verb', emoji: '❓🧑🔤' },
+
+  // STEAL (ăn cắp)
+  { template: 'Someone ___ my bike {signal}.', subject: 'Someone', verb: 'steal', vn: 'Ai đó ăn cắp xe đạp của tôi', type: 'affirm', emoji: '😈🚲' },
+  { template: 'The thief ___ the money {signal}.', subject: 'The thief', verb: 'steal', vn: 'Tên trộm ăn cắp tiền', type: 'affirm', emoji: '🦹💰' },
+  { template: 'I ___ steal anything {signal}.', subject: 'I', verb: 'steal', vn: 'Tôi không ăn cắp gì', type: 'negative', emoji: '🧑🚫' },
+  { template: 'Did someone ___ your phone {signal}?', subject: 'someone', verb: 'steal', vn: 'Có ai ăn cắp điện thoại của bạn không?', type: 'question_verb', emoji: '❓😈📱' },
+
+  // SWEEP (quét)
+  { template: 'I ___ the floor {signal}.', subject: 'I', verb: 'sweep', vn: 'Tôi quét nhà', type: 'affirm', emoji: '🧑🧹' },
+  { template: 'She ___ the room {signal}.', subject: 'She', verb: 'sweep', vn: 'Cô ấy quét phòng', type: 'affirm', emoji: '👧🧹' },
+  { template: 'He ___ sweep the yard {signal}.', subject: 'He', verb: 'sweep', vn: 'Anh ấy không quét sân', type: 'negative', emoji: '👦🚫🧹' },
+  { template: 'Did you ___ under the bed {signal}?', subject: 'you', verb: 'sweep', vn: 'Bạn có quét dưới giường không?', type: 'question_verb', emoji: '❓🧑🛏️🧹' },
+
+  // SWING (đu, đong đưa)
+  { template: 'The kids ___ in the park {signal}.', subject: 'The kids', verb: 'swing', vn: 'Bọn trẻ chơi xích đu ở công viên', type: 'affirm', emoji: '👧👦🎠' },
+  { template: 'The monkey ___ from tree to tree {signal}.', subject: 'The monkey', verb: 'swing', vn: 'Con khỉ đu từ cây này sang cây kia', type: 'affirm', emoji: '🐒🌳' },
+  { template: 'I ___ swing high {signal}.', subject: 'I', verb: 'swing', vn: 'Tôi không đu cao', type: 'negative', emoji: '🧑🚫🎠' },
+  { template: 'Did the door ___ open {signal}?', subject: 'the door', verb: 'swing', vn: 'Cửa có mở ra không?', type: 'question_verb', emoji: '❓🚪' }
 ];
 
 function getVerbForms(verbBase) {
@@ -4260,8 +4655,24 @@ function getVerbForms(verbBase) {
 
 function getPresentForm(verb, subject) {
   // Add 's' for he/she/it/singular nouns
-  var thirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'tom', 'lily'];
-  if (thirdPerson.indexOf(subject.toLowerCase()) >= 0) {
+  var subjectLower = subject.toLowerCase();
+  
+  // Danh sách ngôi 3 số ít cụ thể
+  var thirdPersonList = ['he', 'she', 'it', 'mom', 'dad', 'tom', 'lily', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'the class', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane'];
+  
+  // Kiểm tra nếu là ngôi 3 số ít (không phải số nhiều)
+  var isThirdPerson = thirdPersonList.indexOf(subjectLower) >= 0;
+  
+  // Nếu không trong danh sách, kiểm tra thêm: bắt đầu bằng "the " hoặc "my " hoặc "his/her " và KHÔNG kết thúc bằng "s" (số nhiều)
+  if (!isThirdPerson && (subjectLower.startsWith('the ') || subjectLower.startsWith('my ') || subjectLower.startsWith('his ') || subjectLower.startsWith('her '))) {
+    // Loại bỏ các từ số nhiều (kết thúc bằng s nhưng không phải class, bus, etc.)
+    var pluralExceptions = ['the kids', 'the boys', 'the girls', 'the stars', 'the leaves', 'prices', 'birds', 'penguins', 'dogs'];
+    if (pluralExceptions.indexOf(subjectLower) < 0) {
+      isThirdPerson = true;
+    }
+  }
+  
+  if (isThirdPerson) {
     if (verb === 'go' || verb === 'do') return verb + 'es';
     if (verb === 'have') return 'has';
     if (verb === 'watch' || verb === 'wash' || verb === 'teach' || verb === 'catch') return verb + 'es';
@@ -4312,7 +4723,7 @@ function generateQuizQuestions(count) {
     
     var correctAnswer, wrongAnswers = [];
     var subject = template.subject.toLowerCase();
-    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class'].indexOf(subject) >= 0;
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane'].indexOf(subject) >= 0;
     
     if (sentenceType === 'affirm') {
       // Câu khẳng định: điền động từ
