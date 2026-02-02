@@ -1668,10 +1668,8 @@ function generateStoriesFromTemplates(count, isPastOnly) {
       correctIdx = choices.findIndex(function(c) { return c.correct; });
       choices = choices.map(function(c) { return c.text; });
     } else {
-      // negative, question: 2 lựa chọn
-      choices = isPastOnly ? 
-        [correctAnswer + ' 🌙', wrongAnswer + ' ☀️'] : 
-        [correctAnswer + ' ☀️', wrongAnswer + ' 🌙'];
+      // negative, question: 2 lựa chọn (không có icon)
+      choices = [correctAnswer, wrongAnswer];
       
       correctIdx = 0;
       if (Math.random() > 0.5) {
@@ -1868,10 +1866,8 @@ function generateMixStoryQuestions(count) {
       correctIdx = choices.findIndex(function(c) { return c.correct; });
       choices = choices.map(function(c) { return c.text; });
     } else {
-      // negative, question: 2 lựa chọn
-      choices = isPast ? 
-        [correctAnswer + ' 🌙', wrongAnswer + ' ☀️'] : 
-        [correctAnswer + ' ☀️', wrongAnswer + ' 🌙'];
+      // negative, question: 2 lựa chọn (không có icon)
+      choices = [correctAnswer, wrongAnswer];
       
       correctIdx = 0;
       if (Math.random() > 0.5) {
@@ -1990,7 +1986,7 @@ function checkQuestionAnswer(index) {
     addStars(1);
     correctAnswers++;
     playSound('correct');
-    if (stars % 3 === 0) showConfetti();
+    showConfetti();
   } else {
     playSound('wrong');
   }
@@ -2411,7 +2407,7 @@ function checkAnswer(index) {
     addStars(1);
     correctAnswers++;
     playSound('correct');
-    if (stars % 3 === 0) showConfetti();
+    showConfetti();
   } else {
     playSound('wrong');
   }
