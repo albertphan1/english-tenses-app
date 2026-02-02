@@ -380,7 +380,19 @@
           </div>
           <div class="topic-card stories" onclick="startTopic('stories')">
             <div class="topic-icon">📖</div>
-            <div class="topic-name">Stories</div>
+            <div class="topic-name">Mix Stories</div>
+          </div>
+          <div class="topic-card" onclick="startTopic('questions')" style="border-color:#2196F3">
+            <div class="topic-icon">❓</div>
+            <div class="topic-name">Questions</div>
+          </div>
+          <div class="topic-card" onclick="startTopic('negatives')" style="border-color:#F44336">
+            <div class="topic-icon">🚫</div>
+            <div class="topic-name">Don't / Didn't</div>
+          </div>
+          <div class="topic-card" onclick="showLearnScreen()" style="border-color:#4CAF50">
+            <div class="topic-icon">📚</div>
+            <div class="topic-name">Học kiến thức</div>
           </div>
           <div class="topic-card games" onclick="startTopic('games')">
             <div class="topic-icon">🎮</div>
@@ -1040,6 +1052,354 @@ var STORIES = {
         }
       ]
     }
+  ],
+  // ========== QUESTIONS ==========
+  questions: [
+    // Story 1: Do you...? Does she...?
+    {
+      bg: 'bg-school',
+      scenes: [
+        {
+          image: '❓👧',
+          text: 'Hỏi bạn: "<span class="highlight-green">Do you</span> like ice cream?" - "Yes, I do!"',
+          question: '___ you like ice cream?',
+          choices: ['Do ❓', 'Does ❓'],
+          correct: 0,
+          feedback: 'Yes! Hỏi "you" → dùng "Do" 👍',
+          tip: '❓ Do + you/I/we/they...?'
+        },
+        {
+          image: '❓👦',
+          text: 'Hỏi về Tom: "<span class="highlight-green">Does he</span> like pizza?" - "Yes, he does!"',
+          question: '___ he like pizza?',
+          choices: ['Does ❓', 'Do ❓'],
+          correct: 0,
+          feedback: 'Great! Hỏi "he" → dùng "Does" 👍',
+          tip: '❓ Does + he/she/it...?'
+        },
+        {
+          image: '❓👧🏫',
+          text: '"<span class="highlight-green">Does she go</span> to school every day?" - "Yes, she does!"',
+          question: 'Does she ___ to school?',
+          choices: ['go 🏫', 'goes 🏫'],
+          correct: 0,
+          feedback: 'Perfect! Sau "Does" → dùng "go" (không thêm s)',
+          tip: '⚠️ Does + she + go (KHÔNG phải goes!)'
+        },
+        {
+          image: '❓🐕',
+          text: '"<span class="highlight-green">Does your dog run</span> fast?" - "Yes, it does!"',
+          question: 'Does your dog ___ fast?',
+          choices: ['run 🐕', 'runs 🐕'],
+          correct: 0,
+          feedback: 'Wonderful! Sau "Does" → dùng "run"',
+          tip: '⚠️ Does + dog + run (KHÔNG phải runs!)'
+        },
+        {
+          image: '❓👫',
+          text: '"<span class="highlight-green">Do they play</span> football?" - "Yes, they do!"',
+          question: 'Do they ___ football?',
+          choices: ['play ⚽', 'plays ⚽'],
+          correct: 0,
+          feedback: 'Excellent! Sau "Do" → dùng "play"',
+          tip: '❓ Do + they + play...?'
+        }
+      ]
+    },
+    // Story 2: Did you...? (Quá khứ)
+    {
+      bg: 'bg-night',
+      scenes: [
+        {
+          image: '❓🌙',
+          text: 'Hỏi về hôm qua: "<span class="highlight-orange">Did you go</span> to school yesterday?"',
+          question: '___ you go to school yesterday?',
+          choices: ['Did 🌙', 'Do ☀️'],
+          correct: 0,
+          feedback: 'Yes! Hỏi về "yesterday" → dùng "Did" 👍',
+          tip: '🌙 Yesterday → Did...?'
+        },
+        {
+          image: '❓👧🍦',
+          text: '"<span class="highlight-orange">Did she eat</span> ice cream yesterday?" - "Yes, she did!"',
+          question: 'Did she ___ ice cream yesterday?',
+          choices: ['eat 🍦', 'ate 🍦'],
+          correct: 0,
+          feedback: 'Great! Sau "Did" → dùng "eat" (không phải ate)',
+          tip: '⚠️ Did + she + eat (KHÔNG phải ate!)'
+        },
+        {
+          image: '❓👦🎬',
+          text: '"<span class="highlight-orange">Did he watch</span> TV last night?" - "No, he didn\'t."',
+          question: 'Did he ___ TV last night?',
+          choices: ['watch 📺', 'watched 📺'],
+          correct: 0,
+          feedback: 'Perfect! Sau "Did" → dùng "watch"',
+          tip: '⚠️ Did + he + watch (KHÔNG phải watched!)'
+        },
+        {
+          image: '❓👫🎉',
+          text: '"<span class="highlight-orange">Did they come</span> to the party?" - "Yes, they did!"',
+          question: 'Did they ___ to the party?',
+          choices: ['come 🎉', 'came 🎉'],
+          correct: 0,
+          feedback: 'Wonderful! Sau "Did" → dùng "come"',
+          tip: '⚠️ Did + they + come (KHÔNG phải came!)'
+        },
+        {
+          image: '❓🐕🏃',
+          text: '"<span class="highlight-orange">Did the dog run</span> fast yesterday?" - "Yes, it did!"',
+          question: 'Did the dog ___ fast yesterday?',
+          choices: ['run 🐕', 'ran 🐕'],
+          correct: 0,
+          feedback: 'Excellent! Sau "Did" → dùng "run"',
+          tip: '⚠️ Did + dog + run (KHÔNG phải ran!)'
+        }
+      ]
+    },
+    // Story 3: Mixed Do/Does/Did
+    {
+      bg: 'bg-park',
+      scenes: [
+        {
+          image: '☀️❓',
+          text: 'Hỏi thói quen: "___ you brush your teeth <span class="highlight">every morning</span>?"',
+          question: '___ you brush your teeth every morning?',
+          choices: ['Do ☀️', 'Did 🌙'],
+          correct: 0,
+          feedback: 'Yes! "Every morning" → hiện tại → Do',
+          tip: '☀️ Every morning → Do...?'
+        },
+        {
+          image: '🌙❓',
+          text: 'Hỏi về hôm qua: "___ you brush your teeth <span class="highlight-orange">yesterday</span>?"',
+          question: '___ you brush your teeth yesterday?',
+          choices: ['Did 🌙', 'Do ☀️'],
+          correct: 0,
+          feedback: 'Great! "Yesterday" → quá khứ → Did',
+          tip: '🌙 Yesterday → Did...?'
+        },
+        {
+          image: '👧☀️❓',
+          text: '"___ she drink milk <span class="highlight">every day</span>?"',
+          question: '___ she drink milk every day?',
+          choices: ['Does ☀️', 'Did 🌙'],
+          correct: 0,
+          feedback: 'Perfect! "Every day" + "she" → Does',
+          tip: '☀️ Every day + she → Does...?'
+        },
+        {
+          image: '👧🌙❓',
+          text: '"___ she drink milk <span class="highlight-orange">yesterday</span>?"',
+          question: '___ she drink milk yesterday?',
+          choices: ['Did 🌙', 'Does ☀️'],
+          correct: 0,
+          feedback: 'Wonderful! "Yesterday" → Did (cho tất cả)',
+          tip: '🌙 Yesterday → Did...? (I/you/he/she/they)'
+        },
+        {
+          image: '👫☀️❓',
+          text: '"___ they play games <span class="highlight">every weekend</span>?"',
+          question: '___ they play games every weekend?',
+          choices: ['Do ☀️', 'Did 🌙'],
+          correct: 0,
+          feedback: 'Excellent! "Every weekend" + "they" → Do',
+          tip: '☀️ Every weekend → Do...?'
+        },
+        {
+          image: '👫🌙❓',
+          text: '"___ they play games <span class="highlight-orange">last weekend</span>?"',
+          question: '___ they play games last weekend?',
+          choices: ['Did 🌙', 'Do ☀️'],
+          correct: 0,
+          feedback: 'Great! "Last weekend" → Did',
+          tip: '🌙 Last weekend → Did...?'
+        }
+      ]
+    }
+  ],
+  // ========== NEGATIVES ==========
+  negatives: [
+    // Story 1: don't / doesn't
+    {
+      bg: 'bg-home',
+      scenes: [
+        {
+          image: '🚫👧🥦',
+          text: 'Lily <span class="highlight-green">doesn\'t like</span> vegetables. She says "No, thank you!"',
+          question: 'Lily ___ like vegetables.',
+          choices: ['doesn\'t 🚫', 'don\'t 🚫'],
+          correct: 0,
+          feedback: 'Yes! Lily (she) → doesn\'t',
+          tip: '🚫 She/He/It + doesn\'t + like'
+        },
+        {
+          image: '🚫👦🕷️',
+          text: 'Tom <span class="highlight-green">doesn\'t like</span> spiders. They are scary!',
+          question: 'Tom ___ like spiders.',
+          choices: ['doesn\'t 🚫', 'don\'t 🚫'],
+          correct: 0,
+          feedback: 'Great! Tom (he) → doesn\'t',
+          tip: '🚫 He + doesn\'t + like'
+        },
+        {
+          image: '🚫👫☕',
+          text: 'Children <span class="highlight-green">don\'t drink</span> coffee. It\'s for adults!',
+          question: 'Children ___ drink coffee.',
+          choices: ['don\'t 🚫', 'doesn\'t 🚫'],
+          correct: 0,
+          feedback: 'Perfect! Children (they) → don\'t',
+          tip: '🚫 They + don\'t + drink'
+        },
+        {
+          image: '🚫🐱🏊',
+          text: 'Cats <span class="highlight-green">don\'t like</span> water. They hate swimming!',
+          question: 'Cats ___ like water.',
+          choices: ['don\'t 🚫', 'doesn\'t 🚫'],
+          correct: 0,
+          feedback: 'Wonderful! Cats (they) → don\'t',
+          tip: '🚫 Cats (they) + don\'t + like'
+        },
+        {
+          image: '🚫👧🏃',
+          text: 'She <span class="highlight-green">doesn\'t run</span> fast. She walks slowly.',
+          question: 'She doesn\'t ___ fast.',
+          choices: ['run 🏃', 'runs 🏃'],
+          correct: 0,
+          feedback: 'Excellent! Sau "doesn\'t" → run (không thêm s)',
+          tip: '⚠️ doesn\'t + run (KHÔNG phải runs!)'
+        },
+        {
+          image: '🚫👦🎹',
+          text: 'He <span class="highlight-green">doesn\'t play</span> the piano. He plays guitar!',
+          question: 'He doesn\'t ___ the piano.',
+          choices: ['play 🎹', 'plays 🎹'],
+          correct: 0,
+          feedback: 'Great! Sau "doesn\'t" → play',
+          tip: '⚠️ doesn\'t + play (KHÔNG phải plays!)'
+        }
+      ]
+    },
+    // Story 2: didn't (Quá khứ)
+    {
+      bg: 'bg-night',
+      scenes: [
+        {
+          image: '🚫🌙👧🏫',
+          text: '<span class="highlight-orange">Yesterday</span>, Lily <span class="highlight-orange">didn\'t go</span> to school. She was sick.',
+          question: 'Yesterday, Lily ___ go to school.',
+          choices: ['didn\'t 🚫', 'doesn\'t 🚫'],
+          correct: 0,
+          feedback: 'Yes! "Yesterday" → quá khứ → didn\'t',
+          tip: '🌙 Yesterday → didn\'t'
+        },
+        {
+          image: '🚫🌙👦📺',
+          text: 'Tom <span class="highlight-orange">didn\'t watch</span> TV <span class="highlight-orange">last night</span>. He did homework.',
+          question: 'Last night, Tom ___ watch TV.',
+          choices: ['didn\'t 🚫', 'doesn\'t 🚫'],
+          correct: 0,
+          feedback: 'Great! "Last night" → quá khứ → didn\'t',
+          tip: '🌙 Last night → didn\'t'
+        },
+        {
+          image: '🚫🌙👫🍕',
+          text: 'They <span class="highlight-orange">didn\'t eat</span> pizza <span class="highlight-orange">yesterday</span>. They ate noodles.',
+          question: 'Yesterday, they didn\'t ___ pizza.',
+          choices: ['eat 🍕', 'ate 🍕'],
+          correct: 0,
+          feedback: 'Perfect! Sau "didn\'t" → eat (không phải ate)',
+          tip: '⚠️ didn\'t + eat (KHÔNG phải ate!)'
+        },
+        {
+          image: '🚫🌙🐕🏃',
+          text: 'The dog <span class="highlight-orange">didn\'t run</span> <span class="highlight-orange">yesterday</span>. It slept all day.',
+          question: 'Yesterday, the dog didn\'t ___.',
+          choices: ['run 🐕', 'ran 🐕'],
+          correct: 0,
+          feedback: 'Wonderful! Sau "didn\'t" → run (không phải ran)',
+          tip: '⚠️ didn\'t + run (KHÔNG phải ran!)'
+        },
+        {
+          image: '🚫🌙👧🎤',
+          text: 'She <span class="highlight-orange">didn\'t sing</span> at the party <span class="highlight-orange">last week</span>.',
+          question: 'Last week, she didn\'t ___.',
+          choices: ['sing 🎤', 'sang 🎤'],
+          correct: 0,
+          feedback: 'Excellent! Sau "didn\'t" → sing (không phải sang)',
+          tip: '⚠️ didn\'t + sing (KHÔNG phải sang!)'
+        },
+        {
+          image: '🚫🌙👨‍👩‍👧🎢',
+          text: 'We <span class="highlight-orange">didn\'t go</span> to the zoo <span class="highlight-orange">last Sunday</span>.',
+          question: 'Last Sunday, we didn\'t ___ to the zoo.',
+          choices: ['go 🎢', 'went 🎢'],
+          correct: 0,
+          feedback: 'Great! Sau "didn\'t" → go (không phải went)',
+          tip: '⚠️ didn\'t + go (KHÔNG phải went!)'
+        }
+      ]
+    },
+    // Story 3: Mixed don't/doesn't/didn't
+    {
+      bg: 'bg-park',
+      scenes: [
+        {
+          image: '🚫☀️👧',
+          text: 'Lily <span class="highlight-green">doesn\'t eat</span> meat <span class="highlight">every day</span>. She\'s vegetarian.',
+          question: 'Lily ___ eat meat. (every day)',
+          choices: ['doesn\'t 🚫', 'didn\'t 🚫'],
+          correct: 0,
+          feedback: 'Yes! "Every day" + "she" → doesn\'t',
+          tip: '☀️ Every day + she → doesn\'t'
+        },
+        {
+          image: '🚫🌙👧',
+          text: 'But Lily <span class="highlight-orange">didn\'t eat</span> vegetables <span class="highlight-orange">yesterday</span>!',
+          question: 'Yesterday, Lily ___ eat vegetables.',
+          choices: ['didn\'t 🚫', 'doesn\'t 🚫'],
+          correct: 0,
+          feedback: 'Great! "Yesterday" → didn\'t',
+          tip: '🌙 Yesterday → didn\'t'
+        },
+        {
+          image: '🚫☀️👫',
+          text: 'We <span class="highlight-green">don\'t have</span> school on Sunday.',
+          question: 'We ___ have school on Sunday. (every week)',
+          choices: ['don\'t 🚫', 'didn\'t 🚫'],
+          correct: 0,
+          feedback: 'Perfect! "Every week" + "we" → don\'t',
+          tip: '☀️ We + don\'t'
+        },
+        {
+          image: '🚫🌙👫',
+          text: 'We <span class="highlight-orange">didn\'t have</span> school <span class="highlight-orange">last Monday</span>. It was a holiday!',
+          question: 'Last Monday, we ___ have school.',
+          choices: ['didn\'t 🚫', 'don\'t 🚫'],
+          correct: 0,
+          feedback: 'Wonderful! "Last Monday" → didn\'t',
+          tip: '🌙 Last Monday → didn\'t'
+        },
+        {
+          image: '🚫☀️🐱',
+          text: 'My cat <span class="highlight-green">doesn\'t sleep</span> during the day.',
+          question: 'My cat ___ sleep during the day. (usually)',
+          choices: ['doesn\'t 🚫', 'didn\'t 🚫'],
+          correct: 0,
+          feedback: 'Excellent! "Usually" + "cat (it)" → doesn\'t',
+          tip: '☀️ Cat (it) + doesn\'t'
+        },
+        {
+          image: '🚫🌙🐱',
+          text: 'But my cat <span class="highlight-orange">didn\'t sleep</span> well <span class="highlight-orange">last night</span>.',
+          question: 'Last night, my cat ___ sleep well.',
+          choices: ['didn\'t 🚫', 'doesn\'t 🚫'],
+          correct: 0,
+          feedback: 'Great! "Last night" → didn\'t',
+          tip: '🌙 Last night → didn\'t'
+        }
+      ]
+    }
   ]
 };
 
@@ -1202,6 +1562,157 @@ function shuffle(arr) {
     var t = a[i]; a[i] = a[j]; a[j] = t;
   }
   return a;
+}
+
+// ============ LEARN SCREEN ============
+function showLearnScreen() {
+  playSound('click');
+  document.getElementById('appContainer').className = 'app-container bg-sunny';
+  
+  var html = '<div class="progress-header" style="margin-bottom:20px">' +
+    '<button class="back-btn" onclick="goHome()">← Home</button>' +
+    '<div style="color:white;font-weight:700;font-size:1.2rem">📚 Học kiến thức</div>' +
+    '<div></div></div>' +
+    
+    // === DẤU HIỆU NHẬN BIẾT ===
+    '<div class="pattern-card">' +
+    '<div class="pattern-title"><span class="icon">🔍</span> Dấu hiệu nhận biết</div>' +
+    '<div class="compare-box">' +
+    '<div class="compare-side now">' +
+    '<div class="label">☀️ HIỆN TẠI</div>' +
+    '<div class="time-words">' +
+    '<span class="time-word">every day</span>' +
+    '<span class="time-word">every morning</span>' +
+    '<span class="time-word">every night</span>' +
+    '<span class="time-word">every week</span>' +
+    '<span class="time-word">always</span>' +
+    '<span class="time-word">usually</span>' +
+    '<span class="time-word">often</span>' +
+    '<span class="time-word">sometimes</span>' +
+    '</div>' +
+    '</div>' +
+    '<div class="compare-side past">' +
+    '<div class="label">🌙 QUÁ KHỨ</div>' +
+    '<div class="time-words">' +
+    '<span class="time-word">yesterday</span>' +
+    '<span class="time-word">last night</span>' +
+    '<span class="time-word">last week</span>' +
+    '<span class="time-word">last month</span>' +
+    '<span class="time-word">last year</span>' +
+    '<span class="time-word">...ago</span>' +
+    '<span class="time-word">in 2023</span>' +
+    '</div>' +
+    '</div></div>' +
+    '<div class="tip-bubble"><span class="bulb">💡</span>' +
+    '<span class="tip-text"><strong>Mẹo nhớ:</strong><br>' +
+    '👉 Thấy <strong>"every"</strong> → Hiện tại<br>' +
+    '👉 Thấy <strong>"yesterday/last/ago"</strong> → Quá khứ</span></div>' +
+    '</div>' +
+    
+    // === CÂU KHẲNG ĐỊNH ===
+    '<div class="pattern-card">' +
+    '<div class="pattern-title"><span class="icon">✅</span> Câu khẳng định</div>' +
+    '<div style="background:#E8F5E9;padding:15px;border-radius:12px;margin-bottom:15px">' +
+    '<div style="font-weight:700;color:#2E7D32;margin-bottom:10px">☀️ Hiện tại:</div>' +
+    '<div class="example-row"><span class="emoji">👧</span><span class="sentence">She <strong>goes</strong> to school every day.</span></div>' +
+    '<div class="example-row"><span class="emoji">👦</span><span class="sentence">He <strong>plays</strong> football every weekend.</span></div>' +
+    '<div class="example-row"><span class="emoji">👫</span><span class="sentence">They <strong>eat</strong> breakfast every morning.</span></div>' +
+    '<div style="background:white;padding:10px;border-radius:8px;margin-top:10px;font-size:0.9rem">' +
+    '⚠️ <strong>He/She/It</strong> → thêm <strong>s/es</strong> (goes, plays, watches)' +
+    '</div></div>' +
+    '<div style="background:#FFF3E0;padding:15px;border-radius:12px">' +
+    '<div style="font-weight:700;color:#E65100;margin-bottom:10px">🌙 Quá khứ:</div>' +
+    '<div class="example-row"><span class="emoji">👧</span><span class="sentence">She <span class="past">went</span> to school yesterday.</span></div>' +
+    '<div class="example-row"><span class="emoji">👦</span><span class="sentence">He <span class="past">played</span> football last week.</span></div>' +
+    '<div class="example-row"><span class="emoji">👫</span><span class="sentence">They <span class="past">ate</span> pizza last night.</span></div>' +
+    '<div style="background:white;padding:10px;border-radius:8px;margin-top:10px;font-size:0.9rem">' +
+    '⚠️ Động từ đổi sang dạng quá khứ (went, played, ate...)' +
+    '</div></div>' +
+    '</div>' +
+    
+    // === CÂU PHỦ ĐỊNH ===
+    '<div class="pattern-card">' +
+    '<div class="pattern-title"><span class="icon">🚫</span> Câu phủ định (Không làm gì)</div>' +
+    '<div style="background:#E8F5E9;padding:15px;border-radius:12px;margin-bottom:15px">' +
+    '<div style="font-weight:700;color:#2E7D32;margin-bottom:10px">☀️ Hiện tại:</div>' +
+    '<div class="example-row"><span class="emoji">👧</span><span class="sentence">She <strong>doesn\'t go</strong> to school on Sunday.</span></div>' +
+    '<div class="example-row"><span class="emoji">👦</span><span class="sentence">He <strong>doesn\'t like</strong> vegetables.</span></div>' +
+    '<div class="example-row"><span class="emoji">👫</span><span class="sentence">They <strong>don\'t eat</strong> meat.</span></div>' +
+    '<div style="background:white;padding:10px;border-radius:8px;margin-top:10px">' +
+    '<div style="font-size:0.9rem;margin-bottom:5px">📌 <strong>I/You/We/They</strong> → <span style="background:#FFCDD2;padding:2px 6px;border-radius:4px">don\'t</span> + động từ gốc</div>' +
+    '<div style="font-size:0.9rem">📌 <strong>He/She/It</strong> → <span style="background:#FFCDD2;padding:2px 6px;border-radius:4px">doesn\'t</span> + động từ gốc</div>' +
+    '</div></div>' +
+    '<div style="background:#FFF3E0;padding:15px;border-radius:12px">' +
+    '<div style="font-weight:700;color:#E65100;margin-bottom:10px">🌙 Quá khứ:</div>' +
+    '<div class="example-row"><span class="emoji">👧</span><span class="sentence">She <span class="past">didn\'t go</span> to school yesterday.</span></div>' +
+    '<div class="example-row"><span class="emoji">👦</span><span class="sentence">He <span class="past">didn\'t watch</span> TV last night.</span></div>' +
+    '<div class="example-row"><span class="emoji">👫</span><span class="sentence">They <span class="past">didn\'t play</span> games yesterday.</span></div>' +
+    '<div style="background:white;padding:10px;border-radius:8px;margin-top:10px">' +
+    '<div style="font-size:0.9rem">📌 <strong>Tất cả</strong> → <span style="background:#FFCC80;padding:2px 6px;border-radius:4px">didn\'t</span> + động từ <strong>GỐC</strong></div>' +
+    '</div></div>' +
+    '<div class="tip-bubble" style="background:#FFEBEE"><span class="bulb">⚠️</span>' +
+    '<span class="tip-text"><strong>Quan trọng:</strong> Sau don\'t / doesn\'t / didn\'t → động từ giữ nguyên dạng GỐC!<br>' +
+    '❌ She doesn\'t <s>goes</s> → ✅ She doesn\'t <strong>go</strong><br>' +
+    '❌ He didn\'t <s>went</s> → ✅ He didn\'t <strong>go</strong></span></div>' +
+    '</div>' +
+    
+    // === CÂU HỎI ===
+    '<div class="pattern-card">' +
+    '<div class="pattern-title"><span class="icon">❓</span> Câu hỏi (Có làm không?)</div>' +
+    '<div style="background:#E8F5E9;padding:15px;border-radius:12px;margin-bottom:15px">' +
+    '<div style="font-weight:700;color:#2E7D32;margin-bottom:10px">☀️ Hiện tại:</div>' +
+    '<div class="example-row"><span class="emoji">❓</span><span class="sentence"><strong>Do you</strong> like pizza? - Yes, I do!</span></div>' +
+    '<div class="example-row"><span class="emoji">❓</span><span class="sentence"><strong>Does she</strong> go to school? - Yes, she does!</span></div>' +
+    '<div class="example-row"><span class="emoji">❓</span><span class="sentence"><strong>Do they</strong> play games? - No, they don\'t.</span></div>' +
+    '<div style="background:white;padding:10px;border-radius:8px;margin-top:10px">' +
+    '<div style="font-size:0.9rem;margin-bottom:5px">📌 <span style="background:#BBDEFB;padding:2px 6px;border-radius:4px">Do</span> + I/you/we/they + động từ gốc?</div>' +
+    '<div style="font-size:0.9rem">📌 <span style="background:#BBDEFB;padding:2px 6px;border-radius:4px">Does</span> + he/she/it + động từ gốc?</div>' +
+    '</div></div>' +
+    '<div style="background:#FFF3E0;padding:15px;border-radius:12px">' +
+    '<div style="font-weight:700;color:#E65100;margin-bottom:10px">🌙 Quá khứ:</div>' +
+    '<div class="example-row"><span class="emoji">❓</span><span class="sentence"><span class="past">Did you</span> go to school yesterday? - Yes, I did!</span></div>' +
+    '<div class="example-row"><span class="emoji">❓</span><span class="sentence"><span class="past">Did she</span> eat pizza? - No, she didn\'t.</span></div>' +
+    '<div class="example-row"><span class="emoji">❓</span><span class="sentence"><span class="past">Did they</span> watch TV? - Yes, they did!</span></div>' +
+    '<div style="background:white;padding:10px;border-radius:8px;margin-top:10px">' +
+    '<div style="font-size:0.9rem">📌 <span style="background:#FFCC80;padding:2px 6px;border-radius:4px">Did</span> + tất cả + động từ <strong>GỐC</strong>?</div>' +
+    '</div></div>' +
+    '<div class="tip-bubble" style="background:#E3F2FD"><span class="bulb">⚠️</span>' +
+    '<span class="tip-text"><strong>Quan trọng:</strong> Sau Do / Does / Did → động từ giữ nguyên dạng GỐC!<br>' +
+    '❌ Does she <s>goes</s>? → ✅ Does she <strong>go</strong>?<br>' +
+    '❌ Did you <s>went</s>? → ✅ Did you <strong>go</strong>?</span></div>' +
+    '</div>' +
+    
+    // === BẢNG TÓM TẮT ===
+    '<div class="pattern-card">' +
+    '<div class="pattern-title"><span class="icon">📋</span> Bảng tóm tắt</div>' +
+    '<table style="width:100%;border-collapse:collapse;font-size:0.9rem">' +
+    '<tr style="background:#E3F2FD"><th style="padding:10px;border:1px solid #ddd"></th><th style="padding:10px;border:1px solid #ddd">☀️ Hiện tại</th><th style="padding:10px;border:1px solid #ddd">🌙 Quá khứ</th></tr>' +
+    '<tr><td style="padding:10px;border:1px solid #ddd;font-weight:700">Dấu hiệu</td><td style="padding:10px;border:1px solid #ddd">every day, always</td><td style="padding:10px;border:1px solid #ddd">yesterday, last...</td></tr>' +
+    '<tr style="background:#E8F5E9"><td style="padding:10px;border:1px solid #ddd;font-weight:700">✅ She</td><td style="padding:10px;border:1px solid #ddd">She <strong>goes</strong></td><td style="padding:10px;border:1px solid #ddd">She <strong>went</strong></td></tr>' +
+    '<tr style="background:#FFEBEE"><td style="padding:10px;border:1px solid #ddd;font-weight:700">🚫 She</td><td style="padding:10px;border:1px solid #ddd">She <strong>doesn\'t go</strong></td><td style="padding:10px;border:1px solid #ddd">She <strong>didn\'t go</strong></td></tr>' +
+    '<tr style="background:#E3F2FD"><td style="padding:10px;border:1px solid #ddd;font-weight:700">❓ She</td><td style="padding:10px;border:1px solid #ddd"><strong>Does</strong> she <strong>go</strong>?</td><td style="padding:10px;border:1px solid #ddd"><strong>Did</strong> she <strong>go</strong>?</td></tr>' +
+    '<tr style="background:#E8F5E9"><td style="padding:10px;border:1px solid #ddd;font-weight:700">✅ They</td><td style="padding:10px;border:1px solid #ddd">They <strong>go</strong></td><td style="padding:10px;border:1px solid #ddd">They <strong>went</strong></td></tr>' +
+    '<tr style="background:#FFEBEE"><td style="padding:10px;border:1px solid #ddd;font-weight:700">🚫 They</td><td style="padding:10px;border:1px solid #ddd">They <strong>don\'t go</strong></td><td style="padding:10px;border:1px solid #ddd">They <strong>didn\'t go</strong></td></tr>' +
+    '<tr style="background:#E3F2FD"><td style="padding:10px;border:1px solid #ddd;font-weight:700">❓ They</td><td style="padding:10px;border:1px solid #ddd"><strong>Do</strong> they <strong>go</strong>?</td><td style="padding:10px;border:1px solid #ddd"><strong>Did</strong> they <strong>go</strong>?</td></tr>' +
+    '</table>' +
+    '</div>' +
+    
+    // === QUY TẮC VÀNG ===
+    '<div class="pattern-card" style="background:linear-gradient(135deg,#FFF9C4,#FFECB3)">' +
+    '<div class="pattern-title"><span class="icon">⭐</span> QUY TẮC VÀNG</div>' +
+    '<div style="text-align:center;padding:15px">' +
+    '<p style="font-size:1.2rem;font-weight:700;color:#F57F17;margin-bottom:15px">' +
+    'Sau <span style="background:#FF8A65;color:white;padding:5px 12px;border-radius:8px">don\'t / doesn\'t / didn\'t</span></p>' +
+    '<p style="font-size:1.2rem;font-weight:700;color:#F57F17;margin-bottom:15px">' +
+    'Sau <span style="background:#64B5F6;color:white;padding:5px 12px;border-radius:8px">Do / Does / Did</span></p>' +
+    '<p style="font-size:1.5rem;font-weight:800;color:#E65100">' +
+    '→ Động từ luôn ở <span style="background:#FFEB3B;padding:5px 15px;border-radius:8px">DẠNG GỐC</span>!</p>' +
+    '</div></div>' +
+    
+    '<button class="next-btn" onclick="goHome()" style="margin-top:20px">🏠 Về trang chủ</button>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
 }
 
 // ============ TOPIC START ============
