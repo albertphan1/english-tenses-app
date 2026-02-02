@@ -1491,8 +1491,12 @@ function renderFlashcards() {
     '<div style="color:white;font-weight:700">🎴 ' + (flashcardIndex + 1) + ' / ' + words.length + '</div>' +
     '<div></div></div>' +
     
-    '<div style="color:white;text-align:center;margin-bottom:15px;font-size:1.1rem">' +
+    '<div style="color:white;text-align:center;margin-bottom:8px;font-size:1.1rem">' +
     '👆 Chạm thẻ để lật!</div>' +
+    
+    '<div style="background:rgba(255,255,255,0.2);padding:10px 15px;border-radius:12px;margin-bottom:15px;text-align:center">' +
+    '<span style="font-size:1.1rem">🔊 <strong style="color:#FFEB3B">Đọc TO</strong> để nhớ lâu nhé con!</span>' +
+    '</div>' +
     
     '<div class="flashcard-container">' +
     '<div class="flashcard' + (isFlipped ? ' flipped' : '') + '" onclick="flipCard()">' +
@@ -1500,12 +1504,15 @@ function renderFlashcards() {
     '<div class="flashcard-label">☀️ Hiện tại</div>' +
     '<div class="flashcard-word">' + word.now + '</div>' +
     '<div class="flashcard-meaning">(' + word.meaning + ')</div>' +
-    '<div class="flashcard-hint">👆 Chạm để xem từ quá khứ</div>' +
+    '<div class="flashcard-hint" style="margin-top:10px;padding:8px 12px;background:#E8F5E9;border-radius:8px;color:#2E7D32">' +
+    '🗣️ Đọc to: "<strong>' + word.now + '</strong>"</div>' +
     '</div>' +
     '<div class="flashcard-face flashcard-back">' +
     '<div class="flashcard-label">🌙 Quá khứ</div>' +
     '<div class="flashcard-word">' + word.past + '</div>' +
     '<div class="flashcard-meaning">' + word.now + ' → ' + word.past + '</div>' +
+    '<div class="flashcard-hint" style="margin-top:10px;padding:8px 12px;background:#FFF3E0;border-radius:8px;color:#E65100">' +
+    '🗣️ Đọc to: "<strong>' + word.now + '</strong> → <strong>' + word.past + '</strong>"</div>' +
     '</div></div></div>' +
     
     '<div class="flashcard-nav">' +
@@ -1514,14 +1521,15 @@ function renderFlashcards() {
     '<button class="flashcard-btn" onclick="nextFlashcard()">Sau →</button>' +
     '</div>' +
     
-    '<div class="pattern-card" style="margin-top:25px">' +
+    '<div class="pattern-card" style="margin-top:20px">' +
+    '<div style="text-align:center;margin-bottom:10px;color:#666;font-size:0.9rem">🗣️ Đọc to câu này nha:</div>' +
     '<div class="example-row">' +
     '<span class="emoji">☀️</span>' +
-    '<span class="sentence">I <strong>' + word.now + '</strong> every day. (Hiện tại)</span>' +
+    '<span class="sentence">I <strong>' + word.now + '</strong> every day.</span>' +
     '</div>' +
     '<div class="example-row">' +
     '<span class="emoji">🌙</span>' +
-    '<span class="sentence">I <span class="past">' + word.past + '</span> yesterday. (Quá khứ)</span>' +
+    '<span class="sentence">I <span class="past">' + word.past + '</span> yesterday.</span>' +
     '</div></div>';
   
   document.getElementById('gameScreen').innerHTML = html;
