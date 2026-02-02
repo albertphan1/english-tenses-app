@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🦉 English Tenses - Học Thì Tiếng Anh</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦉</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    
+    .app-container { max-width: 800px; margin: 0 auto; position: relative; }
+    
+    .floating-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .shape { position: absolute; opacity: 0.3; animation: float 6s ease-in-out infinite; }
+    .shape:nth-child(1) { top: 10%; left: 10%; font-size: 40px; }
+    .shape:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; font-size: 35px; }
+    .shape:nth-child(3) { bottom: 30%; left: 5%; animation-delay: 2s; font-size: 45px; }
+    .shape:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 3s; font-size: 38px; }
+    .shape:nth-child(5) { top: 50%; left: 50%; animation-delay: 4s; font-size: 42px; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+    
+    .sound-toggle {
+      position: fixed; top: 20px; right: 20px; width: 50px; height: 50px;
+      border-radius: 50%; border: none; background: rgba(255,255,255,0.95);
+      font-size: 1.5rem; cursor: pointer; z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .sound-toggle:hover { transform: scale(1.1); }
+    
+    .content { position: relative; z-index: 1; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    
+    .home-screen { text-align: center; padding: 40px 20px; }
+    .app-title {
+      font-size: 2.5rem; font-weight: 800; color: white;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.2); margin-bottom: 10px;
+    }
+    .app-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 30px; }
+    .mascot { font-size: 100px; margin: 20px 0; animation: bounce 2s ease infinite; }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    .menu-buttons { display: flex; flex-direction: column; gap: 15px; max-width: 280px; margin: 0 auto; }
+    .menu-btn {
+      padding: 16px 28px; font-size: 1.2rem; font-weight: 700; border: none;
+      border-radius: 50px; cursor: pointer; font-family: 'Nunito', sans-serif;
+    }
+    .menu-btn.play {
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      color: #5a3e2b; box-shadow: 0 6px 0 #d4904a;
+    }
+    .menu-btn.verbs {
+      background: linear-gradient(135deg, #a8e6cf 0%, #88d8b0 100%);
+      color: #2d6a4f; box-shadow: 0 6px 0 #5fa87f;
+    }
+    .menu-btn.learn {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      color: #4a6572; box-shadow: 0 6px 0 #7fb8b6;
+    }
+    .menu-btn:hover { transform: translateY(-3px); }
+    .menu-btn:active { transform: translateY(3px); }
+    
+    .game-header {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255,255,255,0.95); border-radius: 20px;
+      padding: 15px 20px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+    }
+    .back-btn {
+      background: #ff6b6b; color: white; border: none; padding: 10px 20px;
+      border-radius: 25px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif;
+    }
+    .back-btn:hover { background: #ee5a5a; }
+    
+    .progress-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .question-counter { font-weight: 700; color: #4a4a4a; }
+    .score-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700;
+    }
+    .streak-display {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700;
+    }
+    
+    .progress-bar-container {
+      background: rgba(255,255,255,0.3); border-radius: 10px;
+      height: 10px; margin-bottom: 20px; overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%; background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+      border-radius: 10px; transition: width 0.5s ease;
+    }
+    
+    .question-card {
+      background: rgba(255,255,255,0.98); border-radius: 25px;
+      padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+    .question-type-badge {
+      display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; padding: 8px 20px; border-radius: 25px;
+      font-weight: 700; font-size: 0.9rem; margin-bottom: 20px;
+    }
+    .question-text { font-size: 1.4rem; color: #2d3748; margin-bottom: 25px; line-height: 1.4; }
+    
+    .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .options-grid.vertical { grid-template-columns: 1fr; }
+    .option-btn {
+      padding: 16px 20px; font-size: 1.1rem; font-weight: 600;
+      border: 3px solid #e2e8f0; border-radius: 15px; background: white;
+      cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s;
+    }
+    .option-btn:hover:not(:disabled) { border-color: #667eea; background: #f7fafc; }
+    .option-btn.correct { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); border-color: #48bb78; }
+    .option-btn.wrong { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border-color: #fc8181; }
+    
+    .explanation {
+      margin-top: 20px; padding: 20px; border-radius: 15px;
+      font-weight: 600; font-size: 1.1rem;
+    }
+    .explanation.correct { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); color: #276749; }
+    .explanation.wrong { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #c53030; }
+    
+    .next-btn {
+      display: block; width: 100%; margin-top: 20px; padding: 16px;
+      font-size: 1.2rem; font-weight: 700; border: none; border-radius: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; cursor: pointer; font-family: 'Nunito', sans-serif;
+    }
+    .next-btn:hover { transform: translateY(-2px); }
+    
+    .hint-box {
+      background: linear-gradient(135deg, #fff9c4 0%, #ffecd2 100%);
+      padding: 15px 20px; border-radius: 15px; margin-bottom: 20px;
+      font-weight: 600; color: #8b6914;
+    }
+    .fill-input-container { display: flex; gap: 15px; flex-wrap: wrap; }
+    .fill-input {
+      flex: 1; min-width: 180px; padding: 16px 20px; font-size: 1.2rem;
+      border: 3px solid #e2e8f0; border-radius: 15px; font-family: 'Nunito', sans-serif;
+    }
+    .fill-input:focus { outline: none; border-color: #667eea; }
+    .submit-btn {
+      padding: 16px 30px; font-size: 1.1rem; font-weight: 700; border: none;
+      border-radius: 15px; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      color: #5a3e2b; cursor: pointer; font-family: 'Nunito', sans-serif;
+    }
+    .submit-btn:hover { transform: scale(1.05); }
+    
+    .sort-hint { color: #718096; font-size: 0.9rem; margin-bottom: 15px; text-align: center; }
+    .words-pool {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      min-height: 50px; padding: 15px; background: rgba(102,126,234,0.1);
+      border-radius: 15px; margin-bottom: 20px;
+    }
+    .draggable-word {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; padding: 10px 18px; border-radius: 20px;
+      font-weight: 700; cursor: pointer; user-select: none;
+    }
+    .draggable-word:hover { transform: scale(1.1); }
+    .draggable-word.selected {
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      color: #5a3e2b; transform: scale(1.1);
+    }
+    .sort-containers { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+    .sort-box {
+      background: white; border: 4px dashed #cbd5e0; border-radius: 15px;
+      padding: 15px; min-height: 120px; cursor: pointer;
+    }
+    .sort-box:hover { border-color: #667eea; }
+    .sort-box h3 { font-size: 0.95rem; margin-bottom: 10px; }
+    .sort-box.present h3 { color: #38a169; }
+    .sort-box.past h3 { color: #dd6b20; }
+    .sorted-words { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sorted-word { background: #e2e8f0; padding: 8px 12px; border-radius: 12px; font-weight: 600; font-size: 0.85rem; }
+    .sorted-word.correct { background: #c6f6d5; color: #276749; }
+    .sorted-word.wrong { background: #fed7d7; color: #c53030; }
+    
+    .tf-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .tf-btn {
+      padding: 20px; font-size: 1.3rem; font-weight: 700;
+      border: 4px solid transparent; border-radius: 15px;
+      cursor: pointer; font-family: 'Nunito', sans-serif;
+    }
+    .tf-btn.true { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); color: #276749; }
+    .tf-btn.false { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #c53030; }
+    .tf-btn:hover:not(:disabled) { transform: scale(1.05); }
+    .tf-btn.correct { border-color: #48bb78; }
+    .tf-btn.wrong { border-color: #fc8181; }
+    
+    .picture-emoji { font-size: 70px; text-align: center; margin-bottom: 20px; }
+    
+    .result-screen { text-align: center; padding: 30px 20px; }
+    .result-card {
+      background: rgba(255,255,255,0.98); border-radius: 25px;
+      padding: 35px; box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+    .result-title {
+      font-size: 2rem; font-weight: 800; margin-bottom: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .result-emoji { font-size: 80px; margin: 15px 0; }
+    .stars-display { font-size: 50px; margin: 15px 0; }
+    .result-score { font-size: 1.3rem; color: #4a5568; margin-bottom: 10px; }
+    .result-message { font-size: 1.1rem; color: #718096; margin-bottom: 25px; }
+    .result-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    
+    .lesson-card {
+      background: rgba(255,255,255,0.98); border-radius: 25px;
+      padding: 25px; margin-bottom: 20px;
+    }
+    .lesson-title { font-size: 1.5rem; font-weight: 800; color: #2d3748; margin-bottom: 20px; }
+    .tense-box { background: #f7fafc; border-radius: 15px; padding: 20px; margin-bottom: 15px; }
+    .tense-box h3 { font-size: 1.2rem; margin-bottom: 10px; }
+    .tense-box.present h3 { color: #38a169; }
+    .tense-box.past h3 { color: #dd6b20; }
+    .signal-words { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+    .signal-word { padding: 6px 14px; border-radius: 15px; font-weight: 700; font-size: 0.85rem; }
+    .signal-word.present { background: #c6f6d5; color: #276749; }
+    .signal-word.past { background: #feebc8; color: #c05621; }
+    .examples { background: white; border-radius: 10px; padding: 15px; }
+    .example-sentence { padding: 8px 0; border-bottom: 1px solid #edf2f7; color: #4a5568; }
+    .example-sentence:last-child { border-bottom: none; }
+    
+    .irregular-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    .irregular-table th, .irregular-table td { padding: 10px; text-align: center; border-bottom: 2px solid #edf2f7; }
+    .irregular-table th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    
+    .verb-menu { text-align: center; }
+    .verb-title { font-size: 1.8rem; font-weight: 800; color: white; margin-bottom: 10px; }
+    .verb-subtitle { color: rgba(255,255,255,0.9); margin-bottom: 25px; }
+    .verb-stats { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+    .verb-stats span { background: rgba(255,255,255,0.2); padding: 10px 18px; border-radius: 20px; color: white; font-weight: 600; }
+    .verb-mode-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 350px; margin: 0 auto; }
+    .verb-mode-btn {
+      background: white; border: none; border-radius: 15px; padding: 20px 12px;
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .verb-mode-btn:hover { transform: translateY(-5px); }
+    .verb-mode-btn .mode-icon { font-size: 2rem; }
+    .verb-mode-btn .mode-name { font-size: 1.1rem; font-weight: 700; color: #2d3748; }
+    .verb-mode-btn .mode-desc { font-size: 0.8rem; color: #718096; }
+    .verb-mode-btn.flashcard { border-bottom: 4px solid #667eea; }
+    .verb-mode-btn.match { border-bottom: 4px solid #f093fb; }
+    .verb-mode-btn.fill { border-bottom: 4px solid #f6d365; }
+    .verb-mode-btn.test { border-bottom: 4px solid #84fab0; }
+    
+    .flashcard-mode { max-width: 450px; margin: 0 auto; }
+    .flashcard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    .flashcard-progress { background: rgba(255,255,255,0.9); padding: 10px 18px; border-radius: 20px; font-weight: 700; color: #4a5568; }
+    .flashcard { perspective: 1000px; cursor: pointer; margin-bottom: 25px; }
+    .flashcard-inner { position: relative; width: 100%; height: 250px; transition: transform 0.6s; transform-style: preserve-3d; }
+    .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+    .flashcard-front, .flashcard-back {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+      border-radius: 20px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 25px;
+    }
+    .flashcard-front { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .flashcard-back { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); color: #2d3748; transform: rotateY(180deg); }
+    .flashcard-label { font-size: 0.95rem; font-weight: 600; opacity: 0.8; margin-bottom: 10px; }
+    .flashcard-word { font-size: 3rem; font-weight: 800; margin-bottom: 15px; }
+    .flashcard-hint { font-size: 0.85rem; opacity: 0.7; }
+    .flashcard-pair { font-size: 1.1rem; font-weight: 600; margin-top: 10px; padding: 10px 18px; background: rgba(255,255,255,0.5); border-radius: 12px; }
+    .flashcard-buttons { display: flex; gap: 12px; justify-content: center; }
+    .flashcard-btn { padding: 12px 22px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; }
+    .flashcard-btn.prev, .flashcard-btn.next { background: white; color: #4a5568; }
+    .flashcard-btn.shuffle { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: #5a3e2b; }
+    .flashcard-btn:hover { transform: scale(1.05); }
+    
+    .match-mode { max-width: 550px; margin: 0 auto; }
+    .match-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .match-score { background: rgba(255,255,255,0.9); padding: 10px 18px; border-radius: 20px; font-weight: 700; color: #4a5568; }
+    .match-title { text-align: center; color: white; font-size: 1.2rem; margin-bottom: 20px; }
+    .match-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+    .match-card {
+      padding: 15px 10px; border: none; border-radius: 12px; font-size: 1.1rem;
+      font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif;
+    }
+    .match-card.base { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .match-card.past { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: #5a3e2b; }
+    .match-card.selected { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+    .match-card.matched { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); color: #276749; opacity: 0.7; }
+    .match-card:hover:not(.matched) { transform: scale(1.05); }
+    .match-complete { text-align: center; background: rgba(255,255,255,0.95); padding: 25px; border-radius: 15px; }
+    .match-complete p { font-size: 1.3rem; font-weight: 700; color: #2d3748; margin-bottom: 15px; }
+    
+    .verb-fill-mode { max-width: 450px; margin: 0 auto; }
+    .verb-fill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+    .verb-fill-progress, .verb-fill-score { background: rgba(255,255,255,0.9); padding: 10px 18px; border-radius: 20px; font-weight: 700; color: #4a5568; }
+    .verb-fill-card { background: rgba(255,255,255,0.98); border-radius: 20px; padding: 30px; text-align: center; }
+    .verb-fill-card h3 { font-size: 1.2rem; color: #4a5568; margin-bottom: 15px; }
+    .verb-fill-word { font-size: 3rem; font-weight: 800; color: #667eea; margin-bottom: 25px; }
+    .verb-fill-input {
+      width: 100%; max-width: 280px; padding: 16px 20px; font-size: 1.4rem;
+      text-align: center; border: 3px solid #e2e8f0; border-radius: 15px;
+      font-family: 'Nunito', sans-serif; font-weight: 600; margin-bottom: 15px;
+    }
+    .verb-fill-input:focus { outline: none; border-color: #667eea; }
+    .verb-fill-result { margin-top: 20px; padding: 20px; border-radius: 12px; }
+    .verb-fill-result.correct { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); }
+    .verb-fill-result.wrong { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+    .verb-fill-result p { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; color: #2d3748; }
+    
+    .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
+    .confetti { position: absolute; width: 12px; height: 12px; animation: confettiFall 3s linear forwards; }
+    @keyframes confettiFall {
+      0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    
+    @media (max-width: 600px) {
+      .app-title { font-size: 2rem; }
+      .question-text { font-size: 1.2rem; }
+      .sort-containers { grid-template-columns: 1fr; }
+      .tf-buttons { grid-template-columns: 1fr; }
+      .match-grid { grid-template-columns: repeat(3, 1fr); }
+      .verb-fill-word { font-size: 2.5rem; }
+      .flashcard-word { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="floating-shapes">
+      <span class="shape">📚</span><span class="shape">✨</span>
+      <span class="shape">🌟</span><span class="shape">🎯</span><span class="shape">🏆</span>
+    </div>
+    
+    <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+    <div id="confettiContainer" class="confetti-container"></div>
+    
+    <div class="content">
+      <div id="homeScreen" class="screen active">
+        <div class="home-screen">
+          <h1 class="app-title">🌈 English Tenses</h1>
+          <p class="app-subtitle">Học phân biệt thì Hiện tại & Quá khứ</p>
+          <div class="mascot">🦉</div>
+          <div class="menu-buttons">
+            <button class="menu-btn play" onclick="initGame()">🎮 Chơi ngay!</button>
+            <button class="menu-btn verbs" onclick="showVerbMenu()">🔄 Học động từ BQT</button>
+            <button class="menu-btn learn" onclick="showLesson()">📖 Học bài</button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="gameScreen" class="screen"></div>
+      <div id="resultScreen" class="screen"></div>
+      <div id="lessonScreen" class="screen"></div>
+      <div id="verbScreen" class="screen"></div>
+    </div>
+  </div>
+
+<script>
+// ========== DATA ==========
+var QUESTIONS = {
+  multiple: [
+    { question: 'I ___ to school every day.', options: ['go', 'went', 'going'], correct: 0, explanation: '"Every day" = mỗi ngày → thì hiện tại "go"' },
+    { question: 'She ___ a book yesterday.', options: ['reads', 'read', 'reading'], correct: 1, explanation: '"Yesterday" = hôm qua → thì quá khứ "read"' },
+    { question: 'They ___ football last Sunday.', options: ['play', 'played', 'plays'], correct: 1, explanation: '"Last Sunday" → quá khứ "played"' },
+    { question: 'My cat ___ milk every morning.', options: ['drinks', 'drank', 'drinking'], correct: 0, explanation: '"Every morning" → hiện tại "drinks"' },
+    { question: 'We ___ a movie last night.', options: ['watch', 'watched', 'watches'], correct: 1, explanation: '"Last night" → quá khứ "watched"' },
+    { question: 'He ___ his homework every day.', options: ['did', 'does', 'doing'], correct: 1, explanation: '"Every day" → hiện tại "does"' },
+    { question: 'Birds ___ in the sky.', options: ['fly', 'flew', 'flying'], correct: 0, explanation: 'Sự thật → hiện tại "fly"' },
+    { question: 'She ___ a cake yesterday.', options: ['makes', 'make', 'made'], correct: 2, explanation: '"Yesterday" → quá khứ "made"' },
+    { question: 'I always ___ breakfast at 7 AM.', options: ['eat', 'ate', 'eats'], correct: 0, explanation: '"Always" → hiện tại "eat"' },
+    { question: 'We ___ to the zoo last month.', options: ['go', 'went', 'goes'], correct: 1, explanation: '"Last month" → quá khứ "went"' },
+    { question: 'The sun ___ in the East.', options: ['rise', 'rises', 'rose'], correct: 1, explanation: 'Sự thật → hiện tại "rises"' },
+    { question: 'Mom ___ us a story yesterday.', options: ['tell', 'told', 'tells'], correct: 1, explanation: '"Yesterday" → quá khứ "told"' }
+  ],
+  fill: [
+    { sentence: 'They ___ (play) games yesterday.', answer: 'played', hint: '"Yesterday"! Thêm -ed' },
+    { sentence: 'She ___ (go) to school every day.', answer: 'goes', hint: '"Every day"! she → goes' },
+    { sentence: 'I ___ (eat) breakfast this morning.', answer: 'ate', hint: '"This morning" đã qua! eat → ate' },
+    { sentence: 'My dog ___ (like) bones.', answer: 'likes', hint: 'Sự thật! Thêm -s' },
+    { sentence: 'We ___ (see) a rainbow last week.', answer: 'saw', hint: '"Last week"! see → saw' },
+    { sentence: 'He ___ (drink) water every day.', answer: 'drinks', hint: '"Every day"! Thêm -s' },
+    { sentence: 'I ___ (have) a dream last night.', answer: 'had', hint: '"Last night"! have → had' },
+    { sentence: 'Mom ___ (cook) dinner every day.', answer: 'cooks', hint: '"Every day"! Thêm -s' }
+  ],
+  truefalse: [
+    { statement: '"Yesterday" dùng với thì quá khứ', correct: true, explanation: 'Đúng! "Yesterday" = hôm qua → quá khứ' },
+    { statement: '"Every day" dùng với thì quá khứ', correct: false, explanation: 'Sai! "Every day" = mỗi ngày → hiện tại' },
+    { statement: '"Played" là dạng quá khứ của "play"', correct: true, explanation: 'Đúng! Thêm -ed' },
+    { statement: '"Go - went" là động từ bất quy tắc', correct: true, explanation: 'Đúng! Go → went' },
+    { statement: 'Thêm -ed vào "eat" thành "eated"', correct: false, explanation: 'Sai! "Eat" bất quy tắc → "ate"' },
+    { statement: '"Always" dùng với thì hiện tại', correct: true, explanation: 'Đúng! "Always" → hiện tại' }
+  ],
+  picture: [
+    { image: '🌅', question: 'Chọn câu đúng:', options: ['The sun rises every day.', 'The sun rised yesterday.'], correct: 0, explanation: 'Sự thật → hiện tại!' },
+    { image: '🎂', question: 'Hôm qua là sinh nhật Tom:', options: ['Tom has a party.', 'Tom had a party.'], correct: 1, explanation: '"Hôm qua" → quá khứ!' },
+    { image: '📚', question: 'Lisa đọc sách mỗi tối:', options: ['Lisa reads every night.', 'Lisa read every night.'], correct: 0, explanation: '"Mỗi tối" → hiện tại!' },
+    { image: '🏊', question: 'Tuần trước Tom đi bơi:', options: ['Tom swims last week.', 'Tom swam last week.'], correct: 1, explanation: '"Last week" → quá khứ!' },
+    { image: '🍎', question: 'Mary ăn táo mỗi ngày:', options: ['Mary eats an apple every day.', 'Mary ate an apple every day.'], correct: 0, explanation: '"Every day" → hiện tại!' }
+  ],
+  sort: [
+    { instruction: 'Phân loại từ thời gian!', words: ['yesterday', 'every day', 'last week', 'always', 'ago', 'now'], presentWords: ['every day', 'always', 'now'], pastWords: ['yesterday', 'last week', 'ago'] },
+    { instruction: 'Phân loại động từ!', words: ['played', 'eat', 'went', 'like', 'watched', 'run'], presentWords: ['eat', 'like', 'run'], pastWords: ['played', 'went', 'watched'] }
+  ]
+};
+
+var IRREGULAR_VERBS = [
+  {base:'go',past:'went'},{base:'eat',past:'ate'},{base:'see',past:'saw'},{base:'have',past:'had'},
+  {base:'come',past:'came'},{base:'make',past:'made'},{base:'take',past:'took'},{base:'get',past:'got'},
+  {base:'run',past:'ran'},{base:'swim',past:'swam'},{base:'drink',past:'drank'},{base:'sing',past:'sang'},
+  {base:'write',past:'wrote'},{base:'read',past:'read'},{base:'give',past:'gave'},{base:'find',past:'found'},
+  {base:'tell',past:'told'},{base:'say',past:'said'},{base:'buy',past:'bought'},{base:'bring',past:'brought'},
+  {base:'think',past:'thought'},{base:'catch',past:'caught'},{base:'teach',past:'taught'},{base:'sit',past:'sat'},
+  {base:'sleep',past:'slept'},{base:'keep',past:'kept'},{base:'leave',past:'left'},{base:'lose',past:'lost'},
+  {base:'drive',past:'drove'},{base:'fly',past:'flew'},{base:'know',past:'knew'},{base:'grow',past:'grew'},
+  {base:'begin',past:'began'},{base:'break',past:'broke'},{base:'speak',past:'spoke'},{base:'wear',past:'wore'}
+];
+
+var TIME_SIGNALS = {
+  present: ['every day','always','usually','sometimes','often','now','every morning'],
+  past: ['yesterday','last week','last night','ago','last year','last month']
+};
+
+// ========== STATE ==========
+var soundEnabled = true;
+var gameQuestions = [];
+var currentQ = 0;
+var score = 0;
+var streak = 0;
+var sortedPresent = [];
+var sortedPast = [];
+var remainingWords = [];
+var selectedWord = null;
+var verbMode = 'menu';
+var shuffledVerbs = [];
+var currentVerbIdx = 0;
+var showVerbAns = false;
+var verbScore = 0;
+var verbTotal = 0;
+var matchPairs = [];
+var selectedMatch = null;
+var matchedPairs = [];
+var testVerbs = [];
+var testIdx = 0;
+
+// ========== SOUND ==========
+function playSound(type) {
+  if (!soundEnabled) return;
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    if (type === 'correct') {
+      osc.frequency.setValueAtTime(523, ctx.currentTime);
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(784, ctx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'wrong') {
+      osc.frequency.setValueAtTime(311, ctx.currentTime);
+      osc.frequency.setValueAtTime(277, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.3);
+    } else if (type === 'click') {
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.05);
+    } else if (type === 'flip') {
+      osc.frequency.setValueAtTime(600, ctx.currentTime);
+      osc.frequency.setValueAtTime(900, ctx.currentTime + 0.05);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.1);
+    } else if (type === 'complete') {
+      [523, 659, 784, 1047].forEach(function(freq, i) {
+        var o = ctx.createOscillator();
+        var g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.15);
+        g.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.15);
+        g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.2);
+        o.start(ctx.currentTime + i * 0.15);
+        o.stop(ctx.currentTime + i * 0.15 + 0.2);
+      });
+    } else if (type === 'match') {
+      osc.frequency.setValueAtTime(440, ctx.currentTime);
+      osc.frequency.setValueAtTime(554, ctx.currentTime + 0.08);
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.16);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.3);
+    }
+  } catch(e) {}
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+  playSound('click');
+}
+
+// ========== CONFETTI ==========
+function showConfetti() {
+  var container = document.getElementById('confettiContainer');
+  container.innerHTML = '';
+  var colors = ['#f6d365','#fda085','#667eea','#764ba2','#84fab0'];
+  for (var i = 0; i < 30; i++) {
+    var c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+  }
+  setTimeout(function() { container.innerHTML = ''; }, 3000);
+}
+
+// ========== NAVIGATION ==========
+function showScreen(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) {
+    screens[i].classList.remove('active');
+  }
+  document.getElementById(id).classList.add('active');
+}
+
+function goHome() {
+  showScreen('homeScreen');
+}
+
+// ========== SHUFFLE ==========
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+// ========== GAME ==========
+function initGame() {
+  var all = [];
+  QUESTIONS.multiple.forEach(function(q) { all.push({type:'multiple', data:q}); });
+  QUESTIONS.fill.forEach(function(q) { all.push({type:'fill', data:q}); });
+  QUESTIONS.truefalse.forEach(function(q) { all.push({type:'truefalse', data:q}); });
+  QUESTIONS.picture.forEach(function(q) { all.push({type:'picture', data:q}); });
+  QUESTIONS.sort.forEach(function(q) { all.push({type:'sort', data:q}); });
+  
+  gameQuestions = shuffle(all).slice(0, 10);
+  currentQ = 0;
+  score = 0;
+  streak = 0;
+  
+  showScreen('gameScreen');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  var q = gameQuestions[currentQ];
+  var html = '<div class="game-header">' +
+    '<button class="back-btn" onclick="goHome()">← Về</button>' +
+    '<div class="progress-info">' +
+    '<span class="question-counter">Câu ' + (currentQ + 1) + '/' + gameQuestions.length + '</span>' +
+    '<span class="score-display">⭐ ' + score + '</span>' +
+    (streak >= 2 ? '<span class="streak-display">🔥 ' + streak + '</span>' : '') +
+    '</div></div>' +
+    '<div class="progress-bar-container"><div class="progress-bar" style="width:' + ((currentQ + 1) / gameQuestions.length * 100) + '%"></div></div>';
+  
+  html += '<div class="question-card">';
+  
+  if (q.type === 'multiple') {
+    html += '<div class="question-type-badge">🎯 Chọn đáp án đúng</div>' +
+      '<h2 class="question-text">' + q.data.question + '</h2>' +
+      '<div class="options-grid">';
+    for (var i = 0; i < q.data.options.length; i++) {
+      html += '<button class="option-btn" id="opt' + i + '" onclick="answerMultiple(' + i + ')">' + q.data.options[i] + '</button>';
+    }
+    html += '</div><div id="explanation"></div>';
+  }
+  else if (q.type === 'fill') {
+    html += '<div class="question-type-badge">✏️ Điền vào chỗ trống</div>' +
+      '<h2 class="question-text">' + q.data.sentence + '</h2>' +
+      '<div class="hint-box">💡 Gợi ý: ' + q.data.hint + '</div>' +
+      '<div class="fill-input-container">' +
+      '<input type="text" class="fill-input" id="fillInput" placeholder="Nhập đáp án..." onkeypress="if(event.key===\'Enter\')answerFill()">' +
+      '<button class="submit-btn" id="fillSubmit" onclick="answerFill()">Kiểm tra</button>' +
+      '</div><div id="explanation"></div>';
+  }
+  else if (q.type === 'truefalse') {
+    html += '<div class="question-type-badge">✅ Đúng hay Sai?</div>' +
+      '<h2 class="question-text">' + q.data.statement + '</h2>' +
+      '<div class="tf-buttons">' +
+      '<button class="tf-btn true" id="tfTrue" onclick="answerTF(true)">✓ Đúng</button>' +
+      '<button class="tf-btn false" id="tfFalse" onclick="answerTF(false)">✗ Sai</button>' +
+      '</div><div id="explanation"></div>';
+  }
+  else if (q.type === 'picture') {
+    html += '<div class="question-type-badge">🖼️ Nhìn hình chọn câu</div>' +
+      '<div class="picture-emoji">' + q.data.image + '</div>' +
+      '<h2 class="question-text">' + q.data.question + '</h2>' +
+      '<div class="options-grid vertical">';
+    for (var i = 0; i < q.data.options.length; i++) {
+      html += '<button class="option-btn" id="opt' + i + '" onclick="answerMultiple(' + i + ')">' + q.data.options[i] + '</button>';
+    }
+    html += '</div><div id="explanation"></div>';
+  }
+  else if (q.type === 'sort') {
+    remainingWords = shuffle(q.data.words.slice());
+    sortedPresent = [];
+    sortedPast = [];
+    selectedWord = null;
+    html += '<div class="question-type-badge">🎮 Phân loại từ</div>' +
+      '<h2 class="question-text">' + q.data.instruction + '</h2>' +
+      '<p class="sort-hint">👆 Chạm vào từ, rồi chạm vào ô!</p>' +
+      '<div class="words-pool" id="wordsPool"></div>' +
+      '<div class="sort-containers">' +
+      '<div class="sort-box present" onclick="dropWord(\'present\')"><h3>🌟 Hiện tại</h3><div class="sorted-words" id="presentWords"></div></div>' +
+      '<div class="sort-box past" onclick="dropWord(\'past\')"><h3>⏰ Quá khứ</h3><div class="sorted-words" id="pastWords"></div></div>' +
+      '</div>' +
+      '<button class="submit-btn" id="sortSubmit" onclick="checkSort()" style="display:none;width:100%">Kiểm tra</button>' +
+      '<div id="explanation"></div>';
+  }
+  
+  html += '</div>';
+  document.getElementById('gameScreen').innerHTML = html;
+  
+  if (q.type === 'sort') renderSortWords();
+}
+
+function renderSortWords() {
+  var poolHtml = '';
+  for (var i = 0; i < remainingWords.length; i++) {
+    var w = remainingWords[i];
+    poolHtml += '<div class="draggable-word' + (selectedWord === w ? ' selected' : '') + '" onclick="selectWord(\'' + w + '\')">' + w + '</div>';
+  }
+  document.getElementById('wordsPool').innerHTML = poolHtml;
+  
+  var presHtml = '';
+  for (var i = 0; i < sortedPresent.length; i++) {
+    presHtml += '<span class="sorted-word">' + sortedPresent[i] + '</span>';
+  }
+  document.getElementById('presentWords').innerHTML = presHtml;
+  
+  var pastHtml = '';
+  for (var i = 0; i < sortedPast.length; i++) {
+    pastHtml += '<span class="sorted-word">' + sortedPast[i] + '</span>';
+  }
+  document.getElementById('pastWords').innerHTML = pastHtml;
+  
+  document.getElementById('sortSubmit').style.display = remainingWords.length === 0 ? 'block' : 'none';
+}
+
+function selectWord(w) {
+  playSound('click');
+  selectedWord = selectedWord === w ? null : w;
+  renderSortWords();
+}
+
+function dropWord(target) {
+  if (!selectedWord) return;
+  playSound('click');
+  if (target === 'present') sortedPresent.push(selectedWord);
+  else sortedPast.push(selectedWord);
+  remainingWords = remainingWords.filter(function(x) { return x !== selectedWord; });
+  selectedWord = null;
+  renderSortWords();
+}
+
+function answerMultiple(idx) {
+  var q = gameQuestions[currentQ];
+  var correct = idx === q.data.correct;
+  
+  var btns = document.querySelectorAll('.option-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].disabled = true;
+    if (i === q.data.correct) btns[i].classList.add('correct');
+    if (i === idx && !correct) btns[i].classList.add('wrong');
+  }
+  
+  showAnswerFeedback(correct, q.data.explanation);
+}
+
+function answerFill() {
+  var q = gameQuestions[currentQ];
+  var input = document.getElementById('fillInput');
+  var correct = input.value.toLowerCase().trim() === q.data.answer.toLowerCase();
+  
+  input.disabled = true;
+  document.getElementById('fillSubmit').style.display = 'none';
+  
+  showAnswerFeedback(correct, correct ? '🎉 Tuyệt vời!' : '💡 Đáp án đúng: ' + q.data.answer);
+}
+
+function answerTF(ans) {
+  var q = gameQuestions[currentQ];
+  var correct = ans === q.data.correct;
+  
+  document.getElementById('tfTrue').disabled = true;
+  document.getElementById('tfFalse').disabled = true;
+  
+  if (q.data.correct === true) document.getElementById('tfTrue').classList.add('correct');
+  else document.getElementById('tfFalse').classList.add('correct');
+  
+  if (!correct) {
+    document.getElementById(ans ? 'tfTrue' : 'tfFalse').classList.add('wrong');
+  }
+  
+  showAnswerFeedback(correct, q.data.explanation);
+}
+
+function checkSort() {
+  var q = gameQuestions[currentQ];
+  var presOk = sortedPresent.length === q.data.presentWords.length && sortedPresent.every(function(w) { return q.data.presentWords.indexOf(w) >= 0; });
+  var pastOk = sortedPast.length === q.data.pastWords.length && sortedPast.every(function(w) { return q.data.pastWords.indexOf(w) >= 0; });
+  var correct = presOk && pastOk;
+  
+  var presHtml = '';
+  for (var i = 0; i < sortedPresent.length; i++) {
+    var w = sortedPresent[i];
+    presHtml += '<span class="sorted-word ' + (q.data.presentWords.indexOf(w) >= 0 ? 'correct' : 'wrong') + '">' + w + '</span>';
+  }
+  document.getElementById('presentWords').innerHTML = presHtml;
+  
+  var pastHtml = '';
+  for (var i = 0; i < sortedPast.length; i++) {
+    var w = sortedPast[i];
+    pastHtml += '<span class="sorted-word ' + (q.data.pastWords.indexOf(w) >= 0 ? 'correct' : 'wrong') + '">' + w + '</span>';
+  }
+  document.getElementById('pastWords').innerHTML = pastHtml;
+  
+  document.getElementById('sortSubmit').style.display = 'none';
+  showAnswerFeedback(correct, correct ? '🎉 Xuất sắc!' : '💡 yesterday, last, ago → Quá khứ | every, always, now → Hiện tại');
+}
+
+function showAnswerFeedback(correct, text) {
+  if (correct) {
+    score++;
+    streak++;
+    playSound('correct');
+    if (streak >= 3) showConfetti();
+  } else {
+    streak = 0;
+    playSound('wrong');
+  }
+  
+  document.getElementById('explanation').innerHTML = '<div class="explanation ' + (correct ? 'correct' : 'wrong') + '">' + (correct ? '🎉 ' : '💡 ') + text + '</div>' +
+    '<button class="next-btn" onclick="nextQuestion()">' + (currentQ < gameQuestions.length - 1 ? 'Câu tiếp theo →' : 'Xem kết quả 🏆') + '</button>';
+}
+
+function nextQuestion() {
+  if (currentQ < gameQuestions.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    playSound('complete');
+    showGameResult();
+  }
+}
+
+function showGameResult() {
+  var pct = Math.round(score / gameQuestions.length * 100);
+  var stars = Math.min(3, Math.floor(pct / 33));
+  
+  var html = '<div class="result-screen"><div class="result-card">' +
+    '<h2 class="result-title">🎉 Hoàn thành!</h2>' +
+    '<div class="result-emoji">' + (pct >= 80 ? '🏆' : pct >= 50 ? '🌟' : '💪') + '</div>' +
+    '<div class="stars-display">';
+  for (var i = 0; i < 3; i++) html += i < stars ? '⭐' : '☆';
+  html += '</div>' +
+    '<p class="result-score">Điểm: <strong>' + score + '/' + gameQuestions.length + '</strong></p>' +
+    '<p class="result-message">' + (pct >= 80 ? 'Xuất sắc! Con giỏi quá! 🎊' : pct >= 50 ? 'Tốt lắm! Cố gắng thêm nhé! 💪' : 'Cần ôn lại bài học nha! 📚') + '</p>' +
+    '<div class="result-buttons">' +
+    '<button class="menu-btn play" onclick="initGame()">🔄 Chơi lại</button>' +
+    '<button class="menu-btn learn" onclick="showLesson()">📖 Ôn bài</button>' +
+    '<button class="menu-btn learn" onclick="goHome()">🏠 Về nhà</button>' +
+    '</div></div></div>';
+  
+  document.getElementById('resultScreen').innerHTML = html;
+  showScreen('resultScreen');
+}
+
+// ========== LESSON ==========
+function showLesson() {
+  var html = '<button class="back-btn" onclick="goHome()" style="margin-bottom:20px">← Về trang chủ</button>' +
+    '<div class="lesson-card"><h2 class="lesson-title">📚 Phân biệt Hiện tại & Quá khứ</h2>' +
+    '<div class="tense-box present"><h3>🌟 Thì Hiện tại</h3><p style="margin-bottom:15px;color:#4a5568">Dùng cho <strong>thói quen, sự thật</strong></p>' +
+    '<p style="margin-bottom:10px;font-weight:600">Từ nhận biết:</p><div class="signal-words">';
+  TIME_SIGNALS.present.forEach(function(w) { html += '<span class="signal-word present">' + w + '</span>'; });
+  html += '</div><div class="examples"><p class="example-sentence">✓ I <strong>go</strong> to school every day.</p><p class="example-sentence">✓ She <strong>likes</strong> ice cream.</p></div></div>' +
+    '<div class="tense-box past"><h3>⏰ Thì Quá khứ</h3><p style="margin-bottom:15px;color:#4a5568">Dùng cho <strong>việc đã xảy ra</strong></p>' +
+    '<p style="margin-bottom:10px;font-weight:600">Từ nhận biết:</p><div class="signal-words">';
+  TIME_SIGNALS.past.forEach(function(w) { html += '<span class="signal-word past">' + w + '</span>'; });
+  html += '</div><div class="examples"><p class="example-sentence">✓ I <strong>went</strong> to the park yesterday.</p><p class="example-sentence">✓ She <strong>watched</strong> TV last night.</p></div></div></div>' +
+    '<div class="lesson-card"><h2 class="lesson-title">🔄 Động từ bất quy tắc</h2>' +
+    '<table class="irregular-table"><thead><tr><th>Hiện tại</th><th>Quá khứ</th></tr></thead><tbody>';
+  for (var i = 0; i < 15; i++) {
+    html += '<tr><td style="font-weight:600;color:#38a169">' + IRREGULAR_VERBS[i].base + '</td><td style="font-weight:600;color:#dd6b20">' + IRREGULAR_VERBS[i].past + '</td></tr>';
+  }
+  html += '</tbody></table></div><button class="menu-btn play" onclick="initGame()" style="width:100%">🎮 Luyện tập ngay!</button>';
+  
+  document.getElementById('lessonScreen').innerHTML = html;
+  showScreen('lessonScreen');
+}
+
+// ========== VERB LEARNING ==========
+function showVerbMenu() {
+  shuffledVerbs = shuffle(IRREGULAR_VERBS.slice());
+  currentVerbIdx = 0;
+  verbMode = 'menu';
+  renderVerbScreen();
+  showScreen('verbScreen');
+}
+
+function renderVerbScreen() {
+  var html = '';
+  
+  if (verbMode === 'menu') {
+    html = '<div class="verb-menu"><h2 class="verb-title">🔄 Học Động Từ Bất Quy Tắc</h2>' +
+      '<p class="verb-subtitle">Chọn cách học phù hợp!</p>' +
+      '<div class="verb-stats"><span>📚 Tổng: ' + IRREGULAR_VERBS.length + ' từ</span></div>' +
+      '<div class="verb-mode-buttons">' +
+      '<button class="verb-mode-btn flashcard" onclick="startVerbMode(\'flashcard\')"><span class="mode-icon">🎴</span><span class="mode-name">Flashcard</span><span class="mode-desc">Lật thẻ ghi nhớ</span></button>' +
+      '<button class="verb-mode-btn match" onclick="startVerbMode(\'match\')"><span class="mode-icon">🎯</span><span class="mode-name">Nối từ</span><span class="mode-desc">Ghép đôi đúng</span></button>' +
+      '<button class="verb-mode-btn fill" onclick="startVerbMode(\'fill\')"><span class="mode-icon">✏️</span><span class="mode-name">Điền từ</span><span class="mode-desc">Viết dạng quá khứ</span></button>' +
+      '<button class="verb-mode-btn test" onclick="startVerbMode(\'test\')"><span class="mode-icon">📝</span><span class="mode-name">Kiểm tra</span><span class="mode-desc">10 câu ngẫu nhiên</span></button>' +
+      '</div><button class="back-btn" onclick="goHome()" style="margin-top:30px">← Về trang chủ</button></div>';
+  }
+  else if (verbMode === 'flashcard') {
+    var v = shuffledVerbs[currentVerbIdx];
+    html = '<div class="flashcard-mode"><div class="flashcard-header">' +
+      '<button class="back-btn" onclick="verbMode=\'menu\';renderVerbScreen()">← Về</button>' +
+      '<span class="flashcard-progress">' + (currentVerbIdx + 1) + ' / ' + shuffledVerbs.length + '</span></div>' +
+      '<div class="flashcard' + (showVerbAns ? ' flipped' : '') + '" onclick="flipCard()">' +
+      '<div class="flashcard-inner"><div class="flashcard-front"><span class="flashcard-label">Hiện tại</span><span class="flashcard-word">' + v.base + '</span><span class="flashcard-hint">👆 Chạm để lật</span></div>' +
+      '<div class="flashcard-back"><span class="flashcard-label">Quá khứ</span><span class="flashcard-word">' + v.past + '</span><span class="flashcard-pair">' + v.base + ' → ' + v.past + '</span></div></div></div>' +
+      '<div class="flashcard-buttons"><button class="flashcard-btn prev" onclick="prevCard()">← Trước</button>' +
+      '<button class="flashcard-btn shuffle" onclick="shuffleCards()">🔀 Trộn</button>' +
+      '<button class="flashcard-btn next" onclick="nextCard()">Sau →</button></div></div>';
+  }
+  else if (verbMode === 'match') {
+    html = '<div class="match-mode"><div class="match-header">' +
+      '<button class="back-btn" onclick="verbMode=\'menu\';renderVerbScreen()">← Về</button>' +
+      '<span class="match-score">✅ ' + matchedPairs.length + ' / 6</span></div>' +
+      '<h3 class="match-title">🎯 Nối từ hiện tại với quá khứ!</h3><div class="match-grid">';
+    for (var i = 0; i < matchPairs.length; i++) {
+      var c = matchPairs[i];
+      html += '<button class="match-card ' + c.type + (selectedMatch && selectedMatch.id === c.id ? ' selected' : '') + (matchedPairs.indexOf(c.pairId) >= 0 ? ' matched' : '') + '" onclick="handleMatch(\'' + c.id + '\',' + c.pairId + ',\'' + c.type + '\')"' + (matchedPairs.indexOf(c.pairId) >= 0 ? ' disabled' : '') + '>' + c.text + '</button>';
+    }
+    html += '</div>';
+    if (matchedPairs.length >= 6) {
+      html += '<div class="match-complete"><p>🎉 Xuất sắc!</p><button class="menu-btn play" onclick="startVerbMode(\'match\')">🔄 Chơi lại</button></div>';
+    }
+    html += '</div>';
+  }
+  else if (verbMode === 'fill' || verbMode === 'test') {
+    var v = verbMode === 'test' ? testVerbs[testIdx] : shuffledVerbs[currentVerbIdx];
+    html = '<div class="verb-fill-mode"><div class="verb-fill-header">' +
+      '<button class="back-btn" onclick="verbMode=\'menu\';renderVerbScreen()">← Về</button>' +
+      (verbMode === 'test' ? '<span class="verb-fill-progress">Câu ' + (testIdx + 1) + ' / 10</span>' : '') +
+      '<span class="verb-fill-score">✅ ' + verbScore + ' / ' + verbTotal + '</span></div>' +
+      (verbMode === 'test' ? '<div class="progress-bar-container"><div class="progress-bar" style="width:' + ((testIdx + 1) / 10 * 100) + '%"></div></div>' : '') +
+      '<div class="verb-fill-card"><h3>' + (verbMode === 'test' ? '📝' : '✏️') + ' Viết dạng quá khứ của:</h3>' +
+      '<div class="verb-fill-word">' + v.base + '</div>' +
+      '<input type="text" class="verb-fill-input" id="verbInput" placeholder="Nhập đáp án..." onkeypress="if(event.key===\'Enter\')checkVerbFill()">' +
+      '<button class="submit-btn" id="verbSubmit" onclick="checkVerbFill()" style="width:100%">Kiểm tra</button>' +
+      '<div id="verbResult"></div></div></div>';
+  }
+  else if (verbMode === 'testResult') {
+    var pct = Math.round(verbScore / 10 * 100);
+    var stars = Math.min(3, Math.floor(pct / 33));
+    html = '<div class="result-screen"><div class="result-card"><h2 class="result-title">📝 Kết quả</h2>' +
+      '<div class="result-emoji">' + (pct >= 80 ? '🏆' : pct >= 50 ? '🌟' : '💪') + '</div><div class="stars-display">';
+    for (var i = 0; i < 3; i++) html += i < stars ? '⭐' : '☆';
+    html += '</div><p class="result-score">Điểm: <strong>' + verbScore + ' / 10</strong> (' + pct + '%)</p>' +
+      '<p class="result-message">' + (pct >= 80 ? 'Xuất sắc! 🎊' : pct >= 50 ? 'Tốt lắm! 💪' : 'Cần ôn thêm! 📚') + '</p>' +
+      '<div class="result-buttons"><button class="menu-btn play" onclick="startVerbMode(\'test\')">🔄 Thi lại</button>' +
+      '<button class="menu-btn learn" onclick="startVerbMode(\'flashcard\')">🎴 Ôn Flashcard</button>' +
+      '<button class="menu-btn learn" onclick="verbMode=\'menu\';renderVerbScreen()">← Menu</button></div></div></div>';
+  }
+  
+  document.getElementById('verbScreen').innerHTML = html;
+}
+
+function startVerbMode(mode) {
+  verbMode = mode;
+  verbScore = 0;
+  verbTotal = 0;
+  
+  if (mode === 'match') {
+    var sel = shuffle(IRREGULAR_VERBS.slice()).slice(0, 6);
+    var bases = sel.map(function(v, i) { return {id: 'b' + i, text: v.base, type: 'base', pairId: i}; });
+    var pasts = sel.map(function(v, i) { return {id: 'p' + i, text: v.past, type: 'past', pairId: i}; });
+    matchPairs = shuffle(bases.concat(pasts));
+    selectedMatch = null;
+    matchedPairs = [];
+  }
+  if (mode === 'test') {
+    testVerbs = shuffle(IRREGULAR_VERBS.slice()).slice(0, 10);
+    testIdx = 0;
+  }
+  if (mode === 'flashcard') {
+    shuffledVerbs = shuffle(IRREGULAR_VERBS.slice());
+    currentVerbIdx = 0;
+    showVerbAns = false;
+  }
+  if (mode === 'fill') {
+    shuffledVerbs = shuffle(IRREGULAR_VERBS.slice());
+    currentVerbIdx = 0;
+  }
+  
+  renderVerbScreen();
+}
+
+function flipCard() {
+  playSound('flip');
+  showVerbAns = !showVerbAns;
+  renderVerbScreen();
+}
+
+function prevCard() {
+  showVerbAns = false;
+  currentVerbIdx = currentVerbIdx > 0 ? currentVerbIdx - 1 : shuffledVerbs.length - 1;
+  renderVerbScreen();
+}
+
+function nextCard() {
+  showVerbAns = false;
+  currentVerbIdx = currentVerbIdx < shuffledVerbs.length - 1 ? currentVerbIdx + 1 : 0;
+  renderVerbScreen();
+}
+
+function shuffleCards() {
+  shuffledVerbs = shuffle(IRREGULAR_VERBS.slice());
+  currentVerbIdx = 0;
+  showVerbAns = false;
+  renderVerbScreen();
+}
+
+function handleMatch(id, pairId, type) {
+  playSound('click');
+  
+  if (!selectedMatch) {
+    selectedMatch = {id: id, pairId: pairId, type: type};
+    renderVerbScreen();
+    return;
+  }
+  
+  if (selectedMatch.id === id) {
+    selectedMatch = null;
+    renderVerbScreen();
+    return;
+  }
+  
+  if (selectedMatch.pairId === pairId && selectedMatch.type !== type) {
+    matchedPairs.push(pairId);
+    selectedMatch = null;
+    playSound('match');
+    if (matchedPairs.length >= 6) {
+      playSound('complete');
+      showConfetti();
+    }
+  } else {
+    playSound('wrong');
+    selectedMatch = null;
+  }
+  
+  renderVerbScreen();
+}
+
+function checkVerbFill() {
+  var input = document.getElementById('verbInput');
+  var v = verbMode === 'test' ? testVerbs[testIdx] : shuffledVerbs[currentVerbIdx];
+  var correct = input.value.toLowerCase().trim() === v.past.toLowerCase();
+  
+  verbTotal++;
+  if (correct) {
+    verbScore++;
+    playSound('correct');
+  } else {
+    playSound('wrong');
+  }
+  
+  input.disabled = true;
+  document.getElementById('verbSubmit').style.display = 'none';
+  
+  document.getElementById('verbResult').innerHTML = '<div class="verb-fill-result ' + (correct ? 'correct' : 'wrong') + '">' +
+    '<p>' + (correct ? '🎉 Đúng rồi!' : '💡 Đáp án: <strong>' + v.base + ' → ' + v.past + '</strong>') + '</p>' +
+    '<button class="next-btn" onclick="nextVerbFill()">' + (verbMode === 'test' && testIdx >= 9 ? 'Xem kết quả 🏆' : 'Từ tiếp theo →') + '</button></div>';
+}
+
+function nextVerbFill() {
+  if (verbMode === 'test') {
+    if (testIdx < 9) {
+      testIdx++;
+      renderVerbScreen();
+    } else {
+      verbMode = 'testResult';
+      playSound('complete');
+      renderVerbScreen();
+    }
+  } else {
+    currentVerbIdx = currentVerbIdx < shuffledVerbs.length - 1 ? currentVerbIdx + 1 : 0;
+    renderVerbScreen();
+  }
+}
+</script>
+</body>
+</html>
