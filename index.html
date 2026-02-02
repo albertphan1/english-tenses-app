@@ -292,6 +292,517 @@
     .match-card.selected { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     .match-card.matched { opacity: 0.5; cursor: default; }
     
+    /* STUDY SCREEN STYLES */
+    .study-header {
+      text-align: center; padding: 15px 0; margin-bottom: 15px;
+    }
+    .study-title {
+      font-size: 1.8rem; font-weight: 800; color: white;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    }
+    .study-subtitle { color: rgba(255,255,255,0.9); margin-top: 5px; }
+    
+    .group-selector {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center; margin-bottom: 20px;
+    }
+    .group-btn {
+      padding: 8px 16px; border-radius: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: white; font-weight: 600; cursor: pointer;
+      font-family: 'Nunito', sans-serif; font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .group-btn:hover { background: rgba(255,255,255,0.25); }
+    .group-btn.active {
+      background: white; color: #667eea;
+      border-color: white;
+    }
+    
+    .verb-group-card {
+      background: white; border-radius: 20px;
+      margin-bottom: 15px; overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .verb-group-header {
+      padding: 15px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .verb-group-header.expanded { border-radius: 0; }
+    .verb-group-title {
+      font-weight: 700; font-size: 1.1rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .verb-group-count {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px; border-radius: 15px;
+      font-size: 0.85rem;
+    }
+    .verb-group-arrow {
+      transition: transform 0.3s;
+      font-size: 1.2rem;
+    }
+    .verb-group-arrow.rotated { transform: rotate(180deg); }
+    
+    .verb-group-content {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .verb-group-content.expanded {
+      max-height: 2000px;
+    }
+    
+    .verb-table {
+      width: 100%; border-collapse: collapse;
+    }
+    .verb-table th {
+      padding: 12px 10px;
+      background: #f8f9fa;
+      font-weight: 700; font-size: 0.85rem;
+      color: #666; text-align: center;
+      border-bottom: 2px solid #eee;
+      position: sticky; top: 0;
+    }
+    .verb-table th:first-child { text-align: left; padding-left: 20px; }
+    .verb-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      text-align: center; font-size: 0.95rem;
+    }
+    .verb-table td:first-child {
+      text-align: left; padding-left: 20px;
+      font-weight: 600; color: #4CAF50;
+    }
+    .verb-table td:nth-child(2) { color: #FF9800; font-weight: 600; }
+    .verb-table td:nth-child(3) { color: #9C27B0; font-weight: 600; }
+    .verb-table td:last-child { color: #666; font-size: 0.85rem; }
+    
+    .verb-table tr:hover { background: #f8f9fa; }
+    .verb-table tr.mastered { background: #E8F5E9; }
+    .verb-table tr.mastered td:first-child::before {
+      content: '✓ '; color: #4CAF50;
+    }
+    
+    .study-tip-box {
+      background: linear-gradient(135deg, #FFF9C4 0%, #FFECB3 100%);
+      padding: 15px 20px; border-radius: 15px;
+      margin-bottom: 20px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .study-tip-icon { font-size: 30px; }
+    .study-tip-text { color: #5D4037; font-size: 0.95rem; line-height: 1.5; }
+    
+    .study-modes {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .study-mode-btn {
+      padding: 15px; border-radius: 15px;
+      border: none; cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+      transition: all 0.2s;
+    }
+    .study-mode-btn:hover { transform: translateY(-3px); }
+    .study-mode-btn .icon { font-size: 30px; }
+    .study-mode-btn.quiz { background: #E3F2FD; color: #1565C0; }
+    .study-mode-btn.practice { background: #E8F5E9; color: #2E7D32; }
+    .study-mode-btn.speed { background: #FFF3E0; color: #E65100; }
+    .study-mode-btn.memory { background: #F3E5F5; color: #7B1FA2; }
+    
+    /* Quick Quiz Modal */
+    .quiz-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; padding: 20px;
+    }
+    .quiz-modal {
+      background: white; border-radius: 25px;
+      padding: 30px; max-width: 400px; width: 100%;
+      text-align: center;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .quiz-question { font-size: 1.1rem; color: #333; margin-bottom: 10px; }
+    .quiz-verb {
+      font-size: 2.5rem; font-weight: 800;
+      color: #4CAF50; margin: 20px 0;
+    }
+    .quiz-input {
+      width: 100%; padding: 15px 20px;
+      font-size: 1.3rem; font-family: 'Nunito', sans-serif;
+      border: 3px solid #E0E0E0; border-radius: 15px;
+      text-align: center; font-weight: 700;
+      outline: none; transition: border-color 0.2s;
+    }
+    .quiz-input:focus { border-color: #667eea; }
+    .quiz-input.correct { border-color: #4CAF50; background: #E8F5E9; }
+    .quiz-input.wrong { border-color: #F44336; background: #FFEBEE; }
+    .quiz-hint {
+      margin-top: 10px; color: #999; font-size: 0.9rem;
+    }
+    .quiz-progress {
+      display: flex; justify-content: center; gap: 8px;
+      margin-top: 20px;
+    }
+    .quiz-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #E0E0E0;
+    }
+    .quiz-dot.done { background: #4CAF50; }
+    .quiz-dot.wrong-dot { background: #F44336; }
+    .quiz-dot.current { background: #667eea; transform: scale(1.2); }
+    
+    /* Speed Challenge */
+    .speed-timer {
+      font-size: 3rem; font-weight: 800;
+      color: white; text-align: center;
+      margin: 20px 0;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    }
+    .speed-timer.warning { color: #FFEB3B; animation: pulse 0.5s infinite; }
+    .speed-timer.danger { color: #F44336; animation: shake 0.3s infinite; }
+    
+    .speed-score {
+      background: rgba(255,255,255,0.2);
+      padding: 10px 20px; border-radius: 15px;
+      color: white; font-weight: 700;
+      text-align: center; margin-bottom: 20px;
+    }
+    
+    /* Memory Game */
+    .memory-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 10px; margin: 20px 0;
+    }
+    .memory-card {
+      aspect-ratio: 1; border-radius: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; font-weight: 700;
+      color: white; transition: all 0.3s;
+      position: relative;
+    }
+    .memory-card.flipped {
+      background: white; color: #333;
+    }
+    .memory-card.matched {
+      background: #4CAF50; color: white;
+      animation: pulse 0.5s;
+    }
+    .memory-card .card-back {
+      font-size: 1.5rem;
+    }
+    
+    /* Pattern highlight colors */
+    .pattern-important { background: linear-gradient(135deg, #E91E63, #F48FB1); }
+    .pattern-perception { background: linear-gradient(135deg, #9C27B0, #CE93D8); }
+    .pattern-no-change { background: linear-gradient(135deg, #607D8B, #90A4AE); }
+    .pattern-vowel { background: linear-gradient(135deg, #2196F3, #90CAF9); }
+    .pattern-drink { background: linear-gradient(135deg, #00BCD4, #80DEEA); }
+    .pattern-ow-ew { background: linear-gradient(135deg, #4CAF50, #A5D6A7); }
+    .pattern-ought { background: linear-gradient(135deg, #FF9800, #FFCC80); }
+    .pattern-stand { background: linear-gradient(135deg, #795548, #BCAAA4); }
+    .pattern-ee { background: linear-gradient(135deg, #3F51B5, #9FA8DA); }
+    .pattern-d-t { background: linear-gradient(135deg, #009688, #80CBC4); }
+    .pattern-t { background: linear-gradient(135deg, #FF5722, #FFAB91); }
+    .pattern-misc { background: linear-gradient(135deg, #673AB7, #B39DDB); }
+    
+    /* Easy Match Game */
+    .easy-match-container {
+      background: white; border-radius: 20px;
+      padding: 20px; margin-top: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    .easy-match-header {
+      text-align: center; margin-bottom: 20px;
+    }
+    .easy-match-title {
+      font-size: 1.3rem; font-weight: 700; color: #333;
+      margin-bottom: 5px;
+    }
+    .easy-match-hint {
+      color: #666; font-size: 0.95rem;
+    }
+    .easy-match-columns {
+      display: flex; gap: 15px;
+    }
+    .easy-match-column {
+      flex: 1; display: flex; flex-direction: column; gap: 10px;
+    }
+    .easy-match-label {
+      text-align: center; font-weight: 700; padding: 8px;
+      border-radius: 10px; font-size: 0.9rem;
+    }
+    .easy-match-label.base { background: #E8F5E9; color: #2E7D32; }
+    .easy-match-label.past { background: #FFF3E0; color: #E65100; }
+    
+    .easy-match-card {
+      padding: 15px 12px; border-radius: 12px;
+      text-align: center; cursor: pointer;
+      transition: all 0.2s; border: 3px solid transparent;
+      font-family: 'Nunito', sans-serif; font-weight: 600;
+    }
+    .easy-match-card.base-card {
+      background: #E8F5E9; color: #2E7D32;
+    }
+    .easy-match-card.past-card {
+      background: #FFF3E0; color: #E65100;
+    }
+    .easy-match-card:hover:not(.matched):not(.disabled) {
+      transform: scale(1.03);
+    }
+    .easy-match-card.selected {
+      border-color: #667eea;
+      box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+      transform: scale(1.05);
+    }
+    .easy-match-card.matched {
+      opacity: 0.4; cursor: default;
+      text-decoration: line-through;
+    }
+    .easy-match-card.correct-flash {
+      animation: correctFlash 0.5s ease;
+      background: #4CAF50 !important;
+      color: white !important;
+      border-color: #4CAF50;
+    }
+    .easy-match-card.wrong-flash {
+      animation: wrongFlash 0.5s ease;
+      border-color: #F44336;
+    }
+    @keyframes correctFlash {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @keyframes wrongFlash {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+    .easy-match-card .verb-text {
+      font-size: 1.2rem; margin-bottom: 3px;
+    }
+    .easy-match-card .verb-meaning {
+      font-size: 0.75rem; opacity: 0.8; font-weight: 400;
+    }
+    .easy-match-score {
+      text-align: center; margin-top: 20px;
+      padding: 15px; background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+      border-radius: 12px;
+    }
+    .easy-match-progress {
+      display: flex; justify-content: center; gap: 6px;
+      margin-bottom: 10px;
+    }
+    .easy-match-dot {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #E0E0E0; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.7rem;
+    }
+    .easy-match-dot.done {
+      background: #4CAF50; color: white;
+    }
+    .easy-match-level-select {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: 15px;
+    }
+    .easy-match-level {
+      display: flex; align-items: center; gap: 15px;
+      background: white; padding: 18px 20px; border-radius: 15px;
+      cursor: pointer; transition: all 0.2s;
+      border: 3px solid transparent;
+    }
+    .easy-match-level:hover { transform: translateY(-2px); }
+    .easy-match-level.easy { border-color: #4CAF50; }
+    .easy-match-level.medium { border-color: #FF9800; }
+    .easy-match-level.hard { border-color: #E91E63; }
+    .easy-match-level .level-icon { font-size: 2rem; }
+    .easy-match-level .level-info { flex: 1; }
+    .easy-match-level .level-name { font-weight: 700; color: #333; }
+    .easy-match-level .level-desc { font-size: 0.85rem; color: #666; }
+    
+    /* Triple Match Game */
+    .triple-match-container {
+      background: white; border-radius: 20px;
+      padding: 15px; margin-top: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    .triple-columns {
+      display: flex; gap: 8px;
+    }
+    .triple-column {
+      flex: 1; display: flex; flex-direction: column; gap: 8px;
+    }
+    .triple-label {
+      text-align: center; font-weight: 700; padding: 6px 4px;
+      border-radius: 10px; font-size: 0.6rem;
+      line-height: 1.2;
+    }
+    .triple-label.inf { background: #E3F2FD; color: #1565C0; }
+    .triple-label.past { background: #FFF3E0; color: #E65100; }
+    .triple-label.pp { background: #F3E5F5; color: #7B1FA2; }
+    
+    .triple-card {
+      padding: 12px 6px; border-radius: 10px;
+      text-align: center; cursor: pointer;
+      transition: all 0.2s; border: 3px solid transparent;
+      font-family: 'Nunito', sans-serif; font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .triple-card.inf-card { background: #E3F2FD; color: #1565C0; }
+    .triple-card.past-card { background: #FFF3E0; color: #E65100; }
+    .triple-card.pp-card { background: #F3E5F5; color: #7B1FA2; }
+    
+    .triple-card:hover:not(.matched) { transform: scale(1.03); }
+    .triple-card.selected {
+      border-color: #333;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      transform: scale(1.05);
+    }
+    .triple-card.locked {
+      border-color: #4CAF50;
+      background: #C8E6C9 !important;
+      color: #2E7D32 !important;
+    }
+    .triple-card.matched {
+      opacity: 0.35; cursor: default;
+      text-decoration: line-through;
+    }
+    .triple-card.correct-flash {
+      animation: tripleCorrect 0.6s ease;
+      background: #4CAF50 !important;
+      color: white !important;
+    }
+    @keyframes tripleCorrect {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .triple-card .card-meaning {
+      font-size: 0.65rem; font-weight: 400;
+      opacity: 0.8; margin-top: 2px;
+    }
+    .triple-hint-bar {
+      background: linear-gradient(135deg, #FFF9C4, #FFECB3);
+      padding: 12px 15px; border-radius: 12px;
+      margin-bottom: 12px; text-align: center;
+      font-size: 0.9rem; color: #5D4037;
+    }
+    .triple-hint-bar .step {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 15px; margin: 0 3px;
+      font-weight: 700;
+    }
+    .triple-hint-bar .step.active { background: #4CAF50; color: white; }
+    .triple-hint-bar .step.done { background: #81C784; color: white; }
+    .triple-hint-bar .step.waiting { background: #E0E0E0; color: #999; }
+    .triple-score-bar {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-top: 15px;
+      padding: 12px 15px; background: #F5F5F5;
+      border-radius: 12px;
+    }
+    .triple-progress-dots {
+      display: flex; gap: 5px;
+    }
+    .triple-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #E0E0E0; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700;
+    }
+    .triple-dot.done { background: #4CAF50; color: white; }
+    
+    /* Sentence Quiz */
+    .sentence-quiz-card {
+      background: white; border-radius: 20px;
+      padding: 25px 20px; margin-top: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    .sentence-quiz-signal {
+      text-align: center; margin-bottom: 15px;
+    }
+    .signal-badge {
+      display: inline-block; padding: 8px 20px;
+      border-radius: 20px; font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .signal-badge.present {
+      background: #E8F5E9; color: #2E7D32;
+    }
+    .signal-badge.past {
+      background: #FFF3E0; color: #E65100;
+    }
+    .sentence-quiz-sentence {
+      font-size: 1.3rem; text-align: center;
+      padding: 20px; margin: 15px 0;
+      background: #F5F5F5; border-radius: 15px;
+      line-height: 1.6;
+    }
+    .sentence-quiz-sentence .blank {
+      display: inline-block; min-width: 80px;
+      border-bottom: 3px solid #667eea;
+      margin: 0 5px; color: #667eea;
+      font-weight: 700;
+    }
+    .sentence-quiz-meaning {
+      text-align: center; color: #666;
+      font-size: 0.95rem; margin-bottom: 20px;
+    }
+    .sentence-quiz-choices {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .sentence-choice-btn {
+      padding: 12px 10px; border-radius: 12px;
+      border: 3px solid #E0E0E0;
+      background: white; cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      transition: all 0.2s;
+    }
+    .sentence-choice-btn:hover {
+      border-color: #667eea; background: #F5F5FF;
+    }
+    .sentence-choice-btn.correct {
+      border-color: #4CAF50; background: #E8F5E9;
+      color: #2E7D32;
+    }
+    .sentence-choice-btn.wrong {
+      border-color: #F44336; background: #FFEBEE;
+      color: #C62828;
+    }
+    .sentence-choice-btn.show-correct {
+      border-color: #4CAF50; background: #E8F5E9;
+      color: #2E7D32;
+    }
+    .sentence-choice-btn .choice-label {
+      font-size: 0.7rem; color: #999;
+      margin-bottom: 2px; font-weight: 400;
+    }
+    .sentence-feedback {
+      margin-top: 20px; padding: 15px;
+      border-radius: 12px; text-align: center;
+    }
+    .sentence-feedback.correct { background: #E8F5E9; }
+    .sentence-feedback.wrong { background: #FFF3E0; }
+    .sentence-feedback .emoji { font-size: 2.5rem; margin-bottom: 8px; }
+    .sentence-feedback .message { font-weight: 700; margin-bottom: 5px; }
+    .sentence-feedback .explanation {
+      font-size: 0.9rem; color: #666;
+      margin-bottom: 15px;
+    }
+    
     .match-score {
       text-align: center; margin-top: 20px;
       background: white; padding: 15px; border-radius: 15px;
@@ -1367,6 +1878,14 @@ function showGameMenu() {
     '<div class="topic-icon">🎴</div>' +
     '<div class="topic-name">Flashcards</div>' +
     '</div>' +
+    '<div class="topic-card" onclick="showLearnScreen()" style="border-color:#4CAF50">' +
+    '<div class="topic-icon">📖</div>' +
+    '<div class="topic-name">Horrible List</div>' +
+    '</div>' +
+    '<div class="topic-card" onclick="startVerbMemory()" style="border-color:#2196F3">' +
+    '<div class="topic-icon">🧠</div>' +
+    '<div class="topic-name">Memory</div>' +
+    '</div>' +
     '</div>' +
     
     // Visual learning section
@@ -1559,6 +2078,1854 @@ function shuffleFlashcards() {
   flashcardIndex = 0;
   isFlipped = false;
   renderFlashcards();
+}
+
+// ============ IRREGULAR VERBS DATA (từ hình ảnh) ============
+var IRREGULAR_VERBS = {
+  groups: [
+    {
+      id: 'important',
+      name: '1. Động từ quan trọng',
+      pattern: 'IMPORTANT VERBS',
+      color: 'pattern-important',
+      tip: '🌟 Đây là những động từ dùng NHIỀU NHẤT! Học thuộc nhóm này trước nhé!',
+      verbs: [
+        { base: 'be', past: 'was/were', pp: 'been', vn: 'thì, là, ở' },
+        { base: 'do', past: 'did', pp: 'done', vn: 'làm' },
+        { base: 'have', past: 'had', pp: 'had', vn: 'có' },
+        { base: 'come', past: 'came', pp: 'come', vn: 'đến' },
+        { base: 'get', past: 'got', pp: 'got', vn: 'được, lấy' },
+        { base: 'go', past: 'went', pp: 'gone', vn: 'đi' },
+        { base: 'make', past: 'made', pp: 'made', vn: 'làm, chế tạo' },
+        { base: 'say', past: 'said', pp: 'said', vn: 'nói' },
+        { base: 'tell', past: 'told', pp: 'told', vn: 'kể, bảo' }
+      ]
+    },
+    {
+      id: 'perception',
+      name: '2. Giác quan',
+      pattern: 'PERCEPTION VERBS',
+      color: 'pattern-perception',
+      tip: '👀👂👃 Nhóm này liên quan đến các giác quan: nhìn, nghe, ngửi',
+      verbs: [
+        { base: 'hear', past: 'heard', pp: 'heard', vn: 'nghe' },
+        { base: 'see', past: 'saw', pp: 'seen', vn: 'thấy, nhìn' },
+        { base: 'smell', past: 'smelt', pp: 'smelt', vn: 'ngửi' }
+      ]
+    },
+    {
+      id: 'nochange',
+      name: '3. Không đổi',
+      pattern: 'NO CHANGE',
+      color: 'pattern-no-change',
+      tip: '😎 EASY! Cả 3 dạng giống hệt nhau - không cần nhớ gì cả!',
+      verbs: [
+        { base: 'cost', past: 'cost', pp: 'cost', vn: 'tốn (tiền)' },
+        { base: 'cut', past: 'cut', pp: 'cut', vn: 'cắt' },
+        { base: 'hit', past: 'hit', pp: 'hit', vn: 'đánh, đập' },
+        { base: 'hurt', past: 'hurt', pp: 'hurt', vn: 'đau, làm đau' },
+        { base: 'let', past: 'let', pp: 'let', vn: 'để, cho phép' },
+        { base: 'put', past: 'put', pp: 'put', vn: 'đặt, để' },
+        { base: 'read', past: 'read', pp: 'read', vn: 'đọc (phát âm khác)' },
+        { base: 'shut', past: 'shut', pp: 'shut', vn: 'đóng' }
+      ]
+    },
+    {
+      id: 'vowel',
+      name: '4. I → O → E/EN',
+      pattern: 'I - E / O - E / I - EN',
+      color: 'pattern-vowel',
+      tip: '🔤 Quy luật nguyên âm: i → o → e/en. Ví dụ: drIve → drOve → drivEN',
+      verbs: [
+        { base: 'bite', past: 'bit', pp: 'bitten', vn: 'cắn' },
+        { base: 'break', past: 'broke', pp: 'broken', vn: 'vỡ, bẻ gãy' },
+        { base: 'choose', past: 'chose', pp: 'chosen', vn: 'chọn' },
+        { base: 'drive', past: 'drove', pp: 'driven', vn: 'lái xe' },
+        { base: 'eat', past: 'ate', pp: 'eaten', vn: 'ăn' },
+        { base: 'fall', past: 'fell', pp: 'fallen', vn: 'ngã, rơi' },
+        { base: 'give', past: 'gave', pp: 'given', vn: 'cho, tặng' },
+        { base: 'forget', past: 'forgot', pp: 'forgotten', vn: 'quên' },
+        { base: 'forgive', past: 'forgave', pp: 'forgiven', vn: 'tha thứ' },
+        { base: 'freeze', past: 'froze', pp: 'frozen', vn: 'đông đá' },
+        { base: 'hide', past: 'hid', pp: 'hidden', vn: 'giấu, trốn' },
+        { base: 'ride', past: 'rode', pp: 'ridden', vn: 'cưỡi, đi (xe)' },
+        { base: 'rise', past: 'rose', pp: 'risen', vn: 'mọc, nổi lên' },
+        { base: 'shake', past: 'shook', pp: 'shaken', vn: 'lắc' },
+        { base: 'speak', past: 'spoke', pp: 'spoken', vn: 'nói' },
+        { base: 'steal', past: 'stole', pp: 'stolen', vn: 'ăn cắp' },
+        { base: 'take', past: 'took', pp: 'taken', vn: 'lấy, mang' },
+        { base: 'wake', past: 'woke', pp: 'woken', vn: 'thức dậy' },
+        { base: 'write', past: 'wrote', pp: 'written', vn: 'viết' }
+      ]
+    },
+    {
+      id: 'drink',
+      name: '5. I → U*-A → U',
+      pattern: 'I / U* - A / U',
+      color: 'pattern-drink',
+      tip: '🎵 Nhớ theo nhịp: drINK → drANK → drUNK. Vần như bài hát!',
+      verbs: [
+        { base: 'begin', past: 'began', pp: 'begun', vn: 'bắt đầu' },
+        { base: 'drink', past: 'drank', pp: 'drunk', vn: 'uống' },
+        { base: 'ring', past: 'rang', pp: 'rung', vn: 'reo, rung chuông' },
+        { base: 'sing', past: 'sang', pp: 'sung', vn: 'hát' },
+        { base: 'swim', past: 'swam', pp: 'swum', vn: 'bơi' },
+        { base: 'swing', past: 'swung', pp: 'swung', vn: 'đung đưa' }
+      ]
+    },
+    {
+      id: 'owewown',
+      name: '6. OW → EW → OWN',
+      pattern: 'AW - OW / EW / OWN',
+      color: 'pattern-ow-ew',
+      tip: '💨 Quy luật: OW → EW → OWN. Ví dụ: blOW → blEW → blOWN',
+      verbs: [
+        { base: 'blow', past: 'blew', pp: 'blown', vn: 'thổi' },
+        { base: 'draw', past: 'drew', pp: 'drawn', vn: 'vẽ' },
+        { base: 'fly', past: 'flew', pp: 'flown', vn: 'bay' },
+        { base: 'grow', past: 'grew', pp: 'grown', vn: 'lớn lên, trồng' },
+        { base: 'know', past: 'knew', pp: 'known', vn: 'biết' },
+        { base: 'throw', past: 'threw', pp: 'thrown', vn: 'ném' }
+      ]
+    },
+    {
+      id: 'ought',
+      name: '7. -AUGHT / -OUGHT',
+      pattern: '-AUGHT / -OUGHT',
+      color: 'pattern-ought',
+      tip: '🎯 Kết thúc bằng -OUGHT hoặc -AUGHT. Phát âm: /ɔːt/',
+      verbs: [
+        { base: 'bring', past: 'brought', pp: 'brought', vn: 'mang đến' },
+        { base: 'buy', past: 'bought', pp: 'bought', vn: 'mua' },
+        { base: 'catch', past: 'caught', pp: 'caught', vn: 'bắt' },
+        { base: 'fight', past: 'fought', pp: 'fought', vn: 'chiến đấu' },
+        { base: 'teach', past: 'taught', pp: 'taught', vn: 'dạy' },
+        { base: 'think', past: 'thought', pp: 'thought', vn: 'nghĩ' }
+      ]
+    },
+    {
+      id: 'stand',
+      name: '8. -STAND → -STOOD',
+      pattern: '-STAND / -STOOD / -STOOD',
+      color: 'pattern-stand',
+      tip: '🧍 Liên quan đến ĐỨNG: stand → stood → stood',
+      verbs: [
+        { base: 'stand', past: 'stood', pp: 'stood', vn: 'đứng' },
+        { base: 'understand', past: 'understood', pp: 'understood', vn: 'hiểu' }
+      ]
+    },
+    {
+      id: 'ee',
+      name: '9. -EE- → -E- → -E-',
+      pattern: '-EE- / -E- / -E-',
+      color: 'pattern-ee',
+      tip: '📖 Nguyên âm EE rút ngắn thành E. Ví dụ: fEEd → fEd → fEd',
+      verbs: [
+        { base: 'bleed', past: 'bled', pp: 'bled', vn: 'chảy máu' },
+        { base: 'feed', past: 'fed', pp: 'fed', vn: 'cho ăn' },
+        { base: 'feel', past: 'felt', pp: 'felt', vn: 'cảm thấy' },
+        { base: 'keep', past: 'kept', pp: 'kept', vn: 'giữ' },
+        { base: 'meet', past: 'met', pp: 'met', vn: 'gặp' },
+        { base: 'sleep', past: 'slept', pp: 'slept', vn: 'ngủ' },
+        { base: 'sweep', past: 'swept', pp: 'swept', vn: 'quét' }
+      ]
+    },
+    {
+      id: 'dt',
+      name: '10. -D → -T → -T',
+      pattern: '-D / -T / -T',
+      color: 'pattern-d-t',
+      tip: '🔄 Đổi D thành T. Ví dụ: senD → senT → senT',
+      verbs: [
+        { base: 'build', past: 'built', pp: 'built', vn: 'xây dựng' },
+        { base: 'lend', past: 'lent', pp: 'lent', vn: 'cho mượn' },
+        { base: 'send', past: 'sent', pp: 'sent', vn: 'gửi' },
+        { base: 'spend', past: 'spent', pp: 'spent', vn: 'tiêu (tiền/thời gian)' }
+      ]
+    },
+    {
+      id: 't',
+      name: '11. Kết thúc -T',
+      pattern: '-T / -T',
+      color: 'pattern-t',
+      tip: '✨ Past và PP đều kết thúc bằng -T',
+      verbs: [
+        { base: 'burn', past: 'burnt', pp: 'burnt', vn: 'cháy, đốt' },
+        { base: 'dream', past: 'dreamt', pp: 'dreamt', vn: 'mơ' },
+        { base: 'learn', past: 'learnt', pp: 'learnt', vn: 'học' },
+        { base: 'leave', past: 'left', pp: 'left', vn: 'rời đi' },
+        { base: 'light', past: 'lit', pp: 'lit', vn: 'thắp sáng' },
+        { base: 'lose', past: 'lost', pp: 'lost', vn: 'mất, thua' },
+        { base: 'mean', past: 'meant', pp: 'meant', vn: 'có nghĩa' },
+        { base: 'shoot', past: 'shot', pp: 'shot', vn: 'bắn' },
+        { base: 'sit', past: 'sat', pp: 'sat', vn: 'ngồi' },
+        { base: 'spell', past: 'spelt', pp: 'spelt', vn: 'đánh vần' }
+      ]
+    },
+    {
+      id: 'misc',
+      name: '12. Hỗn hợp',
+      pattern: 'MISCELLANEOUS',
+      color: 'pattern-misc',
+      tip: '🎲 Nhóm đặc biệt - cần nhớ riêng từng từ!',
+      verbs: [
+        { base: 'become', past: 'became', pp: 'become', vn: 'trở thành' },
+        { base: 'find', past: 'found', pp: 'found', vn: 'tìm thấy' },
+        { base: 'hang', past: 'hung', pp: 'hung', vn: 'treo' },
+        { base: 'hold', past: 'held', pp: 'held', vn: 'cầm, giữ' },
+        { base: 'lay', past: 'laid', pp: 'laid', vn: 'đặt, để' },
+        { base: 'lie', past: 'lay', pp: 'lain', vn: 'nằm' },
+        { base: 'pay', past: 'paid', pp: 'paid', vn: 'trả tiền' },
+        { base: 'run', past: 'ran', pp: 'run', vn: 'chạy' },
+        { base: 'sell', past: 'sold', pp: 'sold', vn: 'bán' },
+        { base: 'shine', past: 'shone', pp: 'shone', vn: 'chiếu sáng' },
+        { base: 'show', past: 'showed', pp: 'shown', vn: 'cho xem' },
+        { base: 'wear', past: 'wore', pp: 'worn', vn: 'mặc' },
+        { base: 'win', past: 'won', pp: 'won', vn: 'thắng' }
+      ]
+    }
+  ]
+};
+
+// Study state
+var currentStudyGroup = 'all';
+var expandedGroups = ['important'];
+var studyQuizState = {
+  active: false,
+  verbs: [],
+  currentIndex: 0,
+  score: 0,
+  answers: [],
+  mode: 'past' // 'past' or 'pp'
+};
+var speedGameState = {
+  active: false,
+  timer: 30,
+  score: 0,
+  currentVerb: null,
+  intervalId: null
+};
+
+// ============ STUDY SCREEN ============
+function showLearnScreen() {
+  playSound('click');
+  
+  var html = '<div class="progress-header" style="margin-bottom:10px">' +
+    '<button class="back-btn" onclick="goHome()">← Home</button>' +
+    '<div style="color:white;font-weight:700;font-size:1.1rem">📚 Học Tập</div>' +
+    '<div></div></div>' +
+    
+    '<div class="study-header">' +
+    '<div class="study-title">📖 Horrible List</div>' +
+    '<div class="study-subtitle">Danh sách động từ bất quy tắc</div>' +
+    '</div>' +
+    
+    '<div class="study-tip-box">' +
+    '<div class="study-tip-icon">💡</div>' +
+    '<div class="study-tip-text">' +
+    '<strong>Mẹo học nhanh:</strong> Học theo nhóm có quy luật giống nhau sẽ dễ nhớ hơn! ' +
+    'Bắt đầu với nhóm <strong>"Không đổi"</strong> vì cả 3 dạng giống nhau.' +
+    '</div></div>' +
+    
+    // Study modes
+    '<div class="study-modes">' +
+    '<button class="study-mode-btn" onclick="startEasyMatch()" style="background:#E8F5E9;color:#2E7D32">' +
+    '<span class="icon">🎯</span>' +
+    '<span>Easy Match</span>' +
+    '</button>' +
+    '<button class="study-mode-btn" onclick="startTripleMatch()" style="background:#E3F2FD;color:#1565C0">' +
+    '<span class="icon">🔗</span>' +
+    '<span>Triple Match</span>' +
+    '</button>' +
+    '<button class="study-mode-btn" onclick="startVerbSentenceQuiz()" style="background:#FFF3E0;color:#E65100">' +
+    '<span class="icon">📝</span>' +
+    '<span>Trắc nghiệm</span>' +
+    '</button>' +
+    '<button class="study-mode-btn speed" onclick="startSpeedChallenge()">' +
+    '<span class="icon">⚡</span>' +
+    '<span>Thử thách</span>' +
+    '</button>' +
+    '</div>' +
+    
+    // Group selector
+    '<div class="group-selector">' +
+    '<button class="group-btn' + (currentStudyGroup === 'all' ? ' active' : '') + '" onclick="filterStudyGroup(\'all\')">Tất cả</button>';
+  
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    html += '<button class="group-btn' + (currentStudyGroup === group.id ? ' active' : '') + '" onclick="filterStudyGroup(\'' + group.id + '\')">' + 
+      group.name.split('.')[0] + '.' + group.pattern.substring(0, 8) + '</button>';
+  });
+  
+  html += '</div>';
+  
+  // Verb groups
+  var groupsToShow = currentStudyGroup === 'all' ? IRREGULAR_VERBS.groups : 
+    IRREGULAR_VERBS.groups.filter(function(g) { return g.id === currentStudyGroup; });
+  
+  groupsToShow.forEach(function(group) {
+    var isExpanded = expandedGroups.indexOf(group.id) >= 0;
+    html += '<div class="verb-group-card">' +
+      '<div class="verb-group-header ' + group.color + (isExpanded ? ' expanded' : '') + '" onclick="toggleVerbGroup(\'' + group.id + '\')">' +
+      '<div class="verb-group-title">' +
+      '<span>' + group.name + '</span>' +
+      '<span class="verb-group-count">' + group.verbs.length + ' từ</span>' +
+      '</div>' +
+      '<span class="verb-group-arrow' + (isExpanded ? ' rotated' : '') + '">▼</span>' +
+      '</div>' +
+      '<div class="verb-group-content' + (isExpanded ? ' expanded' : '') + '">' +
+      '<div class="study-tip-box" style="margin:15px;background:linear-gradient(135deg,#E3F2FD,#BBDEFB)">' +
+      '<div class="study-tip-icon">💡</div>' +
+      '<div class="study-tip-text">' + group.tip + '</div>' +
+      '</div>' +
+      '<table class="verb-table">' +
+      '<tr><th>Infinitive</th><th>Simple Past</th><th>Past Participle</th><th>Nghĩa 🇻🇳</th></tr>';
+    
+    group.verbs.forEach(function(verb) {
+      html += '<tr>' +
+        '<td>' + verb.base + '</td>' +
+        '<td>' + verb.past + '</td>' +
+        '<td>' + verb.pp + '</td>' +
+        '<td>' + verb.vn + '</td>' +
+        '</tr>';
+    });
+    
+    html += '</table></div></div>';
+  });
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function toggleVerbGroup(groupId) {
+  playSound('click');
+  var index = expandedGroups.indexOf(groupId);
+  if (index >= 0) {
+    expandedGroups.splice(index, 1);
+  } else {
+    expandedGroups.push(groupId);
+  }
+  showLearnScreen();
+}
+
+function filterStudyGroup(groupId) {
+  playSound('click');
+  currentStudyGroup = groupId;
+  if (groupId !== 'all') {
+    expandedGroups = [groupId];
+  }
+  showLearnScreen();
+}
+
+// ============ STUDY QUIZ ============
+function startStudyQuiz(mode) {
+  playSound('click');
+  
+  // Collect all verbs
+  var allVerbs = [];
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    group.verbs.forEach(function(verb) {
+      allVerbs.push(verb);
+    });
+  });
+  
+  studyQuizState = {
+    active: true,
+    verbs: shuffle(allVerbs).slice(0, 10),
+    currentIndex: 0,
+    score: 0,
+    answers: [],
+    mode: mode
+  };
+  
+  renderStudyQuiz();
+}
+
+function renderStudyQuiz() {
+  var state = studyQuizState;
+  if (state.currentIndex >= state.verbs.length) {
+    showStudyQuizResult();
+    return;
+  }
+  
+  var verb = state.verbs[state.currentIndex];
+  var questionText = state.mode === 'past' ? 'Dạng QUÁ KHỨ của:' : 'Dạng PAST PARTICIPLE của:';
+  var answer = state.mode === 'past' ? verb.past : verb.pp;
+  
+  var dotsHtml = '';
+  for (var i = 0; i < state.verbs.length; i++) {
+    var dotClass = 'quiz-dot';
+    if (i < state.currentIndex) {
+      dotClass += state.answers[i] ? ' done' : ' wrong-dot';
+    } else if (i === state.currentIndex) {
+      dotClass += ' current';
+    }
+    dotsHtml += '<div class="' + dotClass + '"></div>';
+  }
+  
+  var html = '<div class="quiz-overlay" onclick="closeStudyQuiz(event)">' +
+    '<div class="quiz-modal" onclick="event.stopPropagation()">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">' +
+    '<button class="back-btn" onclick="closeStudyQuiz()" style="padding:8px 15px">✕</button>' +
+    '<div style="font-weight:700;color:#666">' + (state.currentIndex + 1) + ' / ' + state.verbs.length + '</div>' +
+    '<div style="font-weight:700;color:#4CAF50">⭐ ' + state.score + '</div>' +
+    '</div>' +
+    '<div class="quiz-question">' + questionText + '</div>' +
+    '<div class="quiz-verb">' + verb.base + '</div>' +
+    '<div style="color:#666;margin-bottom:15px">(' + verb.vn + ')</div>' +
+    '<input type="text" class="quiz-input" id="quizInput" placeholder="Nhập câu trả lời..." autocomplete="off" onkeypress="if(event.key===\'Enter\')checkStudyQuizAnswer()">' +
+    '<div class="quiz-hint">💡 Gõ và nhấn Enter</div>' +
+    '<div id="quizFeedback"></div>' +
+    '<div class="quiz-progress">' + dotsHtml + '</div>' +
+    '</div></div>';
+  
+  document.getElementById('learnScreen').innerHTML += '<div id="quizOverlay">' + html + '</div>';
+  setTimeout(function() {
+    var input = document.getElementById('quizInput');
+    if (input) input.focus();
+  }, 100);
+}
+
+function checkStudyQuizAnswer() {
+  var input = document.getElementById('quizInput');
+  var userAnswer = input.value.trim().toLowerCase();
+  var verb = studyQuizState.verbs[studyQuizState.currentIndex];
+  var correctAnswer = studyQuizState.mode === 'past' ? verb.past : verb.pp;
+  
+  // Handle multiple correct answers (e.g., "was/were")
+  var correctAnswers = correctAnswer.toLowerCase().split('/').map(function(a) { return a.trim(); });
+  var isCorrect = correctAnswers.indexOf(userAnswer) >= 0;
+  
+  studyQuizState.answers.push(isCorrect);
+  
+  if (isCorrect) {
+    studyQuizState.score++;
+    input.classList.add('correct');
+    playSound('correct');
+  } else {
+    input.classList.add('wrong');
+    playSound('wrong');
+  }
+  
+  var feedback = '<div style="margin-top:15px;padding:15px;border-radius:12px;' + 
+    (isCorrect ? 'background:#E8F5E9' : 'background:#FFEBEE') + '">' +
+    '<div style="font-size:2rem;margin-bottom:8px">' + (isCorrect ? '🎉' : '💪') + '</div>' +
+    '<div style="font-weight:700;color:' + (isCorrect ? '#2E7D32' : '#C62828') + '">' +
+    (isCorrect ? 'Chính xác!' : 'Đáp án: ' + correctAnswer) + '</div>' +
+    '</div>';
+  
+  document.getElementById('quizFeedback').innerHTML = feedback;
+  input.disabled = true;
+  
+  setTimeout(function() {
+    studyQuizState.currentIndex++;
+    document.getElementById('quizOverlay').remove();
+    if (studyQuizState.currentIndex < studyQuizState.verbs.length) {
+      renderStudyQuiz();
+    } else {
+      showStudyQuizResult();
+    }
+  }, 1500);
+}
+
+function showStudyQuizResult() {
+  var state = studyQuizState;
+  var percentage = Math.round((state.score / state.verbs.length) * 100);
+  var emoji = percentage >= 80 ? '🏆' : percentage >= 60 ? '⭐' : percentage >= 40 ? '💪' : '📚';
+  var message = percentage >= 80 ? 'Xuất sắc! Con giỏi lắm!' : 
+                percentage >= 60 ? 'Tốt lắm! Tiếp tục cố gắng nhé!' :
+                percentage >= 40 ? 'Cố lên! Ôn thêm nhé con!' : 'Cần ôn lại nhiều hơn nha!';
+  
+  playSound('complete');
+  showConfetti();
+  
+  var html = '<div class="quiz-overlay">' +
+    '<div class="quiz-modal">' +
+    '<div style="font-size:80px;margin-bottom:15px">' + emoji + '</div>' +
+    '<div style="font-size:1.5rem;font-weight:800;color:#333;margin-bottom:10px">' + message + '</div>' +
+    '<div style="font-size:3rem;font-weight:800;color:#667eea;margin:20px 0">' + state.score + '/' + state.verbs.length + '</div>' +
+    '<div style="font-size:1.1rem;color:#666;margin-bottom:25px">' + percentage + '% chính xác</div>' +
+    '<button class="next-btn" onclick="closeStudyQuiz();startStudyQuiz(\'' + state.mode + '\')">Chơi lại 🔄</button>' +
+    '<button class="next-btn" style="margin-top:10px;background:#F5F5F5;color:#333" onclick="closeStudyQuiz();showLearnScreen()">Về học tập 📚</button>' +
+    '</div></div>';
+  
+  document.getElementById('learnScreen').innerHTML += '<div id="quizOverlay">' + html + '</div>';
+}
+
+function closeStudyQuiz(event) {
+  if (event && event.target.className !== 'quiz-overlay') return;
+  var overlay = document.getElementById('quizOverlay');
+  if (overlay) overlay.remove();
+  studyQuizState.active = false;
+}
+
+// ============ SPEED CHALLENGE ============
+function startSpeedChallenge() {
+  playSound('click');
+  
+  var allVerbs = [];
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    group.verbs.forEach(function(verb) {
+      allVerbs.push(verb);
+    });
+  });
+  
+  speedGameState = {
+    active: true,
+    timer: 30,
+    score: 0,
+    verbs: shuffle(allVerbs),
+    currentIndex: 0
+  };
+  
+  renderSpeedGame();
+  
+  speedGameState.intervalId = setInterval(function() {
+    speedGameState.timer--;
+    updateSpeedTimer();
+    if (speedGameState.timer <= 0) {
+      endSpeedGame();
+    }
+  }, 1000);
+}
+
+function renderSpeedGame() {
+  var state = speedGameState;
+  var verb = state.verbs[state.currentIndex % state.verbs.length];
+  
+  var timerClass = 'speed-timer';
+  if (state.timer <= 10) timerClass += ' warning';
+  if (state.timer <= 5) timerClass += ' danger';
+  
+  var html = '<div class="progress-header" style="margin-bottom:10px">' +
+    '<button class="back-btn" onclick="endSpeedGame()">← Thoát</button>' +
+    '<div style="color:white;font-weight:700">⚡ Thử thách tốc độ</div>' +
+    '<div></div></div>' +
+    
+    '<div class="' + timerClass + '" id="speedTimer">' + state.timer + '</div>' +
+    '<div class="speed-score">🌟 Điểm: ' + state.score + '</div>' +
+    
+    '<div class="quiz-modal" style="margin:0 auto">' +
+    '<div class="quiz-question">Dạng QUÁ KHỨ của:</div>' +
+    '<div class="quiz-verb">' + verb.base + '</div>' +
+    '<div style="color:#666;margin-bottom:15px">(' + verb.vn + ')</div>' +
+    '<input type="text" class="quiz-input" id="speedInput" placeholder="Gõ nhanh!" autocomplete="off" onkeypress="if(event.key===\'Enter\')checkSpeedAnswer()">' +
+    '<div id="speedFeedback"></div>' +
+    '</div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  setTimeout(function() {
+    var input = document.getElementById('speedInput');
+    if (input) input.focus();
+  }, 50);
+}
+
+function updateSpeedTimer() {
+  var timerEl = document.getElementById('speedTimer');
+  if (timerEl) {
+    timerEl.textContent = speedGameState.timer;
+    timerEl.className = 'speed-timer';
+    if (speedGameState.timer <= 10) timerEl.className += ' warning';
+    if (speedGameState.timer <= 5) timerEl.className += ' danger';
+  }
+}
+
+function checkSpeedAnswer() {
+  var input = document.getElementById('speedInput');
+  var userAnswer = input.value.trim().toLowerCase();
+  var verb = speedGameState.verbs[speedGameState.currentIndex % speedGameState.verbs.length];
+  var correctAnswers = verb.past.toLowerCase().split('/').map(function(a) { return a.trim(); });
+  
+  if (correctAnswers.indexOf(userAnswer) >= 0) {
+    speedGameState.score++;
+    playSound('correct');
+  } else {
+    playSound('wrong');
+  }
+  
+  speedGameState.currentIndex++;
+  renderSpeedGame();
+}
+
+function endSpeedGame() {
+  if (speedGameState.intervalId) {
+    clearInterval(speedGameState.intervalId);
+  }
+  
+  var score = speedGameState.score;
+  var emoji = score >= 15 ? '🏆' : score >= 10 ? '⭐' : score >= 5 ? '💪' : '📚';
+  var message = score >= 15 ? 'Siêu tốc độ!' : score >= 10 ? 'Tốt lắm!' : score >= 5 ? 'Cố lên!' : 'Luyện thêm nhé!';
+  
+  playSound('complete');
+  if (score >= 10) showConfetti();
+  
+  var html = '<div class="result-content">' +
+    '<div class="result-card">' +
+    '<div class="result-emoji">' + emoji + '</div>' +
+    '<div class="result-title">' + message + '</div>' +
+    '<div style="font-size:3rem;font-weight:800;color:#667eea;margin:20px 0">🌟 ' + score + '</div>' +
+    '<div class="result-message">trong 30 giây</div>' +
+    '<div class="result-buttons">' +
+    '<button class="result-btn primary" onclick="startSpeedChallenge()">Chơi lại ⚡</button>' +
+    '<button class="result-btn secondary" onclick="showLearnScreen()">Về học tập 📚</button>' +
+    '</div></div></div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+  speedGameState.active = false;
+}
+
+// ============ MEMORY GAME ============
+var memoryGameState = {
+  cards: [],
+  flipped: [],
+  matched: [],
+  moves: 0
+};
+
+function startVerbMemory() {
+  playSound('click');
+  
+  var allVerbs = [];
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    group.verbs.forEach(function(verb) {
+      allVerbs.push(verb);
+    });
+  });
+  
+  var selectedVerbs = shuffle(allVerbs).slice(0, 6);
+  var cards = [];
+  
+  selectedVerbs.forEach(function(verb, i) {
+    cards.push({ id: 'base-' + i, text: verb.base, pairId: i, type: 'base' });
+    cards.push({ id: 'past-' + i, text: verb.past, pairId: i, type: 'past' });
+  });
+  
+  memoryGameState = {
+    cards: shuffle(cards),
+    flipped: [],
+    matched: [],
+    moves: 0
+  };
+  
+  renderMemoryGame();
+}
+
+function renderMemoryGame() {
+  var state = memoryGameState;
+  
+  var html = '<div class="progress-header" style="margin-bottom:15px">' +
+    '<button class="back-btn" onclick="showLearnScreen()">← Back</button>' +
+    '<div style="color:white;font-weight:700">🧠 Memory Game</div>' +
+    '<div style="color:white;font-weight:700">Lượt: ' + state.moves + '</div>' +
+    '</div>' +
+    
+    '<div style="text-align:center;color:white;margin-bottom:15px">' +
+    '🟢 Ghép từ gốc với dạng quá khứ!' +
+    '</div>' +
+    
+    '<div class="memory-grid">';
+  
+  state.cards.forEach(function(card, index) {
+    var isFlipped = state.flipped.indexOf(index) >= 0;
+    var isMatched = state.matched.indexOf(card.pairId) >= 0;
+    
+    var cardClass = 'memory-card';
+    if (isFlipped || isMatched) cardClass += ' flipped';
+    if (isMatched) cardClass += ' matched';
+    
+    html += '<button class="' + cardClass + '" ' +
+      (isMatched ? 'disabled' : 'onclick="flipMemoryCard(' + index + ')"') + '>' +
+      (isFlipped || isMatched ? card.text : '❓') +
+      '</button>';
+  });
+  
+  html += '</div>';
+  
+  if (state.matched.length >= 6) {
+    html += '<div style="text-align:center;margin-top:25px">' +
+      '<div style="font-size:60px;margin-bottom:15px">🎉</div>' +
+      '<div style="color:white;font-size:1.5rem;font-weight:700;margin-bottom:10px">Hoàn thành!</div>' +
+      '<div style="color:rgba(255,255,255,0.8);margin-bottom:20px">Số lượt: ' + state.moves + '</div>' +
+      '<button class="next-btn" onclick="startVerbMemory()">Chơi lại 🔄</button>' +
+      '</div>';
+  }
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function flipMemoryCard(index) {
+  var state = memoryGameState;
+  
+  if (state.flipped.length >= 2) return;
+  if (state.flipped.indexOf(index) >= 0) return;
+  if (state.matched.indexOf(state.cards[index].pairId) >= 0) return;
+  
+  playSound('flip');
+  state.flipped.push(index);
+  renderMemoryGame();
+  
+  if (state.flipped.length === 2) {
+    state.moves++;
+    var card1 = state.cards[state.flipped[0]];
+    var card2 = state.cards[state.flipped[1]];
+    
+    if (card1.pairId === card2.pairId && card1.type !== card2.type) {
+      // Match!
+      setTimeout(function() {
+        playSound('correct');
+        state.matched.push(card1.pairId);
+        state.flipped = [];
+        renderMemoryGame();
+        if (state.matched.length >= 6) {
+          playSound('complete');
+          showConfetti();
+        }
+      }, 500);
+    } else {
+      // No match
+      setTimeout(function() {
+        playSound('wrong');
+        state.flipped = [];
+        renderMemoryGame();
+      }, 1000);
+    }
+  }
+}
+
+// ============ EASY MATCH GAME ============
+var easyMatchState = {
+  verbs: [],
+  baseCards: [],
+  pastCards: [],
+  selectedBase: null,
+  matched: [],
+  level: 4
+};
+
+function startEasyMatch() {
+  playSound('click');
+  
+  // Show level selection
+  var html = '<div class="progress-header" style="margin-bottom:15px">' +
+    '<button class="back-btn" onclick="showLearnScreen()">← Back</button>' +
+    '<div style="color:white;font-weight:700;font-size:1.1rem">🎯 Easy Match</div>' +
+    '<div></div></div>' +
+    
+    '<div class="easy-match-container">' +
+    '<div class="easy-match-header">' +
+    '<div style="font-size:50px;margin-bottom:10px">🎯</div>' +
+    '<div class="easy-match-title">Chọn mức độ</div>' +
+    '<div class="easy-match-hint">Ghép từ gốc với từ quá khứ</div>' +
+    '</div>' +
+    
+    '<div class="easy-match-level-select">' +
+    '<div class="easy-match-level easy" onclick="startEasyMatchGame(4)">' +
+    '<div class="level-icon">🌱</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Dễ</div>' +
+    '<div class="level-desc">4 cặp từ - Có gợi ý nghĩa</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level medium" onclick="startEasyMatchGame(6)">' +
+    '<div class="level-icon">🌿</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Vừa</div>' +
+    '<div class="level-desc">6 cặp từ - Có gợi ý nghĩa</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level hard" onclick="startEasyMatchGame(8)">' +
+    '<div class="level-icon">🌳</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Khó</div>' +
+    '<div class="level-desc">8 cặp từ - Không gợi ý</div>' +
+    '</div></div>' +
+    '</div></div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function startEasyMatchGame(level) {
+  playSound('click');
+  
+  // Collect all verbs
+  var allVerbs = [];
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    group.verbs.forEach(function(verb) {
+      // Only use verbs where past is different from base
+      if (verb.base !== verb.past) {
+        allVerbs.push(verb);
+      }
+    });
+  });
+  
+  var selectedVerbs = shuffle(allVerbs).slice(0, level);
+  
+  easyMatchState = {
+    verbs: selectedVerbs,
+    baseCards: shuffle(selectedVerbs.map(function(v, i) { return { verb: v, index: i }; })),
+    pastCards: shuffle(selectedVerbs.map(function(v, i) { return { verb: v, index: i }; })),
+    selectedBase: null,
+    matched: [],
+    level: level,
+    showMeaning: level <= 6
+  };
+  
+  renderEasyMatch();
+}
+
+function renderEasyMatch() {
+  var state = easyMatchState;
+  
+  var html = '<div class="progress-header" style="margin-bottom:15px">' +
+    '<button class="back-btn" onclick="startEasyMatch()">← Back</button>' +
+    '<div style="color:white;font-weight:700">🎯 Easy Match</div>' +
+    '<div style="color:white;font-weight:700">✓ ' + state.matched.length + '/' + state.level + '</div>' +
+    '</div>' +
+    
+    '<div style="text-align:center;color:white;margin-bottom:10px;padding:10px 15px;background:rgba(255,255,255,0.15);border-radius:12px">' +
+    '<span style="font-size:1.1rem">' +
+    (state.selectedBase === null ? '👆 Chọn từ <strong style="color:#A5D6A7">GỐC</strong> (bên trái)' : 
+    '👉 Chọn từ <strong style="color:#FFCC80">QUÁ KHỨ</strong> tương ứng') +
+    '</span></div>' +
+    
+    '<div class="easy-match-container">' +
+    '<div class="easy-match-columns">' +
+    
+    // Base column
+    '<div class="easy-match-column">' +
+    '<div class="easy-match-label base">☀️ Từ gốc</div>';
+  
+  state.baseCards.forEach(function(card) {
+    var isMatched = state.matched.indexOf(card.index) >= 0;
+    var isSelected = state.selectedBase === card.index;
+    var cardClass = 'easy-match-card base-card';
+    if (isMatched) cardClass += ' matched';
+    if (isSelected) cardClass += ' selected';
+    
+    html += '<div class="' + cardClass + '" ' +
+      'id="base-' + card.index + '" ' +
+      (isMatched ? '' : 'onclick="selectEasyMatchBase(' + card.index + ')"') + '>' +
+      '<div class="verb-text">' + card.verb.base + '</div>' +
+      (state.showMeaning ? '<div class="verb-meaning">' + card.verb.vn + '</div>' : '') +
+      '</div>';
+  });
+  
+  html += '</div>' +
+    
+    // Past column
+    '<div class="easy-match-column">' +
+    '<div class="easy-match-label past">🌙 Quá khứ</div>';
+  
+  state.pastCards.forEach(function(card) {
+    var isMatched = state.matched.indexOf(card.index) >= 0;
+    var cardClass = 'easy-match-card past-card';
+    if (isMatched) cardClass += ' matched';
+    
+    html += '<div class="' + cardClass + '" ' +
+      'id="past-' + card.index + '" ' +
+      (isMatched ? '' : 'onclick="selectEasyMatchPast(' + card.index + ')"') + '>' +
+      '<div class="verb-text">' + card.verb.past + '</div>' +
+      '</div>';
+  });
+  
+  html += '</div></div>' +
+    
+    // Score section
+    '<div class="easy-match-score">' +
+    '<div class="easy-match-progress">';
+  
+  for (var i = 0; i < state.level; i++) {
+    html += '<div class="easy-match-dot' + (i < state.matched.length ? ' done' : '') + '">' +
+      (i < state.matched.length ? '✓' : (i + 1)) + '</div>';
+  }
+  
+  html += '</div>' +
+    '<div style="color:#2E7D32;font-weight:700">' +
+    (state.matched.length === state.level ? '🎉 Hoàn thành xuất sắc!' : 
+    'Đã ghép: ' + state.matched.length + ' / ' + state.level) +
+    '</div></div></div>';
+  
+  // Complete screen
+  if (state.matched.length === state.level) {
+    playSound('complete');
+    showConfetti();
+    
+    html += '<div style="text-align:center;margin-top:20px">' +
+      '<button class="next-btn" onclick="startEasyMatchGame(' + state.level + ')" style="margin-bottom:10px">Chơi lại 🔄</button>' +
+      '<button class="next-btn" style="background:#F5F5F5;color:#333" onclick="startEasyMatch()">Đổi mức độ 📊</button>' +
+      '</div>';
+  }
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function selectEasyMatchBase(index) {
+  if (easyMatchState.matched.indexOf(index) >= 0) return;
+  
+  playSound('click');
+  easyMatchState.selectedBase = index;
+  renderEasyMatch();
+}
+
+function selectEasyMatchPast(index) {
+  if (easyMatchState.selectedBase === null) {
+    // Hint to select base first
+    playSound('wrong');
+    return;
+  }
+  
+  if (easyMatchState.matched.indexOf(index) >= 0) return;
+  
+  var baseIndex = easyMatchState.selectedBase;
+  
+  if (baseIndex === index) {
+    // Correct match!
+    playSound('correct');
+    
+    // Flash animation
+    var baseEl = document.getElementById('base-' + baseIndex);
+    var pastEl = document.getElementById('past-' + index);
+    if (baseEl) baseEl.classList.add('correct-flash');
+    if (pastEl) pastEl.classList.add('correct-flash');
+    
+    setTimeout(function() {
+      easyMatchState.matched.push(index);
+      easyMatchState.selectedBase = null;
+      renderEasyMatch();
+    }, 500);
+  } else {
+    // Wrong match
+    playSound('wrong');
+    
+    var pastEl = document.getElementById('past-' + index);
+    if (pastEl) pastEl.classList.add('wrong-flash');
+    
+    setTimeout(function() {
+      if (pastEl) pastEl.classList.remove('wrong-flash');
+    }, 500);
+  }
+}
+
+// ============ TRIPLE MATCH GAME ============
+var tripleMatchState = {
+  verbs: [],
+  infCards: [],
+  pastCards: [],
+  ppCards: [],
+  selectedInf: null,
+  selectedPast: null,
+  matched: [],
+  level: 4,
+  showMeaning: true
+};
+
+function startTripleMatch() {
+  playSound('click');
+  
+  var html = '<div class="progress-header" style="margin-bottom:15px">' +
+    '<button class="back-btn" onclick="showLearnScreen()">← Back</button>' +
+    '<div style="color:white;font-weight:700;font-size:1.1rem">🔗 Triple Match</div>' +
+    '<div></div></div>' +
+    
+    '<div class="easy-match-container">' +
+    '<div class="easy-match-header">' +
+    '<div style="font-size:50px;margin-bottom:10px">🔗</div>' +
+    '<div class="easy-match-title">Triple Match</div>' +
+    '<div class="easy-match-hint">Ghép cả 3 dạng: Gốc → Quá khứ → PP</div>' +
+    '</div>' +
+    
+    '<div class="easy-match-level-select">' +
+    '<div class="easy-match-level easy" onclick="startTripleMatchGame(4)">' +
+    '<div class="level-icon">🌱</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Dễ</div>' +
+    '<div class="level-desc">4 bộ từ - Có gợi ý nghĩa</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level medium" onclick="startTripleMatchGame(5)">' +
+    '<div class="level-icon">🌿</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Vừa</div>' +
+    '<div class="level-desc">5 bộ từ - Có gợi ý nghĩa</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level hard" onclick="startTripleMatchGame(6)">' +
+    '<div class="level-icon">🌳</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Khó</div>' +
+    '<div class="level-desc">6 bộ từ - Không gợi ý</div>' +
+    '</div></div>' +
+    '</div></div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function startTripleMatchGame(level) {
+  playSound('click');
+  
+  var allVerbs = [];
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    group.verbs.forEach(function(verb) {
+      // Use verbs where all 3 forms are different for better learning
+      if (verb.base !== verb.past || verb.past !== verb.pp) {
+        allVerbs.push(verb);
+      }
+    });
+  });
+  
+  var selectedVerbs = shuffle(allVerbs).slice(0, level);
+  
+  tripleMatchState = {
+    verbs: selectedVerbs,
+    infCards: shuffle(selectedVerbs.map(function(v, i) { return { verb: v, index: i }; })),
+    pastCards: shuffle(selectedVerbs.map(function(v, i) { return { verb: v, index: i }; })),
+    ppCards: shuffle(selectedVerbs.map(function(v, i) { return { verb: v, index: i }; })),
+    selectedInf: null,
+    selectedPast: null,
+    matched: [],
+    level: level,
+    showMeaning: level <= 5
+  };
+  
+  renderTripleMatch();
+}
+
+function renderTripleMatch() {
+  var state = tripleMatchState;
+  
+  // Determine current step
+  var step = 1;
+  if (state.selectedInf !== null && state.selectedPast === null) step = 2;
+  if (state.selectedInf !== null && state.selectedPast !== null) step = 3;
+  
+  var stepText = '';
+  if (step === 1) stepText = '1️⃣ Chọn từ <strong>GỐC (Infinitive)</strong>';
+  if (step === 2) stepText = '2️⃣ Chọn từ <strong>SIMPLE PAST</strong>';
+  if (step === 3) stepText = '3️⃣ Chọn từ <strong>PAST PARTICIPLE</strong>';
+  
+  var html = '<div class="progress-header" style="margin-bottom:10px">' +
+    '<button class="back-btn" onclick="startTripleMatch()">← Back</button>' +
+    '<div style="color:white;font-weight:700">🔗 Triple Match</div>' +
+    '<div style="color:white;font-weight:700">✓ ' + state.matched.length + '/' + state.level + '</div>' +
+    '</div>' +
+    
+    '<div class="triple-hint-bar">' +
+    '<span class="step ' + (step === 1 ? 'active' : (step > 1 ? 'done' : 'waiting')) + '">1. Gốc</span>' +
+    ' → ' +
+    '<span class="step ' + (step === 2 ? 'active' : (step > 2 ? 'done' : 'waiting')) + '">2. Simple Past</span>' +
+    ' → ' +
+    '<span class="step ' + (step === 3 ? 'active' : 'waiting') + '">3. Past Participle</span>' +
+    '</div>' +
+    
+    '<div class="triple-match-container">' +
+    '<div class="triple-columns">' +
+    
+    // Infinitive column
+    '<div class="triple-column">' +
+    '<div class="triple-label inf">☀️ Gốc</div>';
+  
+  state.infCards.forEach(function(card) {
+    var isMatched = state.matched.indexOf(card.index) >= 0;
+    var isSelected = state.selectedInf === card.index;
+    var cardClass = 'triple-card inf-card';
+    if (isMatched) cardClass += ' matched';
+    if (isSelected) cardClass += ' locked';
+    
+    html += '<div class="' + cardClass + '" id="inf-' + card.index + '" ' +
+      (isMatched || isSelected ? '' : 'onclick="selectTripleInf(' + card.index + ')"') + '>' +
+      '<div>' + card.verb.base + '</div>' +
+      (state.showMeaning ? '<div class="card-meaning">' + card.verb.vn + '</div>' : '') +
+      '</div>';
+  });
+  
+  html += '</div>' +
+    
+    // Past column
+    '<div class="triple-column">' +
+    '<div class="triple-label past">🌙 Simple Past</div>';
+  
+  state.pastCards.forEach(function(card) {
+    var isMatched = state.matched.indexOf(card.index) >= 0;
+    var isSelected = state.selectedPast === card.index;
+    var cardClass = 'triple-card past-card';
+    if (isMatched) cardClass += ' matched';
+    if (isSelected) cardClass += ' locked';
+    
+    html += '<div class="' + cardClass + '" id="past-' + card.index + '" ' +
+      (isMatched || isSelected ? '' : 'onclick="selectTriplePast(' + card.index + ')"') + '>' +
+      '<div>' + card.verb.past + '</div>' +
+      '</div>';
+  });
+  
+  html += '</div>' +
+    
+    // Past Participle column
+    '<div class="triple-column">' +
+    '<div class="triple-label pp">✨ Past Participle</div>';
+  
+  state.ppCards.forEach(function(card) {
+    var isMatched = state.matched.indexOf(card.index) >= 0;
+    var cardClass = 'triple-card pp-card';
+    if (isMatched) cardClass += ' matched';
+    
+    html += '<div class="' + cardClass + '" id="pp-' + card.index + '" ' +
+      (isMatched ? '' : 'onclick="selectTriplePP(' + card.index + ')"') + '>' +
+      '<div>' + card.verb.pp + '</div>' +
+      '</div>';
+  });
+  
+  html += '</div></div>' +
+    
+    // Score section
+    '<div class="triple-score-bar">' +
+    '<div class="triple-progress-dots">';
+  
+  for (var i = 0; i < state.level; i++) {
+    html += '<div class="triple-dot' + (i < state.matched.length ? ' done' : '') + '">' +
+      (i < state.matched.length ? '✓' : '') + '</div>';
+  }
+  
+  html += '</div>' +
+    '<div style="font-weight:700;color:#333">' + state.matched.length + ' / ' + state.level + '</div>' +
+    '</div></div>';
+  
+  // Complete screen
+  if (state.matched.length === state.level) {
+    playSound('complete');
+    showConfetti();
+    
+    html += '<div style="text-align:center;margin-top:20px">' +
+      '<div style="font-size:50px;margin-bottom:10px">🏆</div>' +
+      '<div style="color:white;font-size:1.3rem;font-weight:700;margin-bottom:15px">Xuất sắc! Con đã ghép đúng hết!</div>' +
+      '<button class="next-btn" onclick="startTripleMatchGame(' + state.level + ')" style="margin-bottom:10px">Chơi lại 🔄</button>' +
+      '<button class="next-btn" style="background:#F5F5F5;color:#333" onclick="startTripleMatch()">Đổi mức độ 📊</button>' +
+      '</div>';
+  }
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function selectTripleInf(index) {
+  if (tripleMatchState.matched.indexOf(index) >= 0) return;
+  if (tripleMatchState.selectedInf !== null) return; // Already selected
+  
+  playSound('click');
+  tripleMatchState.selectedInf = index;
+  renderTripleMatch();
+}
+
+function selectTriplePast(index) {
+  if (tripleMatchState.selectedInf === null) {
+    playSound('wrong');
+    return; // Must select Inf first
+  }
+  if (tripleMatchState.matched.indexOf(index) >= 0) return;
+  if (tripleMatchState.selectedPast !== null) return;
+  
+  // Check if correct
+  if (index === tripleMatchState.selectedInf) {
+    playSound('click');
+    tripleMatchState.selectedPast = index;
+    renderTripleMatch();
+  } else {
+    // Wrong - reset
+    playSound('wrong');
+    var el = document.getElementById('past-' + index);
+    if (el) el.classList.add('wrong-flash');
+    
+    setTimeout(function() {
+      tripleMatchState.selectedInf = null;
+      tripleMatchState.selectedPast = null;
+      renderTripleMatch();
+    }, 600);
+  }
+}
+
+function selectTriplePP(index) {
+  if (tripleMatchState.selectedInf === null || tripleMatchState.selectedPast === null) {
+    playSound('wrong');
+    return;
+  }
+  if (tripleMatchState.matched.indexOf(index) >= 0) return;
+  
+  // Check if all 3 match
+  if (index === tripleMatchState.selectedInf) {
+    // Correct!
+    playSound('correct');
+    
+    var infEl = document.getElementById('inf-' + tripleMatchState.selectedInf);
+    var pastEl = document.getElementById('past-' + tripleMatchState.selectedPast);
+    var ppEl = document.getElementById('pp-' + index);
+    
+    if (infEl) infEl.classList.add('correct-flash');
+    if (pastEl) pastEl.classList.add('correct-flash');
+    if (ppEl) ppEl.classList.add('correct-flash');
+    
+    setTimeout(function() {
+      tripleMatchState.matched.push(index);
+      tripleMatchState.selectedInf = null;
+      tripleMatchState.selectedPast = null;
+      renderTripleMatch();
+    }, 600);
+  } else {
+    // Wrong - reset all
+    playSound('wrong');
+    var el = document.getElementById('pp-' + index);
+    if (el) el.classList.add('wrong-flash');
+    
+    setTimeout(function() {
+      tripleMatchState.selectedInf = null;
+      tripleMatchState.selectedPast = null;
+      renderTripleMatch();
+    }, 600);
+  }
+}
+
+// ============ VERB SENTENCE QUIZ ============
+var sentenceQuizState = {
+  questions: [],
+  currentIndex: 0,
+  score: 0,
+  answered: false,
+  level: 10
+};
+
+// Signal words for generating questions
+var SIGNAL_WORDS = {
+  present: [
+    { signal: 'every day', vn: 'mỗi ngày' },
+    { signal: 'every morning', vn: 'mỗi sáng' },
+    { signal: 'every week', vn: 'mỗi tuần' },
+    { signal: 'always', vn: 'luôn luôn' },
+    { signal: 'usually', vn: 'thường' },
+    { signal: 'often', vn: 'thường xuyên' },
+    { signal: 'sometimes', vn: 'đôi khi' }
+  ],
+  past: [
+    { signal: 'yesterday', vn: 'hôm qua' },
+    { signal: 'last night', vn: 'tối qua' },
+    { signal: 'last week', vn: 'tuần trước' },
+    { signal: 'last month', vn: 'tháng trước' },
+    { signal: 'last year', vn: 'năm ngoái' },
+    { signal: '2 days ago', vn: '2 ngày trước' },
+    { signal: 'this morning', vn: 'sáng nay' }
+  ]
+};
+
+var SENTENCE_TEMPLATES = [
+  // GO
+  { template: 'I ___ to school {signal}.', subject: 'I', verb: 'go', vn: 'Tôi đi học' },
+  { template: 'She ___ to the park {signal}.', subject: 'She', verb: 'go', vn: 'Cô ấy đi công viên' },
+  { template: 'They ___ shopping {signal}.', subject: 'They', verb: 'go', vn: 'Họ đi mua sắm' },
+  { template: 'We ___ to church {signal}.', subject: 'We', verb: 'go', vn: 'Chúng tôi đi nhà thờ' },
+  
+  // EAT
+  { template: 'She ___ breakfast {signal}.', subject: 'She', verb: 'eat', vn: 'Cô ấy ăn sáng' },
+  { template: 'I ___ lunch at school {signal}.', subject: 'I', verb: 'eat', vn: 'Tôi ăn trưa ở trường' },
+  { template: 'He ___ dinner with family {signal}.', subject: 'He', verb: 'eat', vn: 'Anh ấy ăn tối với gia đình' },
+  { template: 'They ___ pizza {signal}.', subject: 'They', verb: 'eat', vn: 'Họ ăn pizza' },
+  
+  // READ
+  { template: 'He ___ a book {signal}.', subject: 'He', verb: 'read', vn: 'Anh ấy đọc sách' },
+  { template: 'She ___ the newspaper {signal}.', subject: 'She', verb: 'read', vn: 'Cô ấy đọc báo' },
+  { template: 'I ___ comics {signal}.', subject: 'I', verb: 'read', vn: 'Tôi đọc truyện tranh' },
+  
+  // MAKE
+  { template: 'Mom ___ dinner {signal}.', subject: 'Mom', verb: 'make', vn: 'Mẹ nấu bữa tối' },
+  { template: 'She ___ a cake {signal}.', subject: 'She', verb: 'make', vn: 'Cô ấy làm bánh' },
+  { template: 'I ___ my bed {signal}.', subject: 'I', verb: 'make', vn: 'Tôi dọn giường' },
+  
+  // DRINK
+  { template: 'I ___ milk {signal}.', subject: 'I', verb: 'drink', vn: 'Tôi uống sữa' },
+  { template: 'He ___ coffee {signal}.', subject: 'He', verb: 'drink', vn: 'Anh ấy uống cà phê' },
+  { template: 'She ___ orange juice {signal}.', subject: 'She', verb: 'drink', vn: 'Cô ấy uống nước cam' },
+  
+  // DRAW
+  { template: 'She ___ a picture {signal}.', subject: 'She', verb: 'draw', vn: 'Cô ấy vẽ tranh' },
+  { template: 'I ___ a house {signal}.', subject: 'I', verb: 'draw', vn: 'Tôi vẽ ngôi nhà' },
+  { template: 'He ___ animals {signal}.', subject: 'He', verb: 'draw', vn: 'Anh ấy vẽ động vật' },
+  
+  // SING
+  { template: 'He ___ a song {signal}.', subject: 'He', verb: 'sing', vn: 'Anh ấy hát một bài' },
+  { template: 'She ___ beautifully {signal}.', subject: 'She', verb: 'sing', vn: 'Cô ấy hát hay' },
+  { template: 'They ___ together {signal}.', subject: 'They', verb: 'sing', vn: 'Họ hát cùng nhau' },
+  
+  // SWIM
+  { template: 'They ___ in the pool {signal}.', subject: 'They', verb: 'swim', vn: 'Họ bơi trong hồ' },
+  { template: 'I ___ at the beach {signal}.', subject: 'I', verb: 'swim', vn: 'Tôi bơi ở biển' },
+  { template: 'He ___ very fast {signal}.', subject: 'He', verb: 'swim', vn: 'Anh ấy bơi rất nhanh' },
+  
+  // SPEAK
+  { template: 'We ___ English {signal}.', subject: 'We', verb: 'speak', vn: 'Chúng tôi nói tiếng Anh' },
+  { template: 'She ___ French {signal}.', subject: 'She', verb: 'speak', vn: 'Cô ấy nói tiếng Pháp' },
+  { template: 'He ___ loudly {signal}.', subject: 'He', verb: 'speak', vn: 'Anh ấy nói to' },
+  
+  // DO
+  { template: 'I ___ my homework {signal}.', subject: 'I', verb: 'do', vn: 'Tôi làm bài tập' },
+  { template: 'She ___ the dishes {signal}.', subject: 'She', verb: 'do', vn: 'Cô ấy rửa bát' },
+  { template: 'They ___ exercise {signal}.', subject: 'They', verb: 'do', vn: 'Họ tập thể dục' },
+  
+  // BUY
+  { template: 'She ___ a new dress {signal}.', subject: 'She', verb: 'buy', vn: 'Cô ấy mua váy mới' },
+  { template: 'I ___ some books {signal}.', subject: 'I', verb: 'buy', vn: 'Tôi mua vài quyển sách' },
+  { template: 'He ___ a gift {signal}.', subject: 'He', verb: 'buy', vn: 'Anh ấy mua quà' },
+  
+  // WRITE
+  { template: 'We ___ a letter {signal}.', subject: 'We', verb: 'write', vn: 'Chúng tôi viết thư' },
+  { template: 'She ___ in her diary {signal}.', subject: 'She', verb: 'write', vn: 'Cô ấy viết nhật ký' },
+  { template: 'I ___ an email {signal}.', subject: 'I', verb: 'write', vn: 'Tôi viết email' },
+  
+  // MEET
+  { template: 'I ___ my friend {signal}.', subject: 'I', verb: 'meet', vn: 'Tôi gặp bạn' },
+  { template: 'She ___ her teacher {signal}.', subject: 'She', verb: 'meet', vn: 'Cô ấy gặp cô giáo' },
+  { template: 'They ___ at the cafe {signal}.', subject: 'They', verb: 'meet', vn: 'Họ gặp nhau ở quán' },
+  
+  // RUN
+  { template: 'He ___ fast {signal}.', subject: 'He', verb: 'run', vn: 'Anh ấy chạy nhanh' },
+  { template: 'I ___ in the morning {signal}.', subject: 'I', verb: 'run', vn: 'Tôi chạy buổi sáng' },
+  { template: 'They ___ in the park {signal}.', subject: 'They', verb: 'run', vn: 'Họ chạy trong công viên' },
+  
+  // GIVE
+  { template: 'I ___ a gift to mom {signal}.', subject: 'I', verb: 'give', vn: 'Tôi tặng quà cho mẹ' },
+  { template: 'She ___ me a book {signal}.', subject: 'She', verb: 'give', vn: 'Cô ấy cho tôi sách' },
+  { template: 'He ___ flowers to her {signal}.', subject: 'He', verb: 'give', vn: 'Anh ấy tặng hoa cho cô ấy' },
+  
+  // TAKE
+  { template: 'She ___ the bus {signal}.', subject: 'She', verb: 'take', vn: 'Cô ấy đi xe buýt' },
+  { template: 'I ___ a shower {signal}.', subject: 'I', verb: 'take', vn: 'Tôi tắm' },
+  { template: 'He ___ photos {signal}.', subject: 'He', verb: 'take', vn: 'Anh ấy chụp ảnh' },
+  
+  // COME
+  { template: 'We ___ home late {signal}.', subject: 'We', verb: 'come', vn: 'Chúng tôi về nhà muộn' },
+  { template: 'She ___ to my house {signal}.', subject: 'She', verb: 'come', vn: 'Cô ấy đến nhà tôi' },
+  { template: 'They ___ to the party {signal}.', subject: 'They', verb: 'come', vn: 'Họ đến bữa tiệc' },
+  
+  // SEE
+  { template: 'They ___ a movie {signal}.', subject: 'They', verb: 'see', vn: 'Họ xem phim' },
+  { template: 'I ___ my grandma {signal}.', subject: 'I', verb: 'see', vn: 'Tôi gặp bà' },
+  { template: 'She ___ a bird {signal}.', subject: 'She', verb: 'see', vn: 'Cô ấy nhìn thấy con chim' },
+  
+  // KNOW
+  { template: 'He ___ the answer {signal}.', subject: 'He', verb: 'know', vn: 'Anh ấy biết câu trả lời' },
+  { template: 'I ___ her name {signal}.', subject: 'I', verb: 'know', vn: 'Tôi biết tên cô ấy' },
+  { template: 'They ___ the truth {signal}.', subject: 'They', verb: 'know', vn: 'Họ biết sự thật' },
+  
+  // SLEEP
+  { template: 'I ___ early {signal}.', subject: 'I', verb: 'sleep', vn: 'Tôi ngủ sớm' },
+  { template: 'She ___ late {signal}.', subject: 'She', verb: 'sleep', vn: 'Cô ấy ngủ muộn' },
+  { template: 'The baby ___ well {signal}.', subject: 'The baby', verb: 'sleep', vn: 'Em bé ngủ ngon' },
+  
+  // WAKE
+  { template: 'They ___ up early {signal}.', subject: 'They', verb: 'wake', vn: 'Họ dậy sớm' },
+  { template: 'I ___ up at 6 {signal}.', subject: 'I', verb: 'wake', vn: 'Tôi dậy lúc 6 giờ' },
+  { template: 'He ___ up late {signal}.', subject: 'He', verb: 'wake', vn: 'Anh ấy dậy muộn' },
+  
+  // HAVE
+  { template: 'I ___ breakfast {signal}.', subject: 'I', verb: 'have', vn: 'Tôi ăn sáng' },
+  { template: 'She ___ a dog {signal}.', subject: 'She', verb: 'have', vn: 'Cô ấy có con chó' },
+  { template: 'We ___ a party {signal}.', subject: 'We', verb: 'have', vn: 'Chúng tôi có bữa tiệc' },
+  
+  // GET
+  { template: 'I ___ a present {signal}.', subject: 'I', verb: 'get', vn: 'Tôi được quà' },
+  { template: 'She ___ good grades {signal}.', subject: 'She', verb: 'get', vn: 'Cô ấy được điểm cao' },
+  { template: 'He ___ up early {signal}.', subject: 'He', verb: 'get', vn: 'Anh ấy dậy sớm' },
+  
+  // TELL
+  { template: 'Mom ___ me a story {signal}.', subject: 'Mom', verb: 'tell', vn: 'Mẹ kể chuyện cho tôi' },
+  { template: 'He ___ the truth {signal}.', subject: 'He', verb: 'tell', vn: 'Anh ấy nói sự thật' },
+  { template: 'She ___ me a secret {signal}.', subject: 'She', verb: 'tell', vn: 'Cô ấy kể bí mật' },
+  
+  // SAY
+  { template: 'He ___ hello {signal}.', subject: 'He', verb: 'say', vn: 'Anh ấy nói xin chào' },
+  { template: 'She ___ goodbye {signal}.', subject: 'She', verb: 'say', vn: 'Cô ấy nói tạm biệt' },
+  { template: 'They ___ thank you {signal}.', subject: 'They', verb: 'say', vn: 'Họ nói cảm ơn' },
+  
+  // FEEL
+  { template: 'I ___ happy {signal}.', subject: 'I', verb: 'feel', vn: 'Tôi cảm thấy vui' },
+  { template: 'She ___ tired {signal}.', subject: 'She', verb: 'feel', vn: 'Cô ấy cảm thấy mệt' },
+  { template: 'He ___ sick {signal}.', subject: 'He', verb: 'feel', vn: 'Anh ấy cảm thấy ốm' },
+  
+  // FIND
+  { template: 'I ___ my keys {signal}.', subject: 'I', verb: 'find', vn: 'Tôi tìm thấy chìa khóa' },
+  { template: 'She ___ a new job {signal}.', subject: 'She', verb: 'find', vn: 'Cô ấy tìm được việc mới' },
+  { template: 'He ___ the answer {signal}.', subject: 'He', verb: 'find', vn: 'Anh ấy tìm ra đáp án' },
+  
+  // LOSE
+  { template: 'He ___ his phone {signal}.', subject: 'He', verb: 'lose', vn: 'Anh ấy mất điện thoại' },
+  { template: 'I ___ my wallet {signal}.', subject: 'I', verb: 'lose', vn: 'Tôi mất ví' },
+  { template: 'She ___ her keys {signal}.', subject: 'She', verb: 'lose', vn: 'Cô ấy mất chìa khóa' },
+  
+  // TEACH
+  { template: 'She ___ English {signal}.', subject: 'She', verb: 'teach', vn: 'Cô ấy dạy tiếng Anh' },
+  { template: 'He ___ me math {signal}.', subject: 'He', verb: 'teach', vn: 'Anh ấy dạy tôi toán' },
+  { template: 'They ___ students {signal}.', subject: 'They', verb: 'teach', vn: 'Họ dạy học sinh' },
+  
+  // LEARN
+  { template: 'I ___ English {signal}.', subject: 'I', verb: 'learn', vn: 'Tôi học tiếng Anh' },
+  { template: 'She ___ to swim {signal}.', subject: 'She', verb: 'learn', vn: 'Cô ấy học bơi' },
+  { template: 'They ___ new words {signal}.', subject: 'They', verb: 'learn', vn: 'Họ học từ mới' },
+  
+  // THINK
+  { template: 'I ___ about you {signal}.', subject: 'I', verb: 'think', vn: 'Tôi nghĩ về bạn' },
+  { template: 'She ___ hard {signal}.', subject: 'She', verb: 'think', vn: 'Cô ấy suy nghĩ nhiều' },
+  { template: 'He ___ it was good {signal}.', subject: 'He', verb: 'think', vn: 'Anh ấy nghĩ nó tốt' },
+  
+  // BRING
+  { template: 'I ___ my book {signal}.', subject: 'I', verb: 'bring', vn: 'Tôi mang sách' },
+  { template: 'She ___ food {signal}.', subject: 'She', verb: 'bring', vn: 'Cô ấy mang đồ ăn' },
+  { template: 'He ___ flowers {signal}.', subject: 'He', verb: 'bring', vn: 'Anh ấy mang hoa' },
+  
+  // CATCH
+  { template: 'He ___ the ball {signal}.', subject: 'He', verb: 'catch', vn: 'Anh ấy bắt bóng' },
+  { template: 'I ___ a fish {signal}.', subject: 'I', verb: 'catch', vn: 'Tôi bắt được cá' },
+  { template: 'She ___ the bus {signal}.', subject: 'She', verb: 'catch', vn: 'Cô ấy bắt kịp xe buýt' },
+  
+  // THROW
+  { template: 'He ___ the ball {signal}.', subject: 'He', verb: 'throw', vn: 'Anh ấy ném bóng' },
+  { template: 'I ___ a party {signal}.', subject: 'I', verb: 'throw', vn: 'Tôi tổ chức tiệc' },
+  { template: 'She ___ it away {signal}.', subject: 'She', verb: 'throw', vn: 'Cô ấy vứt nó đi' },
+  
+  // FLY
+  { template: 'The bird ___ high {signal}.', subject: 'The bird', verb: 'fly', vn: 'Con chim bay cao' },
+  { template: 'We ___ to Japan {signal}.', subject: 'We', verb: 'fly', vn: 'Chúng tôi bay đến Nhật' },
+  { template: 'They ___ home {signal}.', subject: 'They', verb: 'fly', vn: 'Họ bay về nhà' },
+  
+  // GROW
+  { template: 'She ___ flowers {signal}.', subject: 'She', verb: 'grow', vn: 'Cô ấy trồng hoa' },
+  { template: 'I ___ vegetables {signal}.', subject: 'I', verb: 'grow', vn: 'Tôi trồng rau' },
+  { template: 'The tree ___ fast {signal}.', subject: 'The tree', verb: 'grow', vn: 'Cây mọc nhanh' },
+  
+  // WEAR
+  { template: 'She ___ a dress {signal}.', subject: 'She', verb: 'wear', vn: 'Cô ấy mặc váy' },
+  { template: 'I ___ jeans {signal}.', subject: 'I', verb: 'wear', vn: 'Tôi mặc quần jeans' },
+  { template: 'He ___ a hat {signal}.', subject: 'He', verb: 'wear', vn: 'Anh ấy đội mũ' },
+  
+  // WIN
+  { template: 'He ___ the game {signal}.', subject: 'He', verb: 'win', vn: 'Anh ấy thắng trận' },
+  { template: 'She ___ a prize {signal}.', subject: 'She', verb: 'win', vn: 'Cô ấy thắng giải' },
+  { template: 'They ___ the match {signal}.', subject: 'They', verb: 'win', vn: 'Họ thắng trận đấu' },
+  
+  // BREAK
+  { template: 'He ___ the window {signal}.', subject: 'He', verb: 'break', vn: 'Anh ấy làm vỡ cửa sổ' },
+  { template: 'I ___ my phone {signal}.', subject: 'I', verb: 'break', vn: 'Tôi làm vỡ điện thoại' },
+  { template: 'She ___ the rule {signal}.', subject: 'She', verb: 'break', vn: 'Cô ấy phá luật' },
+  
+  // CHOOSE
+  { template: 'I ___ the red one {signal}.', subject: 'I', verb: 'choose', vn: 'Tôi chọn cái đỏ' },
+  { template: 'She ___ her dress {signal}.', subject: 'She', verb: 'choose', vn: 'Cô ấy chọn váy' },
+  { template: 'He ___ the best {signal}.', subject: 'He', verb: 'choose', vn: 'Anh ấy chọn cái tốt nhất' },
+  
+  // FORGET
+  { template: 'I ___ my homework {signal}.', subject: 'I', verb: 'forget', vn: 'Tôi quên bài tập' },
+  { template: 'She ___ her keys {signal}.', subject: 'She', verb: 'forget', vn: 'Cô ấy quên chìa khóa' },
+  { template: 'He ___ my birthday {signal}.', subject: 'He', verb: 'forget', vn: 'Anh ấy quên sinh nhật tôi' },
+  
+  // BEGIN
+  { template: 'The class ___ at 8 {signal}.', subject: 'The class', verb: 'begin', vn: 'Lớp bắt đầu lúc 8 giờ' },
+  { template: 'I ___ to study {signal}.', subject: 'I', verb: 'begin', vn: 'Tôi bắt đầu học' },
+  { template: 'She ___ her work {signal}.', subject: 'She', verb: 'begin', vn: 'Cô ấy bắt đầu làm việc' },
+  
+  // SEND
+  { template: 'I ___ an email {signal}.', subject: 'I', verb: 'send', vn: 'Tôi gửi email' },
+  { template: 'She ___ a message {signal}.', subject: 'She', verb: 'send', vn: 'Cô ấy gửi tin nhắn' },
+  { template: 'He ___ a letter {signal}.', subject: 'He', verb: 'send', vn: 'Anh ấy gửi thư' },
+  
+  // SPEND
+  { template: 'I ___ money {signal}.', subject: 'I', verb: 'spend', vn: 'Tôi tiêu tiền' },
+  { template: 'She ___ time with family {signal}.', subject: 'She', verb: 'spend', vn: 'Cô ấy dành thời gian với gia đình' },
+  { template: 'We ___ the weekend together {signal}.', subject: 'We', verb: 'spend', vn: 'Chúng tôi ở cùng nhau cuối tuần' },
+  
+  // LEAVE
+  { template: 'I ___ home early {signal}.', subject: 'I', verb: 'leave', vn: 'Tôi rời nhà sớm' },
+  { template: 'She ___ the party {signal}.', subject: 'She', verb: 'leave', vn: 'Cô ấy rời bữa tiệc' },
+  { template: 'He ___ his job {signal}.', subject: 'He', verb: 'leave', vn: 'Anh ấy nghỉ việc' },
+  
+  // BUILD
+  { template: 'They ___ a house {signal}.', subject: 'They', verb: 'build', vn: 'Họ xây nhà' },
+  { template: 'He ___ a sandcastle {signal}.', subject: 'He', verb: 'build', vn: 'Anh ấy xây lâu đài cát' },
+  { template: 'We ___ a treehouse {signal}.', subject: 'We', verb: 'build', vn: 'Chúng tôi xây nhà trên cây' },
+  
+  // SIT
+  { template: 'I ___ on the chair {signal}.', subject: 'I', verb: 'sit', vn: 'Tôi ngồi trên ghế' },
+  { template: 'She ___ next to me {signal}.', subject: 'She', verb: 'sit', vn: 'Cô ấy ngồi cạnh tôi' },
+  { template: 'They ___ in the front {signal}.', subject: 'They', verb: 'sit', vn: 'Họ ngồi phía trước' },
+  
+  // STAND
+  { template: 'I ___ up {signal}.', subject: 'I', verb: 'stand', vn: 'Tôi đứng dậy' },
+  { template: 'She ___ in line {signal}.', subject: 'She', verb: 'stand', vn: 'Cô ấy đứng xếp hàng' },
+  { template: 'He ___ near the door {signal}.', subject: 'He', verb: 'stand', vn: 'Anh ấy đứng gần cửa' },
+  
+  // PAY
+  { template: 'I ___ the bill {signal}.', subject: 'I', verb: 'pay', vn: 'Tôi trả hóa đơn' },
+  { template: 'She ___ for the food {signal}.', subject: 'She', verb: 'pay', vn: 'Cô ấy trả tiền đồ ăn' },
+  { template: 'He ___ by card {signal}.', subject: 'He', verb: 'pay', vn: 'Anh ấy trả bằng thẻ' },
+  
+  // SELL
+  { template: 'She ___ flowers {signal}.', subject: 'She', verb: 'sell', vn: 'Cô ấy bán hoa' },
+  { template: 'He ___ his car {signal}.', subject: 'He', verb: 'sell', vn: 'Anh ấy bán xe' },
+  { template: 'They ___ fruits {signal}.', subject: 'They', verb: 'sell', vn: 'Họ bán trái cây' },
+  
+  // CUT
+  { template: 'I ___ the paper {signal}.', subject: 'I', verb: 'cut', vn: 'Tôi cắt giấy' },
+  { template: 'She ___ her hair {signal}.', subject: 'She', verb: 'cut', vn: 'Cô ấy cắt tóc' },
+  { template: 'He ___ the cake {signal}.', subject: 'He', verb: 'cut', vn: 'Anh ấy cắt bánh' },
+  
+  // PUT
+  { template: 'I ___ it on the table {signal}.', subject: 'I', verb: 'put', vn: 'Tôi đặt nó lên bàn' },
+  { template: 'She ___ on her shoes {signal}.', subject: 'She', verb: 'put', vn: 'Cô ấy đi giày' },
+  { template: 'He ___ the book away {signal}.', subject: 'He', verb: 'put', vn: 'Anh ấy cất sách' },
+  
+  // KEEP
+  { template: 'I ___ it secret {signal}.', subject: 'I', verb: 'keep', vn: 'Tôi giữ bí mật' },
+  { template: 'She ___ the money {signal}.', subject: 'She', verb: 'keep', vn: 'Cô ấy giữ tiền' },
+  { template: 'He ___ his promise {signal}.', subject: 'He', verb: 'keep', vn: 'Anh ấy giữ lời hứa' },
+  
+  // HOLD
+  { template: 'I ___ the baby {signal}.', subject: 'I', verb: 'hold', vn: 'Tôi bế em bé' },
+  { template: 'She ___ my hand {signal}.', subject: 'She', verb: 'hold', vn: 'Cô ấy nắm tay tôi' },
+  { template: 'He ___ the door {signal}.', subject: 'He', verb: 'hold', vn: 'Anh ấy giữ cửa' },
+  
+  // HEAR
+  { template: 'I ___ a noise {signal}.', subject: 'I', verb: 'hear', vn: 'Tôi nghe thấy tiếng động' },
+  { template: 'She ___ the news {signal}.', subject: 'She', verb: 'hear', vn: 'Cô ấy nghe tin' },
+  { template: 'He ___ music {signal}.', subject: 'He', verb: 'hear', vn: 'Anh ấy nghe nhạc' }
+];
+
+function getVerbForms(verbBase) {
+  // Find verb in IRREGULAR_VERBS
+  for (var i = 0; i < IRREGULAR_VERBS.groups.length; i++) {
+    var group = IRREGULAR_VERBS.groups[i];
+    for (var j = 0; j < group.verbs.length; j++) {
+      var v = group.verbs[j];
+      if (v.base === verbBase) {
+        return { base: v.base, past: v.past, vn: v.vn };
+      }
+    }
+  }
+  // Regular verb fallback
+  return { base: verbBase, past: verbBase + 'ed', vn: '' };
+}
+
+function getPresentForm(verb, subject) {
+  // Add 's' for he/she/it/singular nouns
+  var thirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'tom', 'lily'];
+  if (thirdPerson.indexOf(subject.toLowerCase()) >= 0) {
+    if (verb === 'go' || verb === 'do') return verb + 'es';
+    if (verb === 'watch') return 'watches';
+    if (verb.endsWith('y')) return verb.slice(0, -1) + 'ies';
+    return verb + 's';
+  }
+  return verb;
+}
+
+function generateQuizQuestions(count) {
+  var questions = [];
+  var usedTemplates = [];
+  
+  // Get all verbs for wrong answers
+  var allVerbs = [];
+  IRREGULAR_VERBS.groups.forEach(function(group) {
+    group.verbs.forEach(function(verb) {
+      allVerbs.push(verb);
+    });
+  });
+  
+  for (var i = 0; i < count; i++) {
+    // Pick random template
+    var templateIndex;
+    do {
+      templateIndex = Math.floor(Math.random() * SENTENCE_TEMPLATES.length);
+    } while (usedTemplates.indexOf(templateIndex) >= 0 && usedTemplates.length < SENTENCE_TEMPLATES.length);
+    usedTemplates.push(templateIndex);
+    
+    var template = SENTENCE_TEMPLATES[templateIndex];
+    var verbForms = getVerbForms(template.verb);
+    
+    // Randomly choose present or past
+    var isPast = Math.random() > 0.5;
+    var signalList = isPast ? SIGNAL_WORDS.past : SIGNAL_WORDS.present;
+    var signalObj = signalList[Math.floor(Math.random() * signalList.length)];
+    
+    var correctAnswer = isPast ? verbForms.past : getPresentForm(verbForms.base, template.subject);
+    
+    // Generate 3 wrong answers
+    var wrongAnswers = [];
+    
+    // Wrong answer 1: opposite tense of correct verb
+    var opposite = isPast ? getPresentForm(verbForms.base, template.subject) : verbForms.past;
+    if (opposite !== correctAnswer) wrongAnswers.push(opposite);
+    
+    // Wrong answer 2 & 3: random verbs from other irregular verbs
+    var shuffledVerbs = shuffle(allVerbs);
+    for (var j = 0; j < shuffledVerbs.length && wrongAnswers.length < 3; j++) {
+      var wrongVerb = shuffledVerbs[j];
+      if (wrongVerb.base !== template.verb) {
+        var wrongForm = isPast ? wrongVerb.past : getPresentForm(wrongVerb.base, template.subject);
+        // Make sure it's not duplicate
+        if (wrongForm !== correctAnswer && wrongAnswers.indexOf(wrongForm) < 0) {
+          wrongAnswers.push(wrongForm);
+        }
+      }
+    }
+    
+    // Ensure we have 3 wrong answers
+    while (wrongAnswers.length < 3) {
+      wrongAnswers.push(verbForms.base + 'ed'); // fallback
+    }
+    
+    var sentence = template.template.replace('{signal}', signalObj.signal);
+    
+    questions.push({
+      sentence: sentence,
+      sentenceVn: template.vn,
+      signal: signalObj.signal,
+      signalVn: signalObj.vn,
+      isPast: isPast,
+      verb: verbForms.base,
+      verbVn: verbForms.vn,
+      correctAnswer: correctAnswer,
+      wrongAnswers: wrongAnswers.slice(0, 3),
+      subject: template.subject
+    });
+  }
+  
+  return shuffle(questions);
+}
+
+function startVerbSentenceQuiz() {
+  playSound('click');
+  
+  var html = '<div class="progress-header" style="margin-bottom:15px">' +
+    '<button class="back-btn" onclick="showLearnScreen()">← Back</button>' +
+    '<div style="color:white;font-weight:700;font-size:1.1rem">📝 Trắc nghiệm</div>' +
+    '<div></div></div>' +
+    
+    '<div class="easy-match-container">' +
+    '<div class="easy-match-header">' +
+    '<div style="font-size:50px;margin-bottom:10px">📝</div>' +
+    '<div class="easy-match-title">Trắc nghiệm động từ</div>' +
+    '<div class="easy-match-hint">Chọn dạng đúng của động từ trong câu</div>' +
+    '</div>' +
+    
+    '<div class="study-tip-box" style="margin:20px 0">' +
+    '<div class="study-tip-icon">💡</div>' +
+    '<div class="study-tip-text">' +
+    '<strong>Mẹo:</strong> Nhìn dấu hiệu thời gian!<br>' +
+    '☀️ <strong>every day, always, usually</strong> → dùng hiện tại<br>' +
+    '🌙 <strong>yesterday, last week, ...ago</strong> → dùng quá khứ' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level-select">' +
+    '<div class="easy-match-level easy" onclick="startSentenceQuizGame(5)">' +
+    '<div class="level-icon">🌱</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Nhanh</div>' +
+    '<div class="level-desc">5 câu hỏi</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level medium" onclick="startSentenceQuizGame(10)">' +
+    '<div class="level-icon">🌿</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Vừa phải</div>' +
+    '<div class="level-desc">10 câu hỏi</div>' +
+    '</div></div>' +
+    
+    '<div class="easy-match-level hard" onclick="startSentenceQuizGame(15)">' +
+    '<div class="level-icon">🌳</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Thử thách</div>' +
+    '<div class="level-desc">15 câu hỏi</div>' +
+    '</div></div>' +
+    '</div></div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function startSentenceQuizGame(count) {
+  playSound('click');
+  
+  sentenceQuizState = {
+    questions: generateQuizQuestions(count),
+    currentIndex: 0,
+    score: 0,
+    answered: false,
+    level: count
+  };
+  
+  renderSentenceQuiz();
+}
+
+function renderSentenceQuiz() {
+  var state = sentenceQuizState;
+  
+  if (state.currentIndex >= state.questions.length) {
+    showSentenceQuizResult();
+    return;
+  }
+  
+  var q = state.questions[state.currentIndex];
+  
+  // Progress dots
+  var dotsHtml = '';
+  for (var i = 0; i < state.level; i++) {
+    var dotClass = 'dot';
+    if (i < state.currentIndex) dotClass += ' done';
+    else if (i === state.currentIndex) dotClass += ' active';
+    dotsHtml += '<div class="' + dotClass + '"></div>';
+  }
+  
+  var html = '<div class="progress-header">' +
+    '<button class="back-btn" onclick="startVerbSentenceQuiz()">← Back</button>' +
+    '<div class="progress-dots">' + dotsHtml + '</div>' +
+    '<div class="star-count">⭐ ' + state.score + '</div>' +
+    '</div>' +
+    
+    '<div class="sentence-quiz-card">' +
+    
+    // Signal word badge
+    '<div class="sentence-quiz-signal">' +
+    '<span class="signal-badge ' + (q.isPast ? 'past' : 'present') + '">' +
+    (q.isPast ? '🌙 ' : '☀️ ') + q.signal +
+    '</span>' +
+    '<div style="font-size:0.85rem;color:#666;margin-top:5px">(' + q.signalVn + ')</div>' +
+    '</div>' +
+    
+    // Sentence with blank
+    '<div class="sentence-quiz-sentence">' +
+    q.sentence.replace('___', '<span class="blank">?</span>') +
+    '</div>' +
+    
+    // Sentence meaning
+    '<div class="sentence-quiz-meaning">' +
+    '📖 ' + q.sentenceVn + ' (<strong>' + q.verb + '</strong> - ' + q.verbVn + ')' +
+    '</div>' +
+    
+    // 4 Choices
+    '<div class="sentence-quiz-choices">';
+  
+  // Create array with 1 correct + 3 wrong, then shuffle
+  var allChoices = [
+    { answer: q.correctAnswer, isCorrect: true }
+  ];
+  q.wrongAnswers.forEach(function(wrong) {
+    allChoices.push({ answer: wrong, isCorrect: false });
+  });
+  allChoices = shuffle(allChoices);
+  
+  // Store correct index for later
+  var correctIdx = -1;
+  allChoices.forEach(function(choice, idx) {
+    if (choice.isCorrect) correctIdx = idx;
+    html += '<button class="sentence-choice-btn" id="choice-' + idx + '" ' +
+      'onclick="checkSentenceAnswer(' + idx + ', ' + choice.isCorrect + ', ' + correctIdx + ')">' +
+      choice.answer +
+      '</button>';
+  });
+  
+  // Store correct index in state for feedback
+  sentenceQuizState.correctIdx = correctIdx;
+  
+  html += '</div>' +
+    '<div id="sentenceFeedback"></div>' +
+    '</div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function checkSentenceAnswer(choiceIdx, isCorrect) {
+  if (sentenceQuizState.answered) return;
+  sentenceQuizState.answered = true;
+  
+  var q = sentenceQuizState.questions[sentenceQuizState.currentIndex];
+  var correctIdx = sentenceQuizState.correctIdx;
+  
+  // Highlight all buttons
+  document.querySelectorAll('.sentence-choice-btn').forEach(function(btn, idx) {
+    btn.disabled = true;
+    if (idx === choiceIdx && isCorrect) {
+      btn.classList.add('correct');
+    } else if (idx === choiceIdx && !isCorrect) {
+      btn.classList.add('wrong');
+    }
+    if (idx === correctIdx && !isCorrect) {
+      btn.classList.add('show-correct');
+    }
+  });
+  
+  if (isCorrect) {
+    sentenceQuizState.score++;
+    playSound('correct');
+  } else {
+    playSound('wrong');
+  }
+  
+  var feedbackHtml = '<div class="sentence-feedback ' + (isCorrect ? 'correct' : 'wrong') + '">' +
+    '<div class="emoji">' + (isCorrect ? '🎉' : '💪') + '</div>' +
+    '<div class="message">' + (isCorrect ? 'Chính xác!' : 'Chưa đúng rồi!') + '</div>' +
+    '<div class="explanation">' +
+    (q.isPast ? '🌙 <strong>' + q.signal + '</strong> → dùng Simple Past: <strong>' + q.correctAnswer + '</strong>' :
+               '☀️ <strong>' + q.signal + '</strong> → dùng hiện tại: <strong>' + q.correctAnswer + '</strong>') +
+    '</div>' +
+    '<button class="next-btn" onclick="nextSentenceQuestion()">' +
+    (sentenceQuizState.currentIndex < sentenceQuizState.level - 1 ? 'Tiếp theo →' : 'Xem kết quả 🏆') +
+    '</button>' +
+    '</div>';
+  
+  document.getElementById('sentenceFeedback').innerHTML = feedbackHtml;
+  
+  if (isCorrect && sentenceQuizState.score % 3 === 0) {
+    showConfetti();
+  }
+}
+
+function nextSentenceQuestion() {
+  sentenceQuizState.currentIndex++;
+  sentenceQuizState.answered = false;
+  renderSentenceQuiz();
+}
+
+function showSentenceQuizResult() {
+  var state = sentenceQuizState;
+  var percentage = Math.round((state.score / state.level) * 100);
+  
+  var emoji, message;
+  if (percentage >= 90) { emoji = '🏆'; message = 'Xuất sắc! Con giỏi lắm!'; }
+  else if (percentage >= 70) { emoji = '⭐'; message = 'Tốt lắm! Tiếp tục cố gắng!'; }
+  else if (percentage >= 50) { emoji = '💪'; message = 'Khá rồi! Ôn thêm nhé!'; }
+  else { emoji = '📚'; message = 'Cần ôn lại nhiều hơn nha!'; }
+  
+  playSound('complete');
+  if (percentage >= 70) showConfetti();
+  
+  var starsHtml = '';
+  var starCount = percentage >= 90 ? 3 : percentage >= 70 ? 2 : percentage >= 50 ? 1 : 0;
+  for (var i = 0; i < 3; i++) {
+    starsHtml += i < starCount ? '⭐' : '☆';
+  }
+  
+  var html = '<div class="result-content">' +
+    '<div class="result-card">' +
+    '<div class="result-emoji">' + emoji + '</div>' +
+    '<div class="result-title">' + message + '</div>' +
+    '<div class="result-stars">' + starsHtml + '</div>' +
+    '<div style="font-size:2.5rem;font-weight:800;color:#667eea;margin:15px 0">' + 
+    state.score + ' / ' + state.level + '</div>' +
+    '<div style="color:#666;margin-bottom:20px">' + percentage + '% chính xác</div>' +
+    '<div class="result-buttons">' +
+    '<button class="result-btn primary" onclick="startSentenceQuizGame(' + state.level + ')">Chơi lại 🔄</button>' +
+    '<button class="result-btn secondary" onclick="startVerbSentenceQuiz()">Đổi mức độ 📊</button>' +
+    '<button class="result-btn secondary" onclick="showLearnScreen()">Về học tập 📚</button>' +
+    '</div></div></div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
 }
 </script>
 </body>
