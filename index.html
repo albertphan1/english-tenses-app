@@ -1379,6 +1379,7 @@ var currentQuestionIndex = 0;
 var totalStars = 0;
 var todayStars = 0;
 var streakDays = 0;
+var todayMistakes = []; // Theo dõi câu sai hôm nay
 
 // Load sao từ localStorage
 function loadStarData() {
@@ -1392,8 +1393,10 @@ function loadStarData() {
       var today = new Date().toDateString();
       if (data.lastDate === today) {
         todayStars = data.todayStars || 0;
+        todayMistakes = data.todayMistakes || [];
       } else {
         todayStars = 0;
+        todayMistakes = []; // Reset câu sai mỗi ngày mới
         // Kiểm tra streak
         var lastDate = new Date(data.lastDate);
         var todayDate = new Date(today);
@@ -1420,11 +1423,34 @@ function saveStarData() {
       totalStars: totalStars,
       todayStars: todayStars,
       lastDate: new Date().toDateString(),
-      streakDays: streakDays
+      streakDays: streakDays,
+      todayMistakes: todayMistakes
     };
     localStorage.setItem('verbStarData', JSON.stringify(data));
   } catch(e) {
     console.log('Cannot save star data');
+  }
+}
+
+// Thêm câu sai vào danh sách
+function addMistake(mistakeData) {
+  // Kiểm tra xem đã có câu tương tự chưa (tránh trùng lặp)
+  var isDuplicate = todayMistakes.some(function(m) {
+    return m.sentence === mistakeData.sentence && m.correctAnswer === mistakeData.correctAnswer;
+  });
+  
+  if (!isDuplicate) {
+    mistakeData.timestamp = new Date().toLocaleTimeString('vi-VN', {hour: '2-digit', minute: '2-digit'});
+    todayMistakes.push(mistakeData);
+    saveStarData();
+  }
+}
+
+// Xóa một câu sai khỏi danh sách (khi đã ôn tập đúng)
+function removeMistake(index) {
+  if (index >= 0 && index < todayMistakes.length) {
+    todayMistakes.splice(index, 1);
+    saveStarData();
   }
 }
 
@@ -2931,6 +2957,11 @@ var speedGameState = {
 function showLearnScreen() {
   playSound('click');
   
+  // Hiển thị số câu sai hôm nay
+  var mistakeCount = todayMistakes.length;
+  var mistakeBadge = mistakeCount > 0 ? 
+    '<span style="background:#F44336;color:white;border-radius:50%;padding:2px 8px;font-size:0.8rem;margin-left:5px">' + mistakeCount + '</span>' : '';
+  
   var html = '<div class="progress-header" style="margin-bottom:10px">' +
     '<button class="back-btn" onclick="goHome()">← Home</button>' +
     '<div style="color:white;font-weight:700;font-size:1.1rem">📚 Học Tập</div>' +
@@ -2948,8 +2979,12 @@ function showLearnScreen() {
     'Bắt đầu với nhóm <strong>"Không đổi"</strong> vì cả 3 dạng giống nhau.' +
     '</div></div>' +
     
-    // Study modes
+    // Study modes - THÊM NÚT ÔN TẬP CÂU SAI
     '<div class="study-modes">' +
+    '<button class="study-mode-btn" onclick="showTodayMistakes()" style="background:' + (mistakeCount > 0 ? '#FFEBEE' : '#F5F5F5') + ';color:' + (mistakeCount > 0 ? '#C62828' : '#999') + '">' +
+    '<span class="icon">🔄</span>' +
+    '<span>Ôn câu sai' + mistakeBadge + '</span>' +
+    '</button>' +
     '<button class="study-mode-btn" onclick="showContextLearn()" style="background:#FCE4EC;color:#C2185B">' +
     '<span class="icon">📚</span>' +
     '<span>Ngữ cảnh</span>' +
@@ -3125,6 +3160,15 @@ function checkStudyQuizAnswer() {
   } else {
     input.classList.add('wrong');
     playSound('wrong');
+    // TRACK CÂU SAI
+    addMistake({
+      verb: verb.base,
+      verbVn: verb.vn,
+      correctAnswer: correctAnswer,
+      userAnswer: userAnswer,
+      quizType: 'verb_form',
+      mode: studyQuizState.mode // past hoặc pp
+    });
   }
   
   var feedback = '<div style="margin-top:15px;padding:15px;border-radius:12px;' + 
@@ -4974,6 +5018,21 @@ function checkSentenceAnswer(choiceIdx, isCorrect) {
     playSound('correct');
   } else {
     playSound('wrong');
+    // TRACK CÂU SAI
+    addMistake({
+      sentence: q.sentence,
+      sentenceVn: q.sentenceVn,
+      correctAnswer: q.correctAnswer,
+      verb: q.verb,
+      verbVn: q.verbVn,
+      signal: q.signal,
+      signalVn: q.signalVn,
+      isPast: q.isPast,
+      type: q.type,
+      subject: q.subject,
+      emoji: q.emoji,
+      quizType: 'sentence'
+    });
   }
   
   // Explanation based on type
@@ -5216,6 +5275,323 @@ function nextContextLesson() {
     contextLearnState.currentIndex++;
     renderContextLearn();
   }
+}
+
+// ============ ÔN TẬP CÂU SAI HÔM NAY ============
+var mistakeReviewState = {
+  currentIndex: 0,
+  score: 0,
+  answered: false
+};
+
+function showTodayMistakes() {
+  playSound('click');
+  
+  if (todayMistakes.length === 0) {
+    var html = '<div class="progress-header" style="margin-bottom:15px">' +
+      '<button class="back-btn" onclick="showLearnScreen()">← Back</button>' +
+      '<div style="color:white;font-weight:700;font-size:1.1rem">🔄 Ôn câu sai</div>' +
+      '<div></div></div>' +
+      
+      '<div class="easy-match-container">' +
+      '<div style="text-align:center;padding:40px 20px">' +
+      '<div style="font-size:80px;margin-bottom:20px">🎉</div>' +
+      '<div style="font-size:1.5rem;font-weight:700;color:#333;margin-bottom:10px">Tuyệt vời!</div>' +
+      '<div style="color:#666;margin-bottom:20px">Hôm nay con chưa có câu nào sai.<br>Hãy tiếp tục luyện tập nhé!</div>' +
+      '<button class="next-btn" onclick="startVerbSentenceQuiz()">Làm bài mới 📝</button>' +
+      '</div></div>';
+    
+    document.getElementById('learnScreen').innerHTML = html;
+    showScreen('learnScreen');
+    return;
+  }
+  
+  // Có câu sai - hiển thị danh sách
+  var html = '<div class="progress-header" style="margin-bottom:15px">' +
+    '<button class="back-btn" onclick="showLearnScreen()">← Back</button>' +
+    '<div style="color:white;font-weight:700;font-size:1.1rem">🔄 Ôn câu sai</div>' +
+    '<div style="background:rgba(255,255,255,0.9);padding:5px 12px;border-radius:15px;color:#F44336;font-weight:700">' + todayMistakes.length + ' câu</div>' +
+    '</div>' +
+    
+    '<div class="easy-match-container">' +
+    '<div class="easy-match-header">' +
+    '<div style="font-size:50px;margin-bottom:10px">📋</div>' +
+    '<div class="easy-match-title">Câu sai hôm nay</div>' +
+    '<div class="easy-match-hint">Ôn lại những câu con đã làm sai</div>' +
+    '</div>' +
+    
+    '<div style="margin-bottom:15px">' +
+    '<button class="next-btn" onclick="startMistakeReview()" style="width:100%">Ôn tập ngay 🚀</button>' +
+    '</div>' +
+    
+    '<div style="background:white;border-radius:15px;padding:15px">';
+  
+  todayMistakes.forEach(function(m, idx) {
+    var icon = m.quizType === 'sentence' ? '📝' : '🔤';
+    var timeStr = m.timestamp || '';
+    
+    html += '<div style="padding:12px;border-bottom:1px solid #f0f0f0;display:flex;align-items:flex-start;gap:10px">' +
+      '<div style="font-size:1.5rem">' + icon + '</div>' +
+      '<div style="flex:1">' +
+      '<div style="font-weight:600;color:#333;margin-bottom:4px">';
+    
+    if (m.quizType === 'sentence') {
+      html += m.sentence.replace('___', '<span style="color:#F44336;font-weight:700">' + m.correctAnswer + '</span>');
+    } else {
+      html += '<span style="color:#4CAF50">' + m.verb + '</span> → <span style="color:#F44336">' + m.correctAnswer + '</span>';
+    }
+    
+    html += '</div>' +
+      '<div style="font-size:0.85rem;color:#999">' + 
+      (m.verbVn || '') + (timeStr ? ' • ' + timeStr : '') +
+      '</div>' +
+      '</div>' +
+      '<button onclick="removeMistakeAndRefresh(' + idx + ')" style="background:none;border:none;color:#999;font-size:1.2rem;cursor:pointer" title="Xóa">✕</button>' +
+      '</div>';
+  });
+  
+  html += '</div>' +
+    '<button onclick="clearAllMistakes()" style="margin-top:15px;width:100%;padding:12px;background:#F5F5F5;border:none;border-radius:10px;color:#999;font-family:inherit;cursor:pointer">Xóa tất cả</button>' +
+    '</div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+}
+
+function removeMistakeAndRefresh(index) {
+  removeMistake(index);
+  showTodayMistakes();
+}
+
+function clearAllMistakes() {
+  if (confirm('Xóa tất cả ' + todayMistakes.length + ' câu sai?')) {
+    todayMistakes = [];
+    saveStarData();
+    showTodayMistakes();
+  }
+}
+
+function startMistakeReview() {
+  playSound('click');
+  
+  if (todayMistakes.length === 0) {
+    showTodayMistakes();
+    return;
+  }
+  
+  mistakeReviewState = {
+    currentIndex: 0,
+    score: 0,
+    answered: false,
+    mistakes: todayMistakes.slice() // Copy để không ảnh hưởng
+  };
+  
+  renderMistakeReview();
+}
+
+function renderMistakeReview() {
+  var state = mistakeReviewState;
+  
+  if (state.currentIndex >= state.mistakes.length) {
+    showMistakeReviewResult();
+    return;
+  }
+  
+  var m = state.mistakes[state.currentIndex];
+  
+  // Progress dots
+  var dotsHtml = '';
+  for (var i = 0; i < state.mistakes.length; i++) {
+    var dotClass = 'dot';
+    if (i < state.currentIndex) dotClass += ' done';
+    else if (i === state.currentIndex) dotClass += ' active';
+    dotsHtml += '<div class="' + dotClass + '"></div>';
+  }
+  
+  var html = '<div class="progress-header">' +
+    '<button class="back-btn" onclick="showTodayMistakes()">← Back</button>' +
+    '<div class="progress-dots">' + dotsHtml + '</div>' +
+    '<div class="star-count">✓ ' + state.score + '</div>' +
+    '</div>';
+  
+  if (m.quizType === 'sentence') {
+    // Render sentence quiz
+    var displaySentence = m.sentence.replace(m.signal, '<u style="text-decoration:underline;text-decoration-color:#FF9800;text-decoration-thickness:2px;font-weight:700">' + m.signal + '</u>');
+    displaySentence = displaySentence.replace('___', '<span class="blank">?</span>');
+    
+    html += '<div class="sentence-quiz-card">' +
+      (m.emoji ? '<div style="font-size:3rem;text-align:center;margin-bottom:10px">' + m.emoji + '</div>' : '') +
+      '<div style="text-align:center;margin-bottom:8px;color:#F44336;font-size:0.9rem">🔄 Ôn tập câu sai</div>' +
+      '<div class="sentence-quiz-sentence">' + displaySentence + '</div>' +
+      '<div class="sentence-quiz-choices">';
+    
+    // Tạo choices từ correctAnswer và wrongAnswers
+    var choices = [{ answer: m.correctAnswer, isCorrect: true }];
+    
+    // Tạo wrong answers dựa vào type
+    if (m.type === 'affirm') {
+      var verbForms = getVerbForms(m.verb);
+      if (m.isPast) {
+        choices.push({ answer: getPresentForm(verbForms.base, m.subject), isCorrect: false });
+      } else {
+        choices.push({ answer: verbForms.past, isCorrect: false });
+      }
+      choices.push({ answer: verbForms.base, isCorrect: false });
+    } else if (m.type === 'negative') {
+      var negatives = ["don't", "doesn't", "didn't"];
+      negatives.forEach(function(n) {
+        if (n !== m.correctAnswer) choices.push({ answer: n, isCorrect: false });
+      });
+    } else if (m.type === 'question' || m.type === 'question_verb') {
+      var verbForms = getVerbForms(m.verb);
+      choices.push({ answer: verbForms.past, isCorrect: false });
+      choices.push({ answer: getPresentForm(verbForms.base, 'She'), isCorrect: false });
+    }
+    
+    // Shuffle và hiển thị
+    choices = shuffle(choices).slice(0, 4);
+    var correctIdx = -1;
+    choices.forEach(function(c, idx) {
+      if (c.isCorrect) correctIdx = idx;
+      html += '<button class="sentence-choice-btn" id="mr-choice-' + idx + '" onclick="checkMistakeReviewAnswer(' + idx + ', ' + c.isCorrect + ')">' + c.answer + '</button>';
+    });
+    mistakeReviewState.correctIdx = correctIdx;
+    
+    html += '</div><div id="mistakeReviewFeedback"></div></div>';
+    
+  } else {
+    // Render verb form quiz
+    html += '<div class="sentence-quiz-card">' +
+      '<div style="text-align:center;margin-bottom:8px;color:#F44336;font-size:0.9rem">🔄 Ôn tập câu sai</div>' +
+      '<div style="font-size:1.2rem;color:#666;margin-bottom:10px">Dạng ' + (m.mode === 'past' ? 'quá khứ (V2)' : 'phân từ (V3)') + ' của:</div>' +
+      '<div style="font-size:2.5rem;font-weight:800;color:#4CAF50;margin:20px 0">' + m.verb + '</div>' +
+      '<div style="color:#999;margin-bottom:20px">' + m.verbVn + '</div>' +
+      '<input type="text" id="mrVerbInput" class="quiz-input" placeholder="Nhập đáp án..." onkeypress="if(event.key===\'Enter\')checkMistakeReviewVerbAnswer()">' +
+      '<div id="mistakeReviewFeedback" style="margin-top:15px"></div>' +
+      '</div>';
+  }
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+  
+  // Focus vào input nếu có
+  var input = document.getElementById('mrVerbInput');
+  if (input) input.focus();
+}
+
+function checkMistakeReviewAnswer(choiceIdx, isCorrect) {
+  if (mistakeReviewState.answered) return;
+  mistakeReviewState.answered = true;
+  
+  var m = mistakeReviewState.mistakes[mistakeReviewState.currentIndex];
+  var correctIdx = mistakeReviewState.correctIdx;
+  
+  document.querySelectorAll('.sentence-choice-btn').forEach(function(btn, idx) {
+    btn.disabled = true;
+    if (idx === choiceIdx && isCorrect) btn.classList.add('correct');
+    else if (idx === choiceIdx && !isCorrect) btn.classList.add('wrong');
+    if (idx === correctIdx && !isCorrect) btn.classList.add('show-correct');
+  });
+  
+  if (isCorrect) {
+    mistakeReviewState.score++;
+    playSound('correct');
+    // Xóa câu này khỏi danh sách sai vì đã trả lời đúng
+    var originalIdx = todayMistakes.findIndex(function(tm) {
+      return tm.sentence === m.sentence && tm.correctAnswer === m.correctAnswer;
+    });
+    if (originalIdx >= 0) removeMistake(originalIdx);
+  } else {
+    playSound('wrong');
+  }
+  
+  var explanation = m.isPast ? 
+    '🌙 <strong>' + m.signal + '</strong> → quá khứ: <strong>' + m.correctAnswer + '</strong>' :
+    '☀️ <strong>' + m.signal + '</strong> → hiện tại: <strong>' + m.correctAnswer + '</strong>';
+  
+  var feedbackHtml = '<div class="sentence-feedback ' + (isCorrect ? 'correct' : 'wrong') + '">' +
+    '<div class="emoji">' + (isCorrect ? '🎉' : '💪') + '</div>' +
+    '<div class="message">' + (isCorrect ? 'Đúng rồi! Đã xóa khỏi danh sách sai.' : 'Vẫn chưa đúng, cố gắng thêm nhé!') + '</div>' +
+    '<div class="explanation">' + explanation + '</div>' +
+    '<button class="next-btn" onclick="nextMistakeReview()">' +
+    (mistakeReviewState.currentIndex < mistakeReviewState.mistakes.length - 1 ? 'Tiếp theo →' : 'Xem kết quả 🏆') +
+    '</button></div>';
+  
+  document.getElementById('mistakeReviewFeedback').innerHTML = feedbackHtml;
+}
+
+function checkMistakeReviewVerbAnswer() {
+  if (mistakeReviewState.answered) return;
+  
+  var input = document.getElementById('mrVerbInput');
+  var userAnswer = input.value.trim().toLowerCase();
+  var m = mistakeReviewState.mistakes[mistakeReviewState.currentIndex];
+  
+  var correctAnswers = m.correctAnswer.toLowerCase().split('/').map(function(a) { return a.trim(); });
+  var isCorrect = correctAnswers.indexOf(userAnswer) >= 0;
+  
+  mistakeReviewState.answered = true;
+  input.disabled = true;
+  input.classList.add(isCorrect ? 'correct' : 'wrong');
+  
+  if (isCorrect) {
+    mistakeReviewState.score++;
+    playSound('correct');
+    var originalIdx = todayMistakes.findIndex(function(tm) {
+      return tm.verb === m.verb && tm.correctAnswer === m.correctAnswer;
+    });
+    if (originalIdx >= 0) removeMistake(originalIdx);
+  } else {
+    playSound('wrong');
+  }
+  
+  var feedbackHtml = '<div class="sentence-feedback ' + (isCorrect ? 'correct' : 'wrong') + '">' +
+    '<div class="emoji">' + (isCorrect ? '🎉' : '💪') + '</div>' +
+    '<div class="message">' + (isCorrect ? 'Đúng rồi! Đã xóa khỏi danh sách sai.' : 'Đáp án đúng: ' + m.correctAnswer) + '</div>' +
+    '<button class="next-btn" onclick="nextMistakeReview()">' +
+    (mistakeReviewState.currentIndex < mistakeReviewState.mistakes.length - 1 ? 'Tiếp theo →' : 'Xem kết quả 🏆') +
+    '</button></div>';
+  
+  document.getElementById('mistakeReviewFeedback').innerHTML = feedbackHtml;
+}
+
+function nextMistakeReview() {
+  mistakeReviewState.currentIndex++;
+  mistakeReviewState.answered = false;
+  renderMistakeReview();
+}
+
+function showMistakeReviewResult() {
+  var state = mistakeReviewState;
+  var total = state.mistakes.length;
+  var percentage = Math.round((state.score / total) * 100);
+  
+  var emoji = percentage >= 80 ? '🏆' : percentage >= 50 ? '⭐' : '💪';
+  var message = percentage >= 80 ? 'Tuyệt vời! Con đã nhớ rồi!' : 
+                percentage >= 50 ? 'Khá tốt! Tiếp tục ôn tập nhé!' : 
+                'Cần ôn thêm một chút nữa!';
+  
+  var remainingCount = todayMistakes.length;
+  
+  var html = '<div class="result-content"><div class="result-card">' +
+    '<div class="result-emoji">' + emoji + '</div>' +
+    '<div class="result-title">' + message + '</div>' +
+    '<div style="font-size:2.5rem;font-weight:800;color:#667eea;margin:15px 0">' + state.score + ' / ' + total + '</div>' +
+    '<div style="color:#666;margin-bottom:10px">' + percentage + '% chính xác</div>' +
+    (remainingCount > 0 ? 
+      '<div style="background:#FFF3E0;padding:10px;border-radius:10px;margin-bottom:15px;color:#E65100">Còn ' + remainingCount + ' câu cần ôn lại</div>' :
+      '<div style="background:#E8F5E9;padding:10px;border-radius:10px;margin-bottom:15px;color:#2E7D32">🎉 Đã hoàn thành tất cả!</div>') +
+    '<div class="result-buttons">' +
+    (remainingCount > 0 ? '<button class="result-btn primary" onclick="startMistakeReview()">Ôn tiếp 🔄</button>' : '') +
+    '<button class="result-btn ' + (remainingCount > 0 ? 'secondary' : 'primary') + '" onclick="startVerbSentenceQuiz()">Làm bài mới 📝</button>' +
+    '<button class="result-btn secondary" onclick="showLearnScreen()">Về học tập 📚</button>' +
+    '</div></div></div>';
+  
+  document.getElementById('learnScreen').innerHTML = html;
+  showScreen('learnScreen');
+  
+  playSound('complete');
+  if (percentage >= 70) showConfetti();
 }
 </script>
 </body>
