@@ -41,29 +41,29 @@
     }
     
     /* HOME SCREEN */
-    .home-content { text-align: center; padding-top: 30px; }
-    .mascot-large { font-size: 100px; animation: bounce 2s ease infinite; }
+    .home-content { text-align: center; padding-top: 15px; }
+    .mascot-large { font-size: 65px; animation: bounce 2s ease infinite; }
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-10px); }
     }
     .app-title {
-      font-size: 2.2rem; font-weight: 800; color: white;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.2); margin: 15px 0 5px;
+      font-size: 1.8rem; font-weight: 800; color: white;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.2); margin: 8px 0 3px;
     }
-    .app-tagline { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 30px; }
+    .app-tagline { color: rgba(255,255,255,0.9); font-size: 0.95rem; margin-bottom: 10px; }
     
-    .topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+    .topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
     .topic-card {
-      background: white; border-radius: 20px; padding: 20px 15px;
+      background: white; border-radius: 15px; padding: 14px 10px;
       text-align: center; cursor: pointer; transition: all 0.3s;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
       border: 3px solid transparent;
     }
-    .topic-card:hover { transform: translateY(-5px); }
+    .topic-card:hover { transform: translateY(-3px); }
     .topic-card:active { transform: scale(0.95); }
-    .topic-card .topic-icon { font-size: 45px; margin-bottom: 8px; }
-    .topic-card .topic-name { font-size: 1rem; font-weight: 700; color: #333; }
+    .topic-card .topic-icon { font-size: 32px; margin-bottom: 4px; }
+    .topic-card .topic-name { font-size: 0.88rem; font-weight: 700; color: #333; }
     .topic-card.daily { border-color: #4CAF50; }
     .topic-card.yesterday { border-color: #FF9800; }
     .topic-card.stories { border-color: #E91E63; }
@@ -141,13 +141,13 @@
     }
     
     .feedback-box {
-      margin-top: 20px; padding: 20px; border-radius: 15px;
+      margin-top: 20px; padding: 15px; border-radius: 15px;
       text-align: center; animation: fadeIn 0.3s ease;
     }
     .feedback-box.correct { background: #E8F5E9; }
     .feedback-box.wrong { background: #FFF3E0; }
-    .feedback-emoji { font-size: 50px; margin-bottom: 10px; }
-    .feedback-text { font-size: 1.1rem; color: #333; margin-bottom: 15px; }
+    .feedback-emoji { font-size: 30px; display: inline; vertical-align: middle; margin-right: 8px; }
+    .feedback-text { font-size: 1.1rem; color: #333; margin-bottom: 10px; display: inline; vertical-align: middle; }
     .feedback-tip {
       background: white; padding: 12px 15px; border-radius: 10px;
       font-size: 1rem; color: #666; margin-bottom: 15px;
@@ -171,10 +171,10 @@
       border-radius: 25px; font-weight: 700; cursor: pointer;
       font-family: 'Nunito', sans-serif; color: #333;
     }
-    .progress-dots { display: flex; gap: 8px; }
+    .progress-dots { display: flex; gap: 5px; flex-wrap: nowrap; overflow: hidden; flex: 1; justify-content: center; margin: 0 10px; }
     .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      background: rgba(255,255,255,0.4);
+      width: 10px; height: 10px; min-width: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.4); flex-shrink: 1;
     }
     .dot.active { background: white; }
     .dot.done { background: #4CAF50; }
@@ -971,6 +971,66 @@
     .level-card.easy .level-name { color: #2E7D32; }
     .level-card.medium .level-name { color: #E65100; }
     .level-card.hard .level-name { color: #C2185B; }
+
+    /* Present Perfect Quiz */
+    .pp-quiz-container { background:white; border-radius:20px; padding:25px; margin-top:15px; box-shadow:0 5px 20px rgba(0,0,0,0.15); }
+    .pp-category-badge { display:inline-block; padding:6px 16px; border-radius:20px; font-size:0.85rem; font-weight:700; margin-bottom:15px; }
+    .pp-cat-havhas { background:#E3F2FD; color:#1565C0; }
+    .pp-cat-v3 { background:#F3E5F5; color:#7B1FA2; }
+    .pp-cat-sinfor { background:#E8F5E9; color:#2E7D32; }
+    .pp-cat-signal { background:#FFF3E0; color:#E65100; }
+    .pp-cat-vs { background:#FCE4EC; color:#C2185B; }
+    .pp-cat-neg { background:#FFEBEE; color:#C62828; }
+    .pp-cat-ques { background:#E0F7FA; color:#00838F; }
+    .pp-cat-mix { background:linear-gradient(135deg,#E3F2FD,#F3E5F5); color:#4A148C; }
+    .pp-sentence-box { font-size:1.3rem; text-align:center; padding:22px 18px; margin:15px 0; background:linear-gradient(135deg,#F5F5F5,#FAFAFA); border-radius:15px; line-height:1.7; border:2px solid #E0E0E0; }
+    /* Present Perfect Quiz - compact overrides */
+    .pp-sentence-box .pp-signal, .scene-text .pp-signal { text-decoration:none; border-bottom:3px solid #FF5722; color:#E65100; font-weight:800; padding-bottom:1px; }
+    .pp-sentence-box .pp-blank, .scene-text .pp-blank { display:inline-block; min-width:85px; border-bottom:3px dashed #00BCD4; margin:0 4px; color:#00BCD4; font-weight:800; padding:0 5px; }
+    .pp-sentence-box .pp-filled, .scene-text .pp-filled { display:inline-block; min-width:85px; border-bottom:3px solid #4CAF50; margin:0 4px; color:#2E7D32; font-weight:800; padding:0 5px; background:#E8F5E9; border-radius:5px 5px 0 0; }
+    .pp-sentence-box .pp-filled-wrong, .scene-text .pp-filled-wrong { border-bottom-color:#F44336; color:#C62828; background:#FFEBEE; }
+    .pp-hint-vn { text-align:center; color:#999; font-size:0.92rem; margin-bottom:15px; font-style:italic; }
+    .pp-choices { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .pp-choices.three-cols { grid-template-columns:1fr 1fr 1fr; }
+    .pp-choice-btn { padding:14px 10px; border-radius:14px; border:3px solid #E0E0E0; background:white; cursor:pointer; font-family:'Nunito',sans-serif; font-size:1.1rem; font-weight:700; transition:all 0.2s; text-align:center; }
+    .pp-choice-btn:hover { border-color:#00BCD4; background:#E0F7FA; transform:translateY(-2px); }
+    .pp-choice-btn:active { transform:scale(0.97); }
+    .pp-choice-btn.pp-correct { border-color:#4CAF50; background:#E8F5E9; color:#2E7D32; animation:pulse 0.5s ease; }
+    .pp-choice-btn.pp-wrong { border-color:#F44336; background:#FFEBEE; color:#C62828; animation:shake 0.5s ease; }
+    .pp-choice-btn.pp-show-correct { border-color:#4CAF50; background:#C8E6C9; color:#1B5E20; }
+    .pp-feedback-box { margin-top:18px; padding:18px; border-radius:15px; text-align:center; animation:fadeIn 0.3s ease; }
+    .pp-feedback-box.correct { background:#E8F5E9; }
+    .pp-feedback-box.wrong { background:#FFF3E0; }
+    .pp-feedback-box .fb-emoji { font-size:2.8rem; margin-bottom:6px; }
+    .pp-feedback-box .fb-msg { font-weight:700; font-size:1.1rem; margin-bottom:5px; }
+    .pp-feedback-box .fb-explain { font-size:0.92rem; color:#555; margin-bottom:12px; line-height:1.5; text-align:left; padding:10px 12px; background:rgba(255,255,255,0.7); border-radius:10px; }
+    .pp-level-card { background:white; border-radius:20px; padding:18px; display:flex; align-items:center; gap:15px; cursor:pointer; transition:all 0.3s; box-shadow:0 5px 15px rgba(0,0,0,0.1); border:3px solid transparent; margin-bottom:12px; }
+    .pp-level-card:hover { transform:translateY(-3px); }
+    .pp-level-card:active { transform:scale(0.98); }
+    .pp-level-card .lv-icon { font-size:38px; }
+    .pp-level-card .lv-info { flex:1; text-align:left; }
+    .pp-level-card .lv-name { font-size:1.15rem; font-weight:700; color:#333; }
+    .pp-level-card .lv-desc { font-size:0.82rem; color:#666; }
+    .pp-level-card .lv-badge { background:#f5f5f5; padding:5px 12px; border-radius:15px; font-size:0.82rem; color:#888; font-weight:600; }
+    .pp-progress-bar { height:8px; background:rgba(255,255,255,0.3); border-radius:4px; margin:10px 0; overflow:hidden; }
+    .pp-progress-fill { height:100%; background:linear-gradient(90deg,#00BCD4,#4CAF50); border-radius:4px; transition:width 0.3s ease; }
+    .pp-topic-selector { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px; }
+    .pp-topic-btn { padding:8px 14px; border-radius:20px; border:2px solid rgba(255,255,255,0.3); background:rgba(255,255,255,0.15); color:white; font-weight:600; cursor:pointer; font-family:'Nunito',sans-serif; font-size:0.8rem; transition:all 0.2s; }
+    .pp-topic-btn:hover { background:rgba(255,255,255,0.25); }
+    .pp-topic-btn.active { background:white; color:#00838F; border-color:white; }
+    .pp-result-card { background:white; border-radius:20px; padding:25px; text-align:center; box-shadow:0 5px 20px rgba(0,0,0,0.15); }
+    .pp-result-stars { font-size:3rem; margin-bottom:10px; }
+    .pp-result-score { font-size:2.5rem; font-weight:800; color:#00BCD4; }
+    .pp-result-label { font-size:1rem; color:#666; margin-bottom:15px; }
+    .pp-result-detail { display:flex; justify-content:center; gap:25px; margin:15px 0; }
+    .pp-result-detail .rd-item { text-align:center; }
+    .pp-result-detail .rd-num { font-size:1.8rem; font-weight:800; }
+    .pp-result-detail .rd-label { font-size:0.82rem; color:#999; }
+    .pp-review-item { background:#f9f9f9; border-radius:12px; padding:14px; margin-bottom:10px; text-align:left; }
+    .pp-review-item.rv-correct { border-left:4px solid #4CAF50; }
+    .pp-review-item.rv-wrong { border-left:4px solid #F44336; }
+    .pp-review-item .rv-q { font-weight:600; margin-bottom:5px; }
+    .pp-review-item .rv-a { font-size:0.9rem; color:#555; }
   </style>
 </head>
 <body>
@@ -986,23 +1046,23 @@
         <p class="app-tagline">Học tiếng Anh vui vẻ mỗi ngày</p>
         
         <!-- Hiển thị tổng sao -->
-        <div id="starDisplay" style="display:flex;justify-content:center;gap:15px;margin:15px 0;flex-wrap:wrap">
-          <div style="background:linear-gradient(135deg,#FFD700,#FFA000);padding:10px 20px;border-radius:20px;color:white;font-weight:700;box-shadow:0 3px 10px rgba(255,152,0,0.3)">
+        <div id="starDisplay" style="display:flex;justify-content:center;gap:10px;margin:8px 0;flex-wrap:wrap">
+          <div style="background:linear-gradient(135deg,#FFD700,#FFA000);padding:6px 14px;border-radius:15px;color:white;font-weight:700;font-size:0.85rem;box-shadow:0 2px 8px rgba(255,152,0,0.3)">
             ⭐ Tổng: <span id="totalStarsDisplay">0</span>
           </div>
-          <div style="background:linear-gradient(135deg,#4CAF50,#2E7D32);padding:10px 20px;border-radius:20px;color:white;font-weight:700;box-shadow:0 3px 10px rgba(76,175,80,0.3)">
+          <div style="background:linear-gradient(135deg,#4CAF50,#2E7D32);padding:6px 14px;border-radius:15px;color:white;font-weight:700;font-size:0.85rem;box-shadow:0 2px 8px rgba(76,175,80,0.3)">
             📅 Hôm nay: <span id="todayStarsDisplay">0</span>
           </div>
         </div>
         
         <div class="topic-grid">
-          <div class="topic-card daily" onclick="showLevelSelect('daily')">
-            <div class="topic-icon">☀️</div>
-            <div class="topic-name">Every Day</div>
+          <div class="topic-card" onclick="showPresentPerfectQuiz()" style="border-color:#00BCD4;background:linear-gradient(135deg,#E0F7FA,#fff)">
+            <div class="topic-icon">💎</div>
+            <div class="topic-name">Present Perfect</div>
           </div>
-          <div class="topic-card yesterday" onclick="showLevelSelect('yesterday')">
-            <div class="topic-icon">🌙</div>
-            <div class="topic-name">Yesterday</div>
+          <div class="topic-card" onclick="showSimpleTenseSelect()" style="border-color:#FF9800;background:linear-gradient(135deg,#FFF8E1,#fff)">
+            <div class="topic-icon">☀️🌙</div>
+            <div class="topic-name">Simple Tenses</div>
           </div>
           <div class="topic-card stories" onclick="showLevelSelect('stories')">
             <div class="topic-icon">📖</div>
@@ -1022,7 +1082,7 @@
           </div>
         </div>
         
-        <div id="motivationalMsg" style="margin-top:25px;padding:14px 20px;background:rgba(255,255,255,0.15);border-radius:15px;text-align:center;color:white;font-size:0.95rem;line-height:1.5;backdrop-filter:blur(5px)">
+        <div id="motivationalMsg" style="margin-top:10px;padding:10px 15px;background:rgba(255,255,255,0.15);border-radius:12px;text-align:center;color:white;font-size:0.85rem;line-height:1.4;backdrop-filter:blur(5px)">
         </div>
       </div>
     </div>
@@ -1041,6 +1101,12 @@
     
     <!-- GAME SCREEN -->
     <div id="gameScreen" class="screen"></div>
+
+    <div id="quizScreen" class="screen">
+      <div class="container">
+        <div id="quizArea"></div>
+      </div>
+    </div>
   </div>
 
 <script>
@@ -1484,12 +1550,37 @@ var flashcardIndex = 0;
 var isFlipped = false;
 
 // ============ LEVEL SELECT ============
+function showSimpleTenseSelect() {
+  playSound('click');
+  var html = '<div class="level-content">' +
+    '<div style="text-align:left;margin-bottom:10px"><button class="back-btn" onclick="goHome()">← Home</button></div>' +
+    '<div style="font-size:50px;margin-bottom:10px">☀️🌙</div>' +
+    '<div class="level-title">Simple Tenses</div>' +
+    '<div class="level-subtitle">Chọn chủ đề con muốn luyện:</div>' +
+    '<div class="level-cards">' +
+    '<div class="level-card easy" onclick="showLevelSelect(\'daily\')">' +
+    '<div class="level-icon">☀️</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Every Day</div>' +
+    '<div class="level-desc">Present Simple - Thì hiện tại đơn</div>' +
+    '</div></div>' +
+    '<div class="level-card medium" onclick="showLevelSelect(\'yesterday\')">' +
+    '<div class="level-icon">🌙</div>' +
+    '<div class="level-info">' +
+    '<div class="level-name">Yesterday</div>' +
+    '<div class="level-desc">Past Simple - Thì quá khứ đơn</div>' +
+    '</div></div>' +
+    '</div></div>';
+  document.getElementById('quizArea').innerHTML = html;
+  showScreen('quizScreen');
+}
+
 function showLevelSelect(topic) {
   playSound('click');
   currentTopic = topic;
   
-  var topicName = topic === 'daily' ? '☀️ Every Day' : 
-                  topic === 'yesterday' ? '🌙 Yesterday' : '📖 Mix Stories';
+  var topicName = topic === 'daily' ? 'Every Day' : 
+                  topic === 'yesterday' ? 'Yesterday' : 'Mix Stories';
   
   var html = '<div class="level-content">' +
     '<div style="text-align:left;margin-bottom:10px"><button class="back-btn" onclick="goHome()">← Home</button></div>' +
@@ -1543,8 +1634,27 @@ function showLevelSelect(topic) {
     '</div>' +
     '<div class="level-time">20 câu • 15 phút</div>' +
     '</div>' +
-    '</div></div>';
+    '</div>'; // close level-cards
   
+  // Growth mindset motivation
+  var stMotivMessages = [
+    '💪 Mỗi lần luyện tập là mỗi lần não bộ mạnh hơn!',
+    '🌱 Sai không sao — đó là cách con học được!',
+    '🔥 Con không cần hoàn hảo, chỉ cần cố gắng mỗi ngày!',
+    '🧠 Não con đang tạo thêm kết nối mỗi khi con luyện tập!',
+    '⭐ Điều quan trọng không phải là điểm số — mà là sự nỗ lực!',
+    '🚀 Mỗi câu hỏi là một bước tiến — dù đúng hay sai!',
+    '🌈 Con đã dũng cảm khi bấm vào đây — bắt đầu thôi!',
+    '🎯 Luyện tập đều đặn quan trọng hơn làm đúng hết!',
+    '💡 Khi con thấy khó, nghĩa là não con đang lớn lên!',
+    '🏃 Không ai giỏi ngay từ đầu — tất cả đều nhờ luyện tập!'
+  ];
+  var stMotiv = stMotivMessages[Math.floor(Math.random() * stMotivMessages.length)];
+  html += '<div style="text-align:center;margin-top:15px;padding:14px;background:rgba(255,255,255,0.15);border-radius:15px;color:white;font-size:0.95rem">' +
+    stMotiv + '</div>';
+
+  html += '</div>'; // close level-content
+
   document.getElementById('levelScreen').innerHTML = html;
   showScreen('levelScreen');
 }
@@ -2208,11 +2318,11 @@ function updateStarDisplay() {
     if (todayStars === 0) {
       streakText.textContent = 'Bắt đầu học nào!';
     } else if (todayStars < 10) {
-      streakText.textContent = 'Tốt lắm! Cố thêm nào! 💪';
+      streakText.textContent = 'Con đang cố gắng! Tiếp tục nhé! 💪';
     } else if (todayStars < 30) {
-      streakText.textContent = 'Giỏi quá! ' + todayStars + ' sao hôm nay! ⭐';
+      streakText.textContent = 'Chăm chỉ quá! ' + todayStars + ' sao hôm nay! ⭐';
     } else if (todayStars < 50) {
-      streakText.textContent = 'Xuất sắc! ' + todayStars + ' sao! 🌟';
+      streakText.textContent = 'Nỗ lực tuyệt vời! ' + todayStars + ' sao! 🌟';
     } else {
       streakText.textContent = 'Siêu sao! ' + todayStars + ' sao! 🏆👑';
     }
@@ -2229,7 +2339,7 @@ var MOTIVATIONAL_MESSAGES = [
   "🐢 Chậm mà chắc — con rùa luôn về đích!",
   "🌈 Khó hôm nay, dễ ngày mai — cứ tiếp tục thôi!",
   "🔥 Mỗi lần luyện tập, não con lại mạnh thêm một chút!",
-  "🎯 Không cần hoàn hảo, chỉ cần mỗi ngày tốt hơn một xíu!",
+  "🎯 Mỗi ngày luyện tập là mỗi ngày tiến bộ!",
   "🌟 Con đã dám bắt đầu — đó là điều tuyệt vời nhất rồi!",
   "🏃 Đừng so với ai, hãy so với con của ngày hôm qua!",
   "🎸 Học tiếng Anh giống như tập đàn — càng chơi càng hay!",
@@ -2519,6 +2629,12 @@ function showResult() {
   showConfetti();
   
   var percentage = Math.round((correctAnswers / totalQuestions) * 100);
+  
+  // Save best score per topic
+  var bestKey = 'bestScore_' + currentTopic;
+  var oldBest = parseInt(localStorage.getItem(bestKey) || '0');
+  if (percentage > oldBest) localStorage.setItem(bestKey, percentage);
+  
   var starCount = Math.min(3, Math.floor(percentage / 33) + (percentage > 0 ? 1 : 0));
   var starsHtml = '';
   for (var i = 0; i < 3; i++) {
@@ -2534,9 +2650,9 @@ function showResult() {
   addStars(bonusStars);
   
   var emoji = percentage >= 80 ? '🏆' : percentage >= 50 ? '🌟' : '💪';
-  var title = percentage >= 80 ? 'Xuất sắc!' : percentage >= 50 ? 'Tốt lắm!' : 'Cố gắng thêm!';
-  var message = percentage >= 80 ? 'Con đã rất chăm chỉ! 🎉' : 
-                percentage >= 50 ? 'Con đang tiến bộ rõ rệt! 👍' : 
+  var titles80 = ['Con đã luyện tập rất chăm chỉ!','Sự kiên nhẫn của con được đền đáp!','Con đã nỗ lực hết mình!'];var titles50 = ['Con đang tiến bộ từng bước!','Mỗi câu đúng là một bước tiến!','Con đã cố gắng rất nhiều!'];var titlesLow = ['Mỗi lần thử là mỗi lần học!','Sai cũng là cách để hiểu hơn!','Đừng bỏ cuộc, con đang trên đường tiến bộ!'];var title = percentage >= 80 ? titles80[Math.floor(Math.random()*3)] : percentage >= 50 ? titles50[Math.floor(Math.random()*3)] : titlesLow[Math.floor(Math.random()*3)];
+  var msgs80 = ['Sự cố gắng của con thật đáng khen! 🎉','Con đã dành thời gian luyện tập và có kết quả! 👏','Cứ tiếp tục thế này nhé! 🌟'];var msgs50 = ['Con đã dũng cảm thử sức! 👍','Lần sau sẽ vững hơn nữa! 💪','Mỗi lần luyện, con lại nhớ thêm! 📚'];var message = percentage >= 80 ? msgs80[Math.floor(Math.random()*3)] : 
+                percentage >= 50 ? msgs50[Math.floor(Math.random()*3)] : 
                 'Luyện tập thêm con sẽ tiến bộ hơn! 💪';
   
   document.getElementById('appContainer').className = 'app-container bg-fun';
@@ -2655,7 +2771,7 @@ function renderMatchingGame() {
   if (matchedPairs.length >= 6) {
     html += '<div style="text-align:center;margin-top:20px">' +
       '<div style="font-size:50px;margin-bottom:10px">🎉</div>' +
-      '<div style="color:white;font-size:1.3rem;font-weight:700;margin-bottom:15px">Excellent!</div>' +
+      '<div style="color:white;font-size:1.3rem;font-weight:700;margin-bottom:15px">Con đã hoàn thành rồi!</div>' +
       '<button class="next-btn" onclick="startMatchingGame()">Play Again 🔄</button></div>';
   }
   
@@ -3245,9 +3361,7 @@ function showStudyQuizResult() {
   var state = studyQuizState;
   var percentage = Math.round((state.score / state.verbs.length) * 100);
   var emoji = percentage >= 80 ? '🏆' : percentage >= 60 ? '⭐' : percentage >= 40 ? '💪' : '📚';
-  var message = percentage >= 80 ? 'Tuyệt vời! Con đã rất cố gắng!' : 
-                percentage >= 60 ? 'Tốt lắm! Con đang tiến bộ!' :
-                percentage >= 40 ? 'Cố lên! Ôn thêm nhé con!' : 'Cần ôn lại nhiều hơn nha!';
+  var studyMsgs = percentage >= 80 ? ['Con đã luyện tập rất chăm chỉ!','Sự kiên trì của con có kết quả!','Nỗ lực của con thật đáng tự hào!'] : percentage >= 60 ? ['Con đang tiến bộ từng ngày!','Mỗi lần ôn là mỗi lần vững hơn!','Con đã cố gắng, tiếp tục nhé!'] : percentage >= 40 ? ['Đừng nản! Con đang trên đường tiến bộ!','Sai là để học, con làm đúng rồi!','Luyện thêm, con sẽ nhớ lâu hơn!'] : ['Mỗi từ sai là cơ hội để nhớ!','Kiên nhẫn ôn lại, con sẽ tiến bộ!','Bắt đầu lại cũng là tiến bộ!'];var message = studyMsgs[Math.floor(Math.random()*3)];
   
   playSound('complete');
   showConfetti();
@@ -3367,7 +3481,7 @@ function endSpeedGame() {
   
   var score = speedGameState.score;
   var emoji = score >= 15 ? '🏆' : score >= 10 ? '⭐' : score >= 5 ? '💪' : '📚';
-  var message = score >= 15 ? 'Siêu tốc độ!' : score >= 10 ? 'Tốt lắm!' : score >= 5 ? 'Cố lên!' : 'Luyện thêm nhé!';
+  var message = score >= 15 ? 'Luyện tập có kết quả rồi!' : score >= 10 ? 'Con đang tiến bộ!' : score >= 5 ? 'Tiếp tục luyện nhé!' : 'Mỗi lần thử là mỗi lần hiểu thêm!';
   
   playSound('complete');
   if (score >= 10) showConfetti();
@@ -3942,7 +4056,7 @@ function renderTripleMatch() {
     
     html += '<div style="text-align:center;margin-top:20px">' +
       '<div style="font-size:50px;margin-bottom:10px">🏆</div>' +
-      '<div style="color:white;font-size:1.3rem;font-weight:700;margin-bottom:15px">Xuất sắc! Con đã ghép đúng hết!</div>' +
+      '<div style="color:white;font-size:1.3rem;font-weight:700;margin-bottom:15px">Con đã kiên nhẫn ghép đúng hết!</div>' +
       '<button class="next-btn" onclick="startTripleMatchGame(' + state.level + ')" style="margin-bottom:10px">Chơi lại 🔄</button>' +
       '<button class="next-btn" style="background:#F5F5F5;color:#333" onclick="startTripleMatch()">Đổi mức độ 📊</button>' +
       '</div>';
@@ -4725,7 +4839,139 @@ var SENTENCE_TEMPLATES = [
   { template: 'The kids ___ in the park {signal}.', subject: 'The kids', verb: 'swing', vn: 'Bọn trẻ chơi xích đu ở công viên', type: 'affirm', emoji: '👧👦🎠' },
   { template: 'The monkey ___ from tree to tree {signal}.', subject: 'The monkey', verb: 'swing', vn: 'Con khỉ đu từ cây này sang cây kia', type: 'affirm', emoji: '🐒🌳' },
   { template: 'I ___ swing high {signal}.', subject: 'I', verb: 'swing', vn: 'Tôi không đu cao', type: 'negative', emoji: '🧑🚫🎠' },
-  { template: 'Did the door ___ open {signal}?', subject: 'the door', verb: 'swing', vn: 'Cửa có mở ra không?', type: 'question_verb', emoji: '❓🚪' }
+  { template: 'Did the door ___ open {signal}?', subject: 'the door', verb: 'swing', vn: 'Cửa có mở ra không?', type: 'question_verb', emoji: '❓🚪' },
+
+  // === QUESTION TYPE: Do/Does/Did ___? ===
+  { template: '___ he eat pizza {signal}?', subject: 'he', verb: 'eat', vn: 'Anh ấy có ăn pizza không?', type: 'question', emoji: '❓🍕' },
+  { template: '___ she go to school {signal}?', subject: 'she', verb: 'go', vn: 'Cô ấy có đi học không?', type: 'question', emoji: '❓🏫' },
+  { template: '___ they drink milk {signal}?', subject: 'they', verb: 'drink', vn: 'Họ có uống sữa không?', type: 'question', emoji: '❓🥛' },
+  { template: '___ the dog run fast {signal}?', subject: 'the dog', verb: 'run', vn: 'Con chó có chạy nhanh không?', type: 'question', emoji: '❓🐕' },
+  { template: '___ you see that bird {signal}?', subject: 'you', verb: 'see', vn: 'Bạn có thấy con chim không?', type: 'question', emoji: '❓🐦' },
+  { template: '___ he break the window {signal}?', subject: 'he', verb: 'break', vn: 'Anh ấy có vỡ cửa sổ không?', type: 'question', emoji: '❓🪟' },
+  { template: '___ she sing well {signal}?', subject: 'she', verb: 'sing', vn: 'Cô ấy hát hay không?', type: 'question', emoji: '❓🎤' },
+  { template: '___ they swim in the lake {signal}?', subject: 'they', verb: 'swim', vn: 'Họ có bơi ở hồ không?', type: 'question', emoji: '❓🏊' },
+  { template: '___ the cat steal the fish {signal}?', subject: 'the cat', verb: 'steal', vn: 'Con mèo có ăn cắp cá không?', type: 'question', emoji: '❓🐱🐟' },
+  { template: '___ he fly the kite {signal}?', subject: 'he', verb: 'fly', vn: 'Anh ấy có thả diều không?', type: 'question', emoji: '❓🪁' },
+  { template: '___ she write a letter {signal}?', subject: 'she', verb: 'write', vn: 'Cô ấy có viết thư không?', type: 'question', emoji: '❓✉️' },
+  { template: '___ the baby sleep well {signal}?', subject: 'the baby', verb: 'sleep', vn: 'Em bé có ngủ ngon không?', type: 'question', emoji: '❓👶💤' },
+  { template: '___ you know the answer {signal}?', subject: 'you', verb: 'know', vn: 'Bạn có biết đáp án không?', type: 'question', emoji: '❓🤔' },
+  { template: '___ he bring lunch {signal}?', subject: 'he', verb: 'bring', vn: 'Anh ấy có mang cơm trưa không?', type: 'question', emoji: '❓🍱' },
+  { template: '___ she buy new shoes {signal}?', subject: 'she', verb: 'buy', vn: 'Cô ấy có mua giày mới không?', type: 'question', emoji: '❓👟' },
+  { template: '___ the teacher give homework {signal}?', subject: 'the teacher', verb: 'give', vn: 'Cô giáo có cho bài tập không?', type: 'question', emoji: '❓📝' },
+  { template: '___ you catch the ball {signal}?', subject: 'you', verb: 'catch', vn: 'Bạn có bắt được bóng không?', type: 'question', emoji: '❓⚾' },
+  { template: '___ he think about it {signal}?', subject: 'he', verb: 'think', vn: 'Anh ấy có nghĩ về nó không?', type: 'question', emoji: '❓🧠' },
+  { template: '___ they build a sandcastle {signal}?', subject: 'they', verb: 'build', vn: 'Họ có xây lâu đài cát không?', type: 'question', emoji: '❓🏖️' },
+  { template: '___ she draw a picture {signal}?', subject: 'she', verb: 'draw', vn: 'Cô ấy có vẽ tranh không?', type: 'question', emoji: '❓🎨' },
+  { template: '___ the plant grow fast {signal}?', subject: 'the plant', verb: 'grow', vn: 'Cây có mọc nhanh không?', type: 'question', emoji: '❓🌱' },
+  { template: '___ he throw the ball {signal}?', subject: 'he', verb: 'throw', vn: 'Anh ấy có ném bóng không?', type: 'question', emoji: '❓🏐' },
+  { template: '___ you feel better {signal}?', subject: 'you', verb: 'feel', vn: 'Bạn có khỏe hơn không?', type: 'question', emoji: '❓🤒' },
+  { template: '___ she keep her promise {signal}?', subject: 'she', verb: 'keep', vn: 'Cô ấy có giữ lời hứa không?', type: 'question', emoji: '❓🤞' },
+  { template: '___ he meet the new student {signal}?', subject: 'he', verb: 'meet', vn: 'Anh ấy có gặp bạn mới không?', type: 'question', emoji: '❓🤝' },
+  { template: '___ you send the email {signal}?', subject: 'you', verb: 'send', vn: 'Bạn có gửi email không?', type: 'question', emoji: '❓📧' },
+  { template: '___ she pay for the ticket {signal}?', subject: 'she', verb: 'pay', vn: 'Cô ấy có trả tiền vé không?', type: 'question', emoji: '❓🎟️' },
+  { template: '___ he find his keys {signal}?', subject: 'he', verb: 'find', vn: 'Anh ấy có tìm thấy chìa khóa không?', type: 'question', emoji: '❓🔑' },
+  { template: '___ they win the game {signal}?', subject: 'they', verb: 'win', vn: 'Họ có thắng trận không?', type: 'question', emoji: '❓🏆' },
+  { template: '___ she wear a hat {signal}?', subject: 'she', verb: 'wear', vn: 'Cô ấy có đội mũ không?', type: 'question', emoji: '❓🎩' },
+  { template: '___ he teach math {signal}?', subject: 'he', verb: 'teach', vn: 'Anh ấy có dạy toán không?', type: 'question', emoji: '❓📐' },
+  { template: '___ the wind blow hard {signal}?', subject: 'the wind', verb: 'blow', vn: 'Gió có thổi mạnh không?', type: 'question', emoji: '❓💨' },
+  { template: '___ you spend all your money {signal}?', subject: 'you', verb: 'spend', vn: 'Bạn có tiêu hết tiền không?', type: 'question', emoji: '❓💸' },
+  { template: '___ she tell the truth {signal}?', subject: 'she', verb: 'tell', vn: 'Cô ấy có nói sự thật không?', type: 'question', emoji: '❓🤥' },
+  { template: '___ the alarm ring {signal}?', subject: 'the alarm', verb: 'ring', vn: 'Chuông báo có reo không?', type: 'question', emoji: '❓⏰' },
+  { template: '___ he ride a bike {signal}?', subject: 'he', verb: 'ride', vn: 'Anh ấy có đi xe đạp không?', type: 'question', emoji: '❓🚲' },
+  { template: '___ they fight {signal}?', subject: 'they', verb: 'fight', vn: 'Họ có đánh nhau không?', type: 'question', emoji: '❓🤜🤛' },
+  { template: '___ you hear that noise {signal}?', subject: 'you', verb: 'hear', vn: 'Bạn có nghe tiếng đó không?', type: 'question', emoji: '❓👂' },
+  { template: '___ she choose the red one {signal}?', subject: 'she', verb: 'choose', vn: 'Cô ấy có chọn cái đỏ không?', type: 'question', emoji: '❓🔴' },
+  { template: '___ he stand in the rain {signal}?', subject: 'he', verb: 'stand', vn: 'Anh ấy có đứng dưới mưa không?', type: 'question', emoji: '❓🌧️' },
+  { template: '___ the snake bite him {signal}?', subject: 'the snake', verb: 'bite', vn: 'Con rắn có cắn anh ấy không?', type: 'question', emoji: '❓🐍' },
+
+  // === MORE AFFIRM: HORRIBLE SCENARIOS ===
+  { template: 'The cockroach ___ into my cereal {signal}!', subject: 'The cockroach', verb: 'fall', vn: 'Con gián rơi vào ngũ cốc!', type: 'affirm', emoji: '🪳🥣' },
+  { template: 'My parrot ___ bad words {signal}!', subject: 'My parrot', verb: 'say', vn: 'Con vẹt nói bậy!', type: 'affirm', emoji: '🦜🤬' },
+  { template: 'The monkey ___ my ice cream {signal}!', subject: 'The monkey', verb: 'steal', vn: 'Con khỉ ăn cắp kem!', type: 'affirm', emoji: '🐒🍦' },
+  { template: 'A spider ___ a web on my face {signal}!', subject: 'A spider', verb: 'build', vn: 'Nhện giăng tơ trên mặt tôi!', type: 'affirm', emoji: '🕷️😱' },
+  { template: 'He ___ his finger in his nose {signal}.', subject: 'He', verb: 'put', vn: 'Anh ấy ngoáy mũi!', type: 'affirm', emoji: '👦👃' },
+  { template: 'The ghost ___ behind the door {signal}.', subject: 'The ghost', verb: 'hide', vn: 'Con ma trốn sau cửa!', type: 'affirm', emoji: '👻🚪' },
+  { template: 'Mom ___ about winning the lottery {signal}.', subject: 'Mom', verb: 'dream', vn: 'Mẹ mơ trúng số!', type: 'affirm', emoji: '👩💭💰' },
+  { template: 'The elephant ___ on my lunch box {signal}!', subject: 'The elephant', verb: 'sit', vn: 'Con voi ngồi lên hộp cơm!', type: 'affirm', emoji: '🐘🍱' },
+  { template: 'The pizza ___ $100 {signal}!', subject: 'The pizza', verb: 'cost', vn: 'Pizza giá $100!', type: 'affirm', emoji: '🍕💸' },
+  { template: 'She ___ the cupcake in half {signal}.', subject: 'She', verb: 'cut', vn: 'Cô ấy cắt đôi cupcake!', type: 'affirm', emoji: '👧✂️🧁' },
+  { template: 'Grandpa ___ the candles {signal}.', subject: 'Grandpa', verb: 'light', vn: 'Ông thắp nến!', type: 'affirm', emoji: '👴🕯️' },
+  { template: 'The witch ___ the children candy {signal}.', subject: 'The witch', verb: 'give', vn: 'Phù thủy cho trẻ em kẹo!', type: 'affirm', emoji: '🧙‍♀️🍬' },
+  { template: 'She ___ his name wrong {signal}!', subject: 'She', verb: 'spell', vn: 'Cô ấy viết sai tên!', type: 'affirm', emoji: '✏️❌' },
+  { template: 'The tiger ___ the monkey {signal}!', subject: 'The tiger', verb: 'catch', vn: 'Con hổ bắt con khỉ!', type: 'affirm', emoji: '🐅🐒' },
+  { template: 'The sun ___ really bright {signal}.', subject: 'The sun', verb: 'shine', vn: 'Mặt trời chiếu sáng chói!', type: 'affirm', emoji: '☀️✨' },
+  { template: 'The wizard ___ a superhero {signal}!', subject: 'The wizard', verb: 'become', vn: 'Phù thủy trở thành siêu anh hùng!', type: 'affirm', emoji: '🧙‍♂️🦸' },
+  { template: 'The chicken ___ 3 eggs {signal}!', subject: 'The chicken', verb: 'lay', vn: 'Con gà đẻ 3 trứng!', type: 'affirm', emoji: '🐔🥚' },
+  { template: 'He ___ the picture on the wall {signal}.', subject: 'He', verb: 'hang', vn: 'Anh ấy treo tranh lên tường!', type: 'affirm', emoji: '🖼️' },
+  { template: 'She ___ her friend $5 {signal}.', subject: 'She', verb: 'lend', vn: 'Cô ấy cho bạn mượn $5!', type: 'affirm', emoji: '👧💵' },
+  { template: 'She ___ the floor with a broom {signal}.', subject: 'She', verb: 'sweep', vn: 'Cô ấy quét nhà bằng chổi!', type: 'affirm', emoji: '🧹' },
+  { template: 'My nose ___ after the fall {signal}!', subject: 'My nose', verb: 'bleed', vn: 'Mũi tôi chảy máu!', type: 'affirm', emoji: '👃🩸' },
+  { template: 'He ___ the whole cake {signal}!', subject: 'He', verb: 'eat', vn: 'Anh ấy ăn hết cả bánh!', type: 'affirm', emoji: '👦🎂' },
+  { template: 'The wind ___ the papers everywhere {signal}!', subject: 'The wind', verb: 'blow', vn: 'Gió thổi giấy tung toé!', type: 'affirm', emoji: '💨📄' },
+  { template: 'She ___ a frog in the garden {signal}!', subject: 'She', verb: 'meet', vn: 'Cô ấy gặp ếch ngoài vườn!', type: 'affirm', emoji: '👧🐸' },
+  { template: 'The volcano ___ to erupt {signal}!', subject: 'The volcano', verb: 'begin', vn: 'Núi lửa bắt đầu phun!', type: 'affirm', emoji: '🌋💥' },
+  { template: 'The dragon ___ fire {signal}!', subject: 'The dragon', verb: 'blow', vn: 'Rồng phun lửa!', type: 'affirm', emoji: '🐉🔥' },
+  { template: 'He ___ the spider out the window {signal}.', subject: 'He', verb: 'throw', vn: 'Anh ấy ném nhện ra cửa sổ!', type: 'affirm', emoji: '👦🕷️🪟' },
+  { template: 'The duck ___ across the pond {signal}.', subject: 'The duck', verb: 'swim', vn: 'Con vịt bơi qua ao!', type: 'affirm', emoji: '🦆💦' },
+  { template: 'Grandma ___ me how to cook {signal}.', subject: 'Grandma', verb: 'teach', vn: 'Bà dạy tôi nấu ăn!', type: 'affirm', emoji: '👵🍳' },
+  { template: 'He ___ a really scary story {signal}!', subject: 'He', verb: 'tell', vn: 'Anh ấy kể chuyện ma!', type: 'affirm', emoji: '👦👻' },
+  { template: 'She ___ the letter to Santa {signal}!', subject: 'She', verb: 'send', vn: 'Cô ấy gửi thư cho ông già Noel!', type: 'affirm', emoji: '👧✉️🎅' },
+  { template: 'The bear ___ in the cave all winter {signal}.', subject: 'The bear', verb: 'sleep', vn: 'Con gấu ngủ trong hang cả mùa đông!', type: 'affirm', emoji: '🐻🏔️' },
+  { template: 'He ___ $50 for a toy {signal}!', subject: 'He', verb: 'pay', vn: 'Anh ấy trả $50 mua đồ chơi!', type: 'affirm', emoji: '👦💵🧸' },
+  { template: 'She ___ the puzzle answer {signal}!', subject: 'She', verb: 'find', vn: 'Cô ấy tìm ra đáp án!', type: 'affirm', emoji: '👧🧩' },
+  { template: 'She ___ a beautiful hat {signal}.', subject: 'She', verb: 'wear', vn: 'Cô ấy đội mũ đẹp!', type: 'affirm', emoji: '👧🎩' },
+  { template: 'She ___ him her new doll {signal}.', subject: 'She', verb: 'show', vn: 'Cô ấy cho anh ấy xem búp bê!', type: 'affirm', emoji: '👧🎎' },
+  { template: 'He ___ the doorbell and ran away {signal}!', subject: 'He', verb: 'ring', vn: 'Anh ấy bấm chuông rồi chạy mất!', type: 'affirm', emoji: '👦🔔🏃' },
+  { template: 'She ___ the frog {signal}!', subject: 'She', verb: 'forgive', vn: 'Cô ấy tha thứ cho con ếch!', type: 'affirm', emoji: '👧🐸😇' },
+  { template: 'He ___ the heavy box {signal}.', subject: 'He', verb: 'hold', vn: 'Anh ấy bê hộp nặng!', type: 'affirm', emoji: '💪📦' },
+
+  // === MORE NEGATIVE ===
+  { template: 'He ___ tell the truth {signal}.', subject: 'He', verb: 'tell', vn: 'Anh ấy không nói sự thật!', type: 'negative', emoji: '👦🚫🤥' },
+  { template: 'She ___ hear the alarm {signal}.', subject: 'She', verb: 'hear', vn: 'Cô ấy không nghe chuông!', type: 'negative', emoji: '👧🚫⏰' },
+  { template: 'The dog ___ come when I called {signal}.', subject: 'The dog', verb: 'come', vn: 'Con chó không đến khi tôi gọi!', type: 'negative', emoji: '🐕🚫' },
+  { template: 'He ___ know the answer {signal}.', subject: 'He', verb: 'know', vn: 'Anh ấy không biết đáp án!', type: 'negative', emoji: '👦🚫🤔' },
+  { template: 'She ___ feel well {signal}.', subject: 'She', verb: 'feel', vn: 'Cô ấy không khỏe!', type: 'negative', emoji: '👧🚫🤒' },
+  { template: 'They ___ bring umbrellas {signal}.', subject: 'They', verb: 'bring', vn: 'Họ không mang ô!', type: 'negative', emoji: '👥🚫☂️' },
+  { template: 'He ___ pay for the ticket {signal}.', subject: 'He', verb: 'pay', vn: 'Anh ấy không trả tiền vé!', type: 'negative', emoji: '👦🚫🎟️' },
+  { template: 'She ___ keep her promise {signal}.', subject: 'She', verb: 'keep', vn: 'Cô ấy không giữ lời hứa!', type: 'negative', emoji: '👧🚫🤞' },
+  { template: 'The baby ___ sleep all night {signal}.', subject: 'The baby', verb: 'sleep', vn: 'Em bé không ngủ cả đêm!', type: 'negative', emoji: '👶🚫💤' },
+  { template: 'He ___ understand the lesson {signal}.', subject: 'He', verb: 'understand', vn: 'Anh ấy không hiểu bài!', type: 'negative', emoji: '👦🚫📚' },
+  { template: 'She ___ choose a dress {signal}.', subject: 'She', verb: 'choose', vn: 'Cô ấy không chọn được váy!', type: 'negative', emoji: '👧🚫👗' },
+  { template: 'They ___ find the treasure {signal}.', subject: 'They', verb: 'find', vn: 'Họ không tìm được kho báu!', type: 'negative', emoji: '👥🚫💎' },
+  { template: 'He ___ wear a jacket {signal}.', subject: 'He', verb: 'wear', vn: 'Anh ấy không mặc áo khoác!', type: 'negative', emoji: '👦🚫🧥' },
+  { template: 'She ___ sell any lemonade {signal}.', subject: 'She', verb: 'sell', vn: 'Cô ấy không bán được nước chanh!', type: 'negative', emoji: '👧🚫🍋' },
+  { template: 'She ___ spend any money {signal}.', subject: 'She', verb: 'spend', vn: 'Cô ấy không tiêu tiền!', type: 'negative', emoji: '👧🚫💰' },
+  { template: 'He ___ think about it {signal}.', subject: 'He', verb: 'think', vn: 'Anh ấy không nghĩ về nó!', type: 'negative', emoji: '👦🚫🧠' },
+  { template: 'She ___ write a single word {signal}.', subject: 'She', verb: 'write', vn: 'Cô ấy không viết chữ nào!', type: 'negative', emoji: '👧🚫✏️' },
+  { template: 'He ___ ride the roller coaster {signal}.', subject: 'He', verb: 'ride', vn: 'Anh ấy không dám đi tàu lượn!', type: 'negative', emoji: '👦🚫🎢' },
+  { template: 'The wind ___ blow hard {signal}.', subject: 'The wind', verb: 'blow', vn: 'Gió không thổi mạnh!', type: 'negative', emoji: '🚫💨' },
+  { template: 'He ___ grow any taller {signal}.', subject: 'He', verb: 'grow', vn: 'Anh ấy không cao thêm!', type: 'negative', emoji: '👦🚫📏' },
+
+  // === MORE QUESTION_VERB ===
+  { template: 'Does the parrot ___ bad words {signal}?', subject: 'the parrot', verb: 'say', vn: 'Con vẹt có nói bậy không?', type: 'question_verb', emoji: '❓🦜' },
+  { template: 'Did someone ___ in the bushes {signal}?', subject: 'someone', verb: 'hide', vn: 'Có ai trốn trong bụi không?', type: 'question_verb', emoji: '❓🌿👀' },
+  { template: 'Does she ___ what it means {signal}?', subject: 'she', verb: 'know', vn: 'Cô ấy có biết nghĩa gì không?', type: 'question_verb', emoji: '❓📖' },
+  { template: 'Did he ___ on a banana peel {signal}?', subject: 'he', verb: 'fall', vn: 'Anh ấy có trượt vỏ chuối không?', type: 'question_verb', emoji: '❓🍌😵' },
+  { template: 'Does the dog ___ under the bed {signal}?', subject: 'the dog', verb: 'sleep', vn: 'Con chó có ngủ dưới giường không?', type: 'question_verb', emoji: '❓🐕🛏️' },
+  { template: 'Does she ___ faster than a cheetah {signal}?', subject: 'she', verb: 'run', vn: 'Cô ấy có chạy nhanh hơn báo không?', type: 'question_verb', emoji: '❓🏃‍♀️🐆' },
+  { template: 'Did he ___ a wish {signal}?', subject: 'he', verb: 'make', vn: 'Anh ấy có ước không?', type: 'question_verb', emoji: '❓🌟' },
+  { template: 'Did she ___ sad {signal}?', subject: 'she', verb: 'feel', vn: 'Cô ấy có buồn không?', type: 'question_verb', emoji: '❓😢' },
+  { template: 'Does he ___ new words {signal}?', subject: 'he', verb: 'learn', vn: 'Anh ấy có học từ mới không?', type: 'question_verb', emoji: '❓📚' },
+  { template: 'Did the baby ___ the cat {signal}?', subject: 'the baby', verb: 'hold', vn: 'Em bé có cầm con mèo không?', type: 'question_verb', emoji: '❓👶🐱' },
+  { template: 'Does she ___ his name correctly {signal}?', subject: 'she', verb: 'spell', vn: 'Cô ấy đánh vần đúng tên không?', type: 'question_verb', emoji: '❓🔤' },
+  { template: 'Did the boy ___ in the queue {signal}?', subject: 'the boy', verb: 'stand', vn: 'Cậu bé có xếp hàng không?', type: 'question_verb', emoji: '❓🧍' },
+  { template: 'Does she ___ her room tidy {signal}?', subject: 'she', verb: 'keep', vn: 'Cô ấy có giữ phòng gọn không?', type: 'question_verb', emoji: '❓🧹' },
+  { template: 'Did they ___ the door {signal}?', subject: 'they', verb: 'shut', vn: 'Họ có đóng cửa không?', type: 'question_verb', emoji: '❓🚪' },
+  { template: 'Does he ___ much money {signal}?', subject: 'he', verb: 'spend', vn: 'Anh ấy có tiêu nhiều tiền không?', type: 'question_verb', emoji: '❓💸' },
+  { template: 'Does she ___ him money {signal}?', subject: 'she', verb: 'lend', vn: 'Cô ấy có cho mượn tiền không?', type: 'question_verb', emoji: '❓💵' },
+  { template: 'Did the sunflower ___ tall {signal}?', subject: 'the sunflower', verb: 'grow', vn: 'Hoa hướng dương có mọc cao không?', type: 'question_verb', emoji: '❓🌻' },
+
+  // === BE VERB ===
+  { template: 'He ___ at school {signal}.', subject: 'He', verb: 'be', vn: 'Anh ấy ở trường!', type: 'affirm', emoji: '👦🏫' },
+  { template: 'She ___ happy {signal}.', subject: 'She', verb: 'be', vn: 'Cô ấy vui!', type: 'affirm', emoji: '👧😊' },
+  { template: 'They ___ in the park {signal}.', subject: 'They', verb: 'be', vn: 'Họ ở công viên!', type: 'affirm', emoji: '👥🏞️' },
+  { template: 'The cat ___ on the roof {signal}.', subject: 'The cat', verb: 'be', vn: 'Con mèo ở trên mái nhà!', type: 'affirm', emoji: '🐱🏠' },
+  { template: 'I ___ very tired {signal}.', subject: 'I', verb: 'be', vn: 'Tôi rất mệt!', type: 'affirm', emoji: '🥱' }
 ];
 
 function getVerbForms(verbBase) {
@@ -4820,9 +5066,25 @@ function generateQuizQuestions(count) {
     
     var correctAnswer, wrongAnswers = [];
     var subject = template.subject.toLowerCase();
-    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane'].indexOf(subject) >= 0;
+    var isThirdPerson = ['he', 'she', 'it', 'mom', 'dad', 'the baby', 'the bird', 'the tree', 'the class', 'the cat', 'the dog', 'the sun', 'the moon', 'the flower', 'the food', 'the milk', 'the phone', 'the doorbell', 'the alarm', 'the bell', 'the hen', 'the monkey', 'the thief', 'the hunter', 'the fire', 'the wind', 'water', 'the lake', 'the book', 'the trip', 'the movie', 'the show', 'the game', 'my finger', 'his nose', 'the wound', 'the earthquake', 'this word', 'someone', 'the temperature', 'the water level', 'the light', 'the plane', 'grandpa', 'grandma', 'a spider', 'the cockroach', 'my parrot', 'the ghost', 'the elephant', 'the pizza', 'the witch', 'the tiger', 'the wizard', 'the chicken', 'the duck', 'the bear', 'the dragon', 'the volcano', 'the robber', 'the plant', 'the snake', 'the old man', 'my nose', 'the floor', 'the kitten', 'the sunflower', 'the boy', 'a crab', 'the cockroach', 'my brother', 'the firefighter', 'the turkey', 'the parrot'].indexOf(subject) >= 0;
     
-    if (sentenceType === 'affirm') {
+    // Special handling for BE verb
+    if (template.verb === 'be') {
+      if (isPast) {
+        if (subject === 'they' || subject === 'we' || subject === 'you') {
+          correctAnswer = 'were';
+          wrongAnswers = ['was', 'are', 'is'];
+        } else {
+          correctAnswer = 'was';
+          wrongAnswers = ['were', 'is', 'are'];
+        }
+      } else {
+        correctAnswer = getPresentForm('be', template.subject);
+        if (correctAnswer === 'is') wrongAnswers = ['are', 'am', 'was'];
+        else if (correctAnswer === 'am') wrongAnswers = ['is', 'are', 'was'];
+        else wrongAnswers = ['is', 'am', 'was'];
+      }
+    } else if (sentenceType === 'affirm') {
       // Câu khẳng định: điền động từ
       correctAnswer = isPast ? verbForms.past : getPresentForm(verbForms.base, template.subject);
       
@@ -4934,34 +5196,42 @@ function startVerbSentenceQuiz() {
     '⚠️ Sau <strong>Do/Does/Did</strong> luôn dùng <strong>động từ GỐC</strong>!' +
     '</div></div>' +
     
-    '<div class="easy-match-level-select">' +
-    '<div class="easy-match-level easy" onclick="startSentenceQuizGame(5)">' +
+    '<div class="level-cards">' +
+    '<div class="level-card easy" onclick="startSentenceQuizGame(5)">' +
     '<div class="level-icon">🌱</div>' +
-    '<div class="level-info">' +
-    '<div class="level-name">5 câu</div>' +
-    '<div class="level-desc">Luyện tập nhẹ nhàng</div>' +
-    '</div></div>' +
-    
-    '<div class="easy-match-level medium" onclick="startSentenceQuizGame(10)">' +
+    '<div class="level-info"><div class="level-name">Nhanh</div>' +
+    '<div class="level-desc">Luyện tập nhẹ nhàng</div></div>' +
+    '<div class="level-time">5 câu • 3 phút</div></div>' +
+
+    '<div class="level-card medium" onclick="startSentenceQuizGame(8)">' +
     '<div class="level-icon">🌿</div>' +
-    '<div class="level-info">' +
-    '<div class="level-name">10 câu</div>' +
-    '<div class="level-desc">Ôn tập cơ bản</div>' +
-    '</div></div>' +
-    
-    '<div class="easy-match-level hard" onclick="startSentenceQuizGame(15)">' +
+    '<div class="level-info"><div class="level-name">Vừa phải</div>' +
+    '<div class="level-desc">Ôn tập cơ bản</div></div>' +
+    '<div class="level-time">8 câu • 5 phút</div></div>' +
+
+    '<div class="level-card hard" onclick="startSentenceQuizGame(10)">' +
     '<div class="level-icon">🌳</div>' +
-    '<div class="level-info">' +
-    '<div class="level-name">15 câu</div>' +
-    '<div class="level-desc">Thử thách</div>' +
-    '</div></div>' +
-    
-    '<div class="easy-match-level" onclick="startSentenceQuizGame(20)" style="border-color:#FF6D00;background:linear-gradient(135deg,#FFF8E1,#FFECB3)">' +
+    '<div class="level-info"><div class="level-name">Thử thách</div>' +
+    '<div class="level-desc">Kiểm tra kiến thức</div></div>' +
+    '<div class="level-time">10 câu • 8 phút</div></div>' +
+
+    '<div class="level-card" onclick="startSentenceQuizGame(15)" style="border-color:#9C27B0">' +
+    '<div class="level-icon">🏆</div>' +
+    '<div class="level-info"><div class="level-name" style="color:#7B1FA2">Siêu sao</div>' +
+    '<div class="level-desc">Dành cho cao thủ!</div></div>' +
+    '<div class="level-time">15 câu • 12 phút</div></div>' +
+
+    '<div class="level-card" onclick="startSentenceQuizGame(20)" style="border-color:#FF6D00;background:linear-gradient(135deg,#FFF8E1,#FFECB3)">' +
     '<div class="level-icon">🔥</div>' +
-    '<div class="level-info">' +
-    '<div class="level-name">20 câu</div>' +
-    '<div class="level-desc">Boss cuối đây rồi! 👾</div>' +
-    '</div></div>' +
+    '<div class="level-info"><div class="level-name" style="color:#E65100">Huyền thoại</div>' +
+    '<div class="level-desc">Boss cuối đây rồi! 👾</div></div>' +
+    '<div class="level-time">20 câu • 15 phút</div></div>' +
+
+    '<div class="level-card" onclick="startSentenceQuizGame(30)" style="border-color:#D50000;background:linear-gradient(135deg,#FFEBEE,#FFCDD2)">' +
+    '<div class="level-icon">💀</div>' +
+    '<div class="level-info"><div class="level-name" style="color:#B71C1C">Bất khả chiến bại</div>' +
+    '<div class="level-desc">Chỉ dành cho người dũng cảm! ⚔️</div></div>' +
+    '<div class="level-time">30 câu • 20 phút</div></div>' +
     '</div></div>';
   
   document.getElementById('learnScreen').innerHTML = html;
@@ -4991,10 +5261,11 @@ function renderSentenceQuiz() {
   }
   
   var q = state.questions[state.currentIndex];
+  var total = state.level;
   
   // Progress dots
   var dotsHtml = '';
-  for (var i = 0; i < state.level; i++) {
+  for (var i = 0; i < total; i++) {
     var dotClass = 'dot';
     if (i < state.currentIndex) dotClass += ' done';
     else if (i === state.currentIndex) dotClass += ' active';
@@ -5003,26 +5274,23 @@ function renderSentenceQuiz() {
   
   // Underline the signal word in sentence
   var displaySentence = q.sentence.replace(q.signal, '<u style="text-decoration:underline;text-decoration-color:#FF9800;text-decoration-thickness:2px;font-weight:700">' + q.signal + '</u>');
-  displaySentence = displaySentence.replace('___', '<span class="blank">?</span>');
+  displaySentence = displaySentence.replace('___', '<span class="pp-blank" id="sqBlank">?</span>');
   
   var html = '<div class="progress-header">' +
     '<button class="back-btn" onclick="startVerbSentenceQuiz()">← Back</button>' +
     '<div class="progress-dots">' + dotsHtml + '</div>' +
     '<div class="star-count">⭐ ' + state.score + '</div>' +
     '</div>' +
-    
-    '<div class="sentence-quiz-card">' +
-    
-    // Emoji
-    (q.emoji ? '<div style="font-size:3rem;text-align:center;margin-bottom:10px">' + q.emoji + '</div>' : '') +
-    
-    // Sentence with blank and underlined signal
-    '<div class="sentence-quiz-sentence">' +
-    displaySentence +
-    '</div>' +
-    
-    // 4 Choices
-    '<div class="sentence-quiz-choices">';
+    '<div class="story-scene">';
+  
+  // Emoji
+  if (q.emoji) {
+    html += '<div class="scene-image">' + q.emoji + '</div>';
+  }
+  
+  // Sentence with blank
+  html += '<div class="scene-text">' + displaySentence + '</div>' +
+    '<div class="choice-buttons" id="sqChoices">';
   
   // Create array with 1 correct + 3 wrong, then shuffle
   var allChoices = [
@@ -5039,18 +5307,16 @@ function renderSentenceQuiz() {
   var correctIdx = -1;
   allChoices.forEach(function(choice, idx) {
     if (choice.isCorrect) correctIdx = idx;
-    html += '<button class="sentence-choice-btn" id="choice-' + idx + '" ' +
+    html += '<button class="choice-btn" id="sq-' + idx + '" ' +
       'onclick="checkSentenceAnswer(' + idx + ', ' + choice.isCorrect + ')">' +
       choice.answer +
       '</button>';
   });
   
-  // Store correct index in state for feedback
   sentenceQuizState.correctIdx = correctIdx;
+  sentenceQuizState.allChoices = allChoices;
   
-  html += '</div>' +
-    '<div id="sentenceFeedback"></div>' +
-    '</div>';
+  html += '</div><div id="sentenceFeedback"></div></div>';
   
   document.getElementById('learnScreen').innerHTML = html;
   showScreen('learnScreen');
@@ -5063,8 +5329,15 @@ function checkSentenceAnswer(choiceIdx, isCorrect) {
   var q = sentenceQuizState.questions[sentenceQuizState.currentIndex];
   var correctIdx = sentenceQuizState.correctIdx;
   
+  // Show answer in blank
+  var blank = document.getElementById('sqBlank');
+  if (blank) {
+    blank.textContent = q.correctAnswer;
+    blank.className = isCorrect ? 'pp-filled' : 'pp-filled pp-filled-wrong';
+  }
+  
   // Highlight all buttons
-  document.querySelectorAll('.sentence-choice-btn').forEach(function(btn, idx) {
+  document.querySelectorAll('#sqChoices .choice-btn').forEach(function(btn, idx) {
     btn.disabled = true;
     if (idx === choiceIdx && isCorrect) {
       btn.classList.add('correct');
@@ -5072,7 +5345,7 @@ function checkSentenceAnswer(choiceIdx, isCorrect) {
       btn.classList.add('wrong');
     }
     if (idx === correctIdx && !isCorrect) {
-      btn.classList.add('show-correct');
+      btn.classList.add('correct');
     }
   });
   
@@ -5082,7 +5355,6 @@ function checkSentenceAnswer(choiceIdx, isCorrect) {
     playSound('correct');
   } else {
     playSound('wrong');
-    // TRACK CÂU SAI
     addMistake({
       sentence: q.sentence,
       sentenceVn: q.sentenceVn,
@@ -5117,14 +5389,19 @@ function checkSentenceAnswer(choiceIdx, isCorrect) {
     explanation = '⚠️ Sau Do/Does/Did luôn dùng <strong>động từ GỐC</strong>: <strong>' + q.correctAnswer + '</strong>';
   }
   
-  var feedbackHtml = '<div class="sentence-feedback ' + (isCorrect ? 'correct' : 'wrong') + '">' +
-    '<div class="emoji">' + (isCorrect ? '🎉' : '💪') + '</div>' +
-    '<div class="message">' + (isCorrect ? 'Chính xác!' : 'Chưa đúng rồi!') + '</div>' +
-    '<div class="explanation">' + explanation + '</div>' +
-    '<button class="next-btn" onclick="nextSentenceQuestion()">' +
+  var feedbackHtml = '<div class="feedback-box ' + (isCorrect ? 'correct' : 'wrong') + '">' +
+    '<div class="feedback-emoji">' + (isCorrect ? '🎉' : '💪') + '</div>' +
+    '<div class="feedback-text">' + (isCorrect ? '✅ Chính xác!' : '❌ Chưa đúng!') + '</div>' +
+    '<div class="feedback-tip" style="text-align:left;line-height:1.6">' + explanation + '</div>';
+  
+  if (!isCorrect) {
+    feedbackHtml += '<div style="margin-top:10px;padding:12px;background:#E8F5E9;border-radius:10px;color:#2E7D32;font-weight:600">' +
+      '✅ Đáp án đúng: <strong>' + q.correctAnswer + '</strong></div>';
+  }
+  
+  feedbackHtml += '<button class="next-btn" onclick="nextSentenceQuestion()">' +
     (sentenceQuizState.currentIndex < sentenceQuizState.level - 1 ? 'Tiếp theo →' : 'Xem kết quả 🏆') +
-    '</button>' +
-    '</div>';
+    '</button></div>';
   
   document.getElementById('sentenceFeedback').innerHTML = feedbackHtml;
   
@@ -5144,10 +5421,7 @@ function showSentenceQuizResult() {
   var percentage = Math.round((state.score / state.level) * 100);
   
   var emoji, message;
-  if (percentage >= 90) { emoji = '🏆'; message = 'Tuyệt vời! Con đã rất chăm chỉ!'; }
-  else if (percentage >= 70) { emoji = '⭐'; message = 'Tốt lắm! Tiếp tục cố gắng!'; }
-  else if (percentage >= 50) { emoji = '💪'; message = 'Khá rồi! Ôn thêm nhé!'; }
-  else { emoji = '📚'; message = 'Cần ôn lại nhiều hơn nha!'; }
+  var sqMsgs90 = ['Sự nỗ lực của con được đền đáp!','Con đã kiên trì luyện tập!','Cứ tiếp tục thế này, con tiến bộ rõ rệt!'];var sqMsgs70 = ['Con đang trên đà tiến bộ!','Mỗi lần làm bài là mỗi lần vững hơn!','Con đã cố gắng, kết quả sẽ tốt hơn!'];var sqMsgs50 = ['Con đã dũng cảm thử sức!','Luyện thêm, con sẽ nhớ lâu hơn!','Sai cũng là bước tiến, đừng nản nhé!'];var sqMsgsLow = ['Kiên nhẫn ôn lại, con sẽ tiến bộ!','Mỗi câu sai là cơ hội để học!','Bắt đầu lại cũng cần dũng cảm!'];if (percentage >= 90) { emoji = '🏆'; message = sqMsgs90[Math.floor(Math.random()*3)]; }else if (percentage >= 70) { emoji = '⭐'; message = sqMsgs70[Math.floor(Math.random()*3)]; }else if (percentage >= 50) { emoji = '💪'; message = sqMsgs50[Math.floor(Math.random()*3)]; }else { emoji = '📚'; message = sqMsgsLow[Math.floor(Math.random()*3)]; }
   
   playSound('complete');
   if (percentage >= 70) showConfetti();
@@ -5360,7 +5634,7 @@ function showTodayMistakes() {
       '<div class="easy-match-container">' +
       '<div style="text-align:center;padding:40px 20px">' +
       '<div style="font-size:80px;margin-bottom:20px">🎉</div>' +
-      '<div style="font-size:1.5rem;font-weight:700;color:#333;margin-bottom:10px">Tuyệt vời!</div>' +
+      '<div style="font-size:1.5rem;font-weight:700;color:#333;margin-bottom:10px">Con đã hoàn thành!</div>' +
       '<div style="color:#666;margin-bottom:20px">Hôm nay con chưa có câu nào sai.<br>Hãy tiếp tục luyện tập nhé!</div>' +
       '<button class="next-btn" onclick="startVerbSentenceQuiz()">Làm bài mới 📝</button>' +
       '</div></div>';
@@ -5480,7 +5754,7 @@ function renderMistakeReview() {
   
   if (m.quizType === 'sentence') {
     // Render sentence quiz
-    var displaySentence = m.sentence.replace(m.signal, '<u style="text-decoration:underline;text-decoration-color:#FF9800;text-decoration-thickness:2px;font-weight:700">' + m.signal + '</u>');
+    var displaySentence = m.sentence.replace(m.signal, '<u style="text-decoration:underline;text-decoration-color:#FF9800;text-decoration-thickness:2px;font-weight:700">' + m.signal + '');
     displaySentence = displaySentence.replace('___', '<span class="blank">?</span>');
     
     html += '<div class="sentence-quiz-card">' +
@@ -5649,7 +5923,7 @@ function showMistakeReviewResult() {
   var percentage = Math.round((state.score / total) * 100);
   
   var emoji = percentage >= 80 ? '🏆' : percentage >= 50 ? '⭐' : '💪';
-  var message = percentage >= 80 ? 'Tuyệt vời! Con đã nhớ rồi!' : 
+  var message = percentage >= 80 ? 'Luyện tập có hiệu quả! Con nhớ tốt hơn rồi!' : 
                 percentage >= 50 ? 'Khá tốt! Tiếp tục ôn tập nhé!' : 
                 'Cần ôn thêm một chút nữa!';
   
@@ -5674,6 +5948,799 @@ function showMistakeReviewResult() {
   
   playSound('complete');
   if (percentage >= 70) showConfetti();
+}
+
+// =====================================================
+// PRESENT PERFECT QUIZ
+// =====================================================
+const ppQuestions = [
+  { cat:'havhas', q:'🐹 My hamster _____ eaten my homework!', opts:['have','has','is','did'], ans:1, hint:'Chuột hamster đã ăn bài tập của tôi!', explain:'My hamster = It → has' },
+  { cat:'v3', q:'🍼 The baby has _____ milk on my face! (throw)', opts:['threw','thrown','throwed','throwing'], ans:1, hint:'Em bé ném sữa lên mặt tôi!', explain:'throw → threw → thrown' },
+  { cat:'signal', q:'🕷️ A spider has _____ crawled into my shoe!', opts:['just','yet','ever','already'], ans:0, hint:'Con nhện VỪA MỚI bò vào giày tôi!', explain:'just = vừa mới (vừa xảy ra!)' },
+  { cat:'sinfor', q:'🚽 The toilet has been broken _____ 3 days!', opts:['since','for','from','during'], ans:1, hint:'Toilet hỏng 3 ngày rồi!', explain:'"3 days" = khoảng thời gian → for' },
+  { cat:'vs', q:'🪳 I _____ a cockroach in my soup yesterday!', opts:['have found','found','has found','find'], ans:1, hint:'Tôi thấy con gián trong súp hôm qua!', explain:'"yesterday" = quá khứ cụ thể → Past Simple' },
+  { cat:'neg', q:'🧦 Mom _____ washed my smelly socks yet!', opts:["hasn't","haven't","didn't","isn't"], ans:0, hint:'Mẹ chưa giặt đôi tất thối!', explain:'Mom = She → hasn\'t' },
+  { cat:'ques', q:'🐌 _____ you ever stepped on a snail?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ dẫm phải ốc sên chưa?', explain:'You → Have you ever...?' },
+  { cat:'havhas', q:'🐦 The bird _____ pooped on my head!', opts:['have','has','is','was'], ans:1, hint:'Con chim đã ị lên đầu tôi!', explain:'The bird = It → has' },
+  { cat:'v3', q:'🐕 My dog has _____ my shoe again! (bite)', opts:['bited','bitten','bit','bites'], ans:1, hint:'Con chó lại cắn giày tôi nữa!', explain:'bite → bit → bitten' },
+  { cat:'signal', q:'🪱 Have you _____ eaten a worm?', opts:['ever','never','yet','already'], ans:0, hint:'Bạn đã từng ăn giun chưa?', explain:'ever = đã từng (câu hỏi)' },
+  { cat:'sinfor', q:'🤢 My brother has burped _____ 10 minutes!', opts:['since','for','during','from'], ans:1, hint:'Anh tôi ợ suốt 10 phút rồi!', explain:'"10 minutes" = khoảng thời gian → for' },
+  { cat:'vs', q:'🐸 She _____ never touched a frog before.', opts:['has','did','is','was'], ans:0, hint:'Cô ấy chưa bao giờ sờ con ếch.', explain:'never → Present Perfect (has never)' },
+  { cat:'havhas', q:'😱 We _____ forgotten our teacher\'s name!', opts:['have','has','did','are'], ans:0, hint:'Chúng tôi quên tên cô giáo!', explain:'We → have' },
+  { cat:'v3', q:'🍪 Someone has _____ all the cookies! (steal)', opts:['stealed','stole','stolen','stealing'], ans:2, hint:'Ai đó đã ăn trộm hết bánh quy!', explain:'steal → stole → stolen' },
+  { cat:'signal', q:'😁 I have _____ brushed my teeth. Bedtime!', opts:['already','yet','never','ever'], ans:0, hint:'Tôi đánh răng rồi. Đi ngủ thôi!', explain:'already = đã... rồi' },
+  { cat:'sinfor', q:'🤭 She has hiccupped _____ lunch time!', opts:['since','for','from','at'], ans:0, hint:'Cô ấy nấc từ giờ ăn trưa!', explain:'"lunch time" = mốc thời gian → since' },
+  { cat:'vs', q:'🐒 The monkey _____ my banana 2 hours ago!', opts:['has stolen','stole','have stolen','steals'], ans:1, hint:'Con khỉ lấy chuối tôi 2 tiếng trước!', explain:'"2 hours ago" = quá khứ cụ thể → Past Simple' },
+  { cat:'neg', q:'🥦 I _____ finished my broccoli yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Tôi chưa ăn hết bông cải xanh.', explain:'I → haven\'t' },
+  { cat:'ques', q:'🐱🐟 _____ the cat eaten the goldfish?', opts:['Have','Has','Does','Did'], ans:1, hint:'Con mèo đã ăn cá vàng chưa?', explain:'The cat = It → Has' },
+  { cat:'havhas', q:'🖍️ My little sister _____ drawn on the wall!', opts:['have','has','is','does'], ans:1, hint:'Em gái tôi đã vẽ lên tường!', explain:'My little sister = She → has' },
+  { cat:'v3', q:'🍌 Dad has _____ on a banana peel! (fall)', opts:['fell','fallen','falled','falling'], ans:1, hint:'Bố đã trượt vỏ chuối!', explain:'fall → fell → fallen' },
+  { cat:'signal', q:'👻 I have _____ seen a ghost in my life!', opts:['ever','never','just','already'], ans:1, hint:'Tôi chưa BAO GIỜ thấy ma!', explain:'never = chưa bao giờ' },
+  { cat:'sinfor', q:'😴 Grandpa has snored _____ 9 PM!', opts:['since','for','from','at'], ans:0, hint:'Ông ngáy từ 9 giờ tối!', explain:'"9 PM" = mốc thời gian → since' },
+  { cat:'vs', q:'🏖️ They _____ already built a sandcastle.', opts:['have','did','are','were'], ans:0, hint:'Họ đã xây lâu đài cát rồi.', explain:'already → Present Perfect (have already)' },
+  { cat:'havhas', q:'🐒 The monkeys _____ escaped from the zoo!', opts:['have','has','are','did'], ans:0, hint:'Mấy con khỉ đã trốn khỏi vườn thú!', explain:'The monkeys = They → have' },
+  { cat:'v3', q:'💩 He has _____ in the mud! (swim)', opts:['swam','swimmed','swum','swimming'], ans:2, hint:'Anh ấy đã bơi trong bùn!', explain:'swim → swam → swum' },
+  { cat:'signal', q:'📝 Has she done her homework _____?', opts:['already','just','yet','never'], ans:2, hint:'Cô ấy làm bài tập xong CHƯA?', explain:'yet = chưa (cuối câu hỏi)' },
+  { cat:'sinfor', q:'🤮 The fridge has smelled bad _____ a week!', opts:['since','for','during','from'], ans:1, hint:'Tủ lạnh hôi cả tuần rồi!', explain:'"a week" = khoảng thời gian → for' },
+  { cat:'vs', q:'🕸️ I _____ into a spider web this morning!', opts:['have walked','walked','has walked','walking'], ans:1, hint:'Tôi đi vào mạng nhện sáng nay!', explain:'"this morning" + xong rồi → Past Simple' },
+  { cat:'neg', q:'🐠 They _____ cleaned the fish tank yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Họ chưa rửa bể cá!', explain:'They → haven\'t' },
+  { cat:'ques', q:'🕷️ How long _____ you had that pet spider?', opts:['have','has','do','did'], ans:0, hint:'Bạn nuôi nhện bao lâu rồi?', explain:'You → have' },
+  { cat:'havhas', q:'🎂 My grandma _____ baked 100 cakes!', opts:['have','has','is','did'], ans:1, hint:'Bà tôi đã nướng 100 cái bánh!', explain:'My grandma = She → has' },
+  { cat:'v3', q:'🕳️ The dog has _____ a hole in the garden! (dig)', opts:['digged','dug','dig','diging'], ans:1, hint:'Con chó đào hố ngoài vườn!', explain:'dig → dug → dug' },
+  { cat:'signal', q:'🦷 My tooth has _____ fallen out! Look!', opts:['just','yet','ever','never'], ans:0, hint:'Răng tôi VỪA rụng! Nhìn kìa!', explain:'just = vừa mới' },
+  { cat:'sinfor', q:'👶 The baby has cried _____ this morning!', opts:['since','for','from','during'], ans:0, hint:'Em bé khóc từ sáng tới giờ!', explain:'"this morning" = mốc → since' },
+  { cat:'vs', q:'🎃 We _____ to the haunted house last Halloween!', opts:['have gone','went','has gone','going'], ans:1, hint:'Bọn tôi đi nhà ma Halloween năm ngoái!', explain:'"last Halloween" → Past Simple' },
+  { cat:'havhas', q:'👽 Aliens _____ landed in my garden!', opts:['have','has','are','did'], ans:0, hint:'Người ngoài hành tinh đáp ở vườn tôi!', explain:'Aliens = They → have' },
+  { cat:'v3', q:'🤪 She has _____ a funny face! (make)', opts:['maked','made','make','making'], ans:1, hint:'Cô ấy đã làm mặt xấu!', explain:'make → made → made' },
+  { cat:'signal', q:'🛁 I haven\'t taken a bath _____.', opts:['already','just','yet','never'], ans:2, hint:'Tôi chưa tắm.', explain:'yet = chưa (câu phủ định)' },
+  { cat:'sinfor', q:'🎮 He has played video games _____ 5 hours!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy chơi game 5 tiếng rồi!', explain:'"5 hours" = khoảng thời gian → for' },
+  { cat:'vs', q:'🐉 She _____ already fed the dragon.', opts:['has','did','is','was'], ans:0, hint:'Cô ấy đã cho rồng ăn rồi.', explain:'already → Present Perfect' },
+  { cat:'neg', q:'🍕 The pizza _____ arrived yet! I\'m starving!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Pizza chưa đến! Đói quá!', explain:'The pizza = It → hasn\'t' },
+  { cat:'ques', q:'🦗 _____ they ever eaten fried insects?', opts:['Have','Has','Are','Did'], ans:0, hint:'Họ đã từng ăn côn trùng chiên chưa?', explain:'They → Have they...?' },
+  { cat:'havhas', q:'🧟 My teacher _____ turned into a zombie!', opts:['have','has','is','did'], ans:1, hint:'Cô giáo tôi biến thành zombie!', explain:'My teacher = She/He → has' },
+  { cat:'v3', q:'💨 We have _____ a song about farts! (sing)', opts:['sang','sung','singed','singing'], ans:1, hint:'Chúng tôi hát bài về... xì hơi!', explain:'sing → sang → sung' },
+  { cat:'signal', q:'👃 Have you _____ picked your nose in class?', opts:['ever','never','already','just'], ans:0, hint:'Bạn có BAO GIỜ ngoáy mũi trong lớp không?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'sinfor', q:'🧦 My socks have been stinky _____ Monday!', opts:['since','for','from','during'], ans:0, hint:'Tất tôi thối từ thứ Hai!', explain:'"Monday" = mốc thời gian → since' },
+  { cat:'vs', q:'👻 The ghost _____ at midnight yesterday!', opts:['has appeared','appeared','have appeared','appears'], ans:1, hint:'Con ma xuất hiện lúc nửa đêm hôm qua!', explain:'"yesterday" → Past Simple' },
+  { cat:'havhas', q:'👖 My pants _____ ripped at school!', opts:['have','has','are','did'], ans:0, hint:'Quần tôi bị rách ở trường!', explain:'My pants = They → have' },
+  { cat:'v3', q:'🪟 The bird has _____ into the window! (fly)', opts:['flew','flown','flyed','flying'], ans:1, hint:'Con chim bay đâm vào cửa sổ!', explain:'fly → flew → flown' },
+  { cat:'neg', q:'🤢 He _____ washed his hands yet! Eww!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Anh ấy chưa rửa tay! Ghê quá!', explain:'He → hasn\'t' },
+  { cat:'signal', q:'🐭 Look! The cat has _____ caught a mouse!', opts:['just','yet','never','ever'], ans:0, hint:'Nhìn kìa! Mèo VỪA bắt được chuột!', explain:'just = vừa mới' },
+  { cat:'sinfor', q:'🤣 We have laughed _____ two hours!', opts:['since','for','from','during'], ans:1, hint:'Chúng tôi cười 2 tiếng rồi!', explain:'"two hours" = khoảng thời gian → for' },
+  { cat:'vs', q:'🐘 I _____ never ridden an elephant before!', opts:['have','did','was','am'], ans:0, hint:'Tôi chưa bao giờ cưỡi voi!', explain:'never → Present Perfect' },
+  { cat:'ques', q:'🔤 _____ he ever burped the alphabet?', opts:['Have','Has','Does','Did'], ans:1, hint:'Anh ấy đã bao giờ ợ ra bảng chữ cái chưa?', explain:'He → Has he...?' },
+  { cat:'havhas', q:'🐙 The octopus _____ hugged the diver!', opts:['have','has','is','did'], ans:1, hint:'Con bạch tuộc đã ôm thợ lặn!', explain:'The octopus = It → has' },
+  { cat:'v3', q:'🍦 I have _____ my ice cream on the floor! (drop)', opts:['droped','dropped','drop','dropping'], ans:1, hint:'Tôi làm rơi kem xuống đất!', explain:'drop → dropped → dropped (nhân đôi p!)' },
+  { cat:'signal', q:'🍩 She has _____ eaten 10 donuts! Still hungry!', opts:['already','yet','never','ever'], ans:0, hint:'Cô ấy ĐÃ ăn 10 cái donut! Vẫn đói!', explain:'already = đã... rồi' },
+  { cat:'sinfor', q:'🦜 The parrot has talked _____ I woke up!', opts:['since','for','from','while'], ans:0, hint:'Con vẹt nói từ khi tôi dậy!', explain:'"I woke up" = mốc thời gian → since' },
+  { cat:'vs', q:'🛸 A UFO _____ over my house last night!', opts:['has flown','flew','have flown','fly'], ans:1, hint:'UFO bay qua nhà tôi tối qua!', explain:'"last night" → Past Simple' },
+  { cat:'havhas', q:'🤖 My brother and I _____ built a robot!', opts:['have','has','are','did'], ans:0, hint:'Anh tôi và tôi đã chế robot!', explain:'My brother and I = We → have' },
+  { cat:'v3', q:'🤥 She has _____ to me! So angry! (lie)', opts:['lied','lain','lay','lying'], ans:0, hint:'Cô ấy nói dối tôi! Giận quá!', explain:'lie (nói dối) → lied → lied' },
+  { cat:'neg', q:'💰 We _____ found the buried treasure yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Chúng tôi chưa tìm thấy kho báu!', explain:'We → haven\'t' },
+  { cat:'ques', q:'🌟 _____ your mom ever met a celebrity?', opts:['Have','Has','Did','Does'], ans:1, hint:'Mẹ bạn đã gặp người nổi tiếng chưa?', explain:'Your mom = She → Has' },
+  { cat:'v3', q:'👖 He has _____ his pants at school! (tear)', opts:['teared','torn','tore','tearing'], ans:1, hint:'Anh ấy rách quần ở trường!', explain:'tear → tore → torn' },
+  { cat:'sinfor', q:'🚽 Dad has been in the bathroom _____ 30 minutes!', opts:['since','for','from','during'], ans:1, hint:'Bố ở trong toilet 30 phút rồi!', explain:'"30 minutes" = khoảng thời gian → for' },
+  { cat:'signal', q:'🤔 I have _____ tried durian! Is it good?', opts:['never','ever','just','already'], ans:0, hint:'Tôi CHƯA BAO GIỜ thử sầu riêng!', explain:'never = chưa bao giờ' },
+  { cat:'vs', q:'🐕 The dog _____ into the pool 5 minutes ago!', opts:['has jumped','jumped','have jumped','jumps'], ans:1, hint:'Con chó nhảy vào hồ bơi 5 phút trước!', explain:'"5 minutes ago" → Past Simple' },
+  { cat:'havhas', q:'🐟 My fish _____ learned to do tricks!', opts:['have','has','are','did'], ans:0, hint:'Mấy con cá đã học làm trò!', explain:'My fish (nhiều con) = They → have' },
+  { cat:'v3', q:'🍫 They have _____ all the chocolate! (eat)', opts:['ate','eaten','eated','eating'], ans:1, hint:'Họ đã ăn hết socola!', explain:'eat → ate → eaten' },
+  { cat:'signal', q:'🧹 She hasn\'t cleaned her room _____!', opts:['already','just','yet','never'], ans:2, hint:'Cô ấy CHƯA dọn phòng!', explain:'yet = chưa (cuối câu phủ định)' },
+
+  // === MORE HORRIBLE MIX ===
+  { cat:'havhas', q:'🦈 A shark _____ eaten my surfboard!', opts:['have','has','is','did'], ans:1, hint:'Cá mập ăn ván lướt sóng!', explain:'A shark = It → has' },
+  { cat:'v3', q:'🧪 The scientist has _____ a monster! (create)', opts:['created','create','creating','creates'], ans:0, hint:'Nhà khoa học đã tạo ra quái vật!', explain:'create → created → created (quy tắc)' },
+  { cat:'signal', q:'🎂 Have you _____ eaten a cake with worms?', opts:['ever','never','already','just'], ans:0, hint:'Bạn đã bao giờ ăn bánh có giun chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'sinfor', q:'🐊 The crocodile has lived here _____ 100 years!', opts:['since','for','from','during'], ans:1, hint:'Con cá sấu sống ở đây 100 năm!', explain:'"100 years" = khoảng thời gian → for' },
+  { cat:'vs', q:'🧙 The wizard _____ into a frog last Friday!', opts:['has turned','turned','have turned','turns'], ans:1, hint:'Phù thủy biến thành ếch thứ Sáu!', explain:'"last Friday" → Past Simple' },
+  { cat:'neg', q:'🦷 The dentist _____ pulled my tooth yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Nha sĩ chưa nhổ răng tôi!', explain:'The dentist = He/She → hasn\'t' },
+  { cat:'ques', q:'🎪 _____ the clown ever fallen off the stage?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh hề đã bao giờ ngã khỏi sân khấu?', explain:'The clown = He → Has' },
+  { cat:'havhas', q:'🐍 Two snakes _____ crawled into our kitchen!', opts:['have','has','are','did'], ans:0, hint:'Hai con rắn bò vào bếp!', explain:'Two snakes = They → have' },
+  { cat:'v3', q:'🎸 He has _____ his guitar in half! (break)', opts:['broke','broken','breaked','breaking'], ans:1, hint:'Anh ấy đã bẻ gãy đàn guitar!', explain:'break → broke → broken' },
+  { cat:'signal', q:'🍰 The guests have _____ eaten all the food!', opts:['already','yet','ever','never'], ans:0, hint:'Khách ĐÃ ăn hết đồ ăn rồi!', explain:'already = đã... rồi' },
+  { cat:'sinfor', q:'🦠 He has been sick _____ last Wednesday.', opts:['since','for','from','during'], ans:0, hint:'Anh ấy bệnh từ thứ Tư trước!', explain:'"last Wednesday" = mốc → since' },
+  { cat:'vs', q:'🐝 A bee _____ me on the nose 10 minutes ago!', opts:['has stung','stung','have stung','stings'], ans:1, hint:'Con ong đốt mũi tôi 10 phút trước!', explain:'"10 minutes ago" → Past Simple' },
+  { cat:'havhas', q:'🦜 My parrot _____ learned to say "homework"!', opts:['have','has','is','did'], ans:1, hint:'Con vẹt học nói "homework"!', explain:'My parrot = It → has' },
+  { cat:'v3', q:'🏠 Someone has _____ our doorbell and run away! (ring)', opts:['rang','rung','ringed','ringing'], ans:1, hint:'Ai đó bấm chuông rồi chạy mất!', explain:'ring → rang → rung' },
+  { cat:'neg', q:'🧊 The ice cream _____ melted yet! Hurry!', opts:["hasn't","haven't","didn't","isn't"], ans:0, hint:'Kem chưa tan! Nhanh lên!', explain:'The ice cream = It → hasn\'t' },
+  { cat:'signal', q:'🐔 The chicken has _____ laid an egg! Look!', opts:['just','yet','ever','never'], ans:0, hint:'Con gà VỪA đẻ trứng! Nhìn kìa!', explain:'just = vừa mới' },
+  { cat:'sinfor', q:'🧸 She has kept that teddy bear _____ she was 2!', opts:['since','for','from','when'], ans:0, hint:'Cô ấy giữ gấu bông từ khi 2 tuổi!', explain:'"she was 2" = mốc → since' },
+  { cat:'vs', q:'🌊 We _____ to the beach every summer so far.', opts:['have gone','went','has gone','go'], ans:0, hint:'Hè nào chúng tôi cũng đi biển.', explain:'"so far" = đến nay → Present Perfect' },
+  { cat:'ques', q:'🐛 _____ you ever found a bug in your food?', opts:['Have','Has','Did','Do'], ans:0, hint:'Bạn đã bao giờ tìm thấy sâu trong đồ ăn?', explain:'You → Have' },
+  { cat:'havhas', q:'🧙‍♀️ The witch _____ turned the prince into a toad!', opts:['have','has','is','did'], ans:1, hint:'Phù thủy biến hoàng tử thành cóc!', explain:'The witch = She → has' },
+  { cat:'v3', q:'🏫 We have _____ to school in our pajamas! (go)', opts:['went','gone','goed','going'], ans:1, hint:'Chúng tôi đi học bằng đồ ngủ!', explain:'go → went → gone' },
+  { cat:'signal', q:'🎃 I have _____ been so scared in my life!', opts:['never','ever','just','already'], ans:0, hint:'Tôi chưa BAO GIỜ sợ thế!', explain:'never = chưa bao giờ' },
+  { cat:'sinfor', q:'🐶 My dog has barked _____ 6 AM!', opts:['since','for','from','at'], ans:0, hint:'Con chó sủa từ 6 giờ sáng!', explain:'"6 AM" = mốc thời gian → since' },
+  { cat:'vs', q:'🎁 She _____ already opened all her presents.', opts:['has','did','is','was'], ans:0, hint:'Cô ấy đã mở hết quà rồi.', explain:'already → Present Perfect' },
+  { cat:'neg', q:'🌧️ It _____ stopped raining yet!', opts:["hasn't","haven't","didn't","isn't"], ans:0, hint:'Trời chưa ngừng mưa!', explain:'It → hasn\'t' },
+  { cat:'v3', q:'🐴 The horse has _____ over the fence! (jump)', opts:['jumped','jumps','jumping','jump'], ans:0, hint:'Con ngựa đã nhảy qua hàng rào!', explain:'jump → jumped → jumped (quy tắc)' },
+  { cat:'havhas', q:'🦊 The foxes _____ stolen all our chickens!', opts:['have','has','are','did'], ans:0, hint:'Mấy con cáo ăn trộm hết gà!', explain:'The foxes = They → have' },
+  { cat:'ques', q:'🍝 _____ he ever put ketchup on spaghetti?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy bao giờ cho ketchup vào mì chưa?', explain:'He → Has' },
+  { cat:'signal', q:'🏊 She has _____ jumped into the pool fully dressed!', opts:['just','yet','never','ever'], ans:0, hint:'Cô ấy VỪA nhảy xuống hồ còn nguyên quần áo!', explain:'just = vừa mới' },
+  { cat:'sinfor', q:'📞 He has talked on the phone _____ 2 hours!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy nói điện thoại 2 tiếng rồi!', explain:'"2 hours" = khoảng thời gian → for' },
+  { cat:'vs', q:'🦕 Dinosaurs _____ millions of years ago.', opts:['have lived','lived','has lived','live'], ans:1, hint:'Khủng long sống hàng triệu năm trước.', explain:'"millions of years ago" → Past Simple' },
+  { cat:'havhas', q:'🧑‍🍳 The chef _____ burned the dinner again!', opts:['have','has','is','did'], ans:1, hint:'Đầu bếp lại cháy bữa tối!', explain:'The chef = He/She → has' },
+  { cat:'v3', q:'💍 She has _____ her ring down the drain! (lose)', opts:['losed','lost','lose','losing'], ans:1, hint:'Cô ấy làm rơi nhẫn xuống cống!', explain:'lose → lost → lost' },
+  { cat:'neg', q:'👻 We _____ caught the ghost yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Chúng tôi chưa bắt được con ma!', explain:'We → haven\'t' },
+  { cat:'signal', q:'🧁 Has anyone _____ tried my special cupcakes?', opts:['ever','never','just','already'], ans:0, hint:'Có ai đã từng thử cupcake đặc biệt chưa?', explain:'ever = đã từng (câu hỏi)' },
+  { cat:'sinfor', q:'🎹 She has practiced piano _____ 3 PM!', opts:['since','for','from','at'], ans:0, hint:'Cô ấy tập piano từ 3 giờ chiều!', explain:'"3 PM" = mốc thời gian → since' },
+  { cat:'vs', q:'🐀 A rat _____ across the classroom this morning!', opts:['has run','ran','have run','runs'], ans:1, hint:'Con chuột chạy qua lớp sáng nay!', explain:'"this morning" + xong → Past Simple' },
+  { cat:'havhas', q:'🦆 The ducks _____ eaten all the bread!', opts:['have','has','are','did'], ans:0, hint:'Mấy con vịt ăn hết bánh mì!', explain:'The ducks = They → have' },
+  { cat:'v3', q:'⚽ He has _____ the ball into the neighbor\'s garden! (kick)', opts:['kicked','kick','kicking','kicks'], ans:0, hint:'Anh ấy đá bóng sang vườn hàng xóm!', explain:'kick → kicked → kicked (quy tắc)' },
+  { cat:'ques', q:'🤡 _____ they ever dressed up as clowns?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ hóa trang thành hề chưa?', explain:'They → Have' },
+  { cat:'signal', q:'🎈 Oh no! The balloon has _____ popped!', opts:['just','yet','ever','never'], ans:0, hint:'Ôi không! Bóng bay VỪA nổ!', explain:'just = vừa mới' },
+  { cat:'sinfor', q:'🦷 His toothache has lasted _____ 3 days!', opts:['since','for','from','during'], ans:1, hint:'Đau răng kéo dài 3 ngày rồi!', explain:'"3 days" = khoảng thời gian → for' },
+  { cat:'vs', q:'🧊 I _____ on the ice and fell down yesterday!', opts:['have slipped','slipped','has slipped','slip'], ans:1, hint:'Tôi trượt trên băng hôm qua!', explain:'"yesterday" → Past Simple' },
+  { cat:'havhas', q:'🐻 The bear _____ broken into our camp!', opts:['have','has','is','did'], ans:1, hint:'Con gấu đột nhập trại!', explain:'The bear = It → has' },
+  { cat:'v3', q:'📸 We have _____ a selfie with a monkey! (take)', opts:['took','taken','taked','taking'], ans:1, hint:'Chúng tôi chụp selfie với khỉ!', explain:'take → took → taken' },
+  { cat:'neg', q:'🎯 She _____ hit the target yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Cô ấy chưa bắn trúng đích!', explain:'She → hasn\'t' },
+  { cat:'vs', q:'🦩 I _____ never seen a pink flamingo before!', opts:['have','did','was','am'], ans:0, hint:'Tôi chưa bao giờ thấy chim hồng hạc!', explain:'never → Present Perfect' },
+  { cat:'signal', q:'📦 The package hasn\'t arrived _____!', opts:['already','just','yet','never'], ans:2, hint:'Bưu kiện CHƯA đến!', explain:'yet = chưa (câu phủ định)' },
+  { cat:'sinfor', q:'🎮 They have played Minecraft _____ September!', opts:['since','for','from','at'], ans:0, hint:'Họ chơi Minecraft từ tháng 9!', explain:'"September" = mốc → since' },
+  { cat:'havhas', q:'🐈 My cats _____ knocked everything off the table!', opts:['have','has','are','did'], ans:0, hint:'Mấy con mèo hất hết đồ trên bàn!', explain:'My cats = They → have' },
+  { cat:'v3', q:'🎤 She has _____ in front of 1000 people! (speak)', opts:['spoke','spoken','speaked','speaking'], ans:1, hint:'Cô ấy đã nói trước 1000 người!', explain:'speak → spoke → spoken' },
+  { cat:'ques', q:'🧊 _____ it ever snowed in your city?', opts:['Have','Has','Did','Does'], ans:1, hint:'Thành phố bạn đã bao giờ có tuyết?', explain:'It → Has' },
+  { cat:'vs', q:'🎄 We _____ 50 cookies for Christmas last year!', opts:['have baked','baked','has baked','bake'], ans:1, hint:'Chúng tôi nướng 50 bánh Noel năm ngoái!', explain:'"last year" → Past Simple' },
+  { cat:'havhas', q:'🦁 The lion _____ escaped from the circus!', opts:['have','has','is','did'], ans:1, hint:'Con sư tử trốn khỏi rạp xiếc!', explain:'The lion = It → has' },
+  { cat:'v3', q:'🧤 I have _____ my gloves again! (forget)', opts:['forgot','forgotten','forgetted','forgetting'], ans:1, hint:'Tôi lại quên găng tay!', explain:'forget → forgot → forgotten' },
+  { cat:'neg', q:'🐕 The puppy _____ learned to sit yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Chó con chưa học ngồi!', explain:'The puppy = It → hasn\'t' },
+  { cat:'signal', q:'🌺 Have you _____ smelled a corpse flower?', opts:['ever','never','just','already'], ans:0, hint:'Bạn đã bao giờ ngửi hoa xác thối?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'sinfor', q:'🏠 We have lived in this haunted house _____ 2019!', opts:['since','for','from','during'], ans:0, hint:'Chúng tôi sống trong nhà ma từ 2019!', explain:'"2019" = mốc → since' },
+  { cat:'vs', q:'🎪 The magician _____ a rabbit from his hat just now!', opts:['has pulled','pulled','have pulled','pulls'], ans:0, hint:'Ảo thuật gia vừa rút con thỏ ra!', explain:'"just now" = vừa xảy ra → Present Perfect' },
+
+  // === EVEN MORE HORRIBLE MIX ===
+  { cat:'havhas', q:'🐊 A crocodile _____ moved into our swimming pool!', opts:['have','has','is','did'], ans:1, hint:'Cá sấu dọn vào hồ bơi nhà tôi!', explain:'A crocodile = It → has' },
+  { cat:'v3', q:'🎒 I have _____ my lunchbox at home! (leave)', opts:['left','leaved','leave','leaving'], ans:0, hint:'Tôi để quên hộp cơm ở nhà!', explain:'leave → left → left' },
+  { cat:'signal', q:'🦴 The dog has _____ buried a bone in my bed!', opts:['just','yet','ever','never'], ans:0, hint:'Con chó VỪA chôn xương trên giường tôi!', explain:'just = vừa mới' },
+  { cat:'sinfor', q:'🎵 She has sung the same song _____ 45 minutes!', opts:['since','for','from','during'], ans:1, hint:'Cô ấy hát mãi 1 bài suốt 45 phút!', explain:'"45 minutes" = khoảng thời gian → for' },
+  { cat:'vs', q:'🧁 Mom _____ 200 cupcakes for the school fair last week!', opts:['has baked','baked','have baked','bakes'], ans:1, hint:'Mẹ nướng 200 cupcake tuần trước!', explain:'"last week" → Past Simple' },
+  { cat:'neg', q:'🎪 The clown _____ made anyone laugh yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Anh hề chưa làm ai cười!', explain:'The clown = He → hasn\'t' },
+  { cat:'ques', q:'🧪 _____ the scientist ever created a monster?', opts:['Have','Has','Did','Does'], ans:1, hint:'Nhà khoa học đã bao giờ tạo quái vật chưa?', explain:'The scientist = He → Has' },
+  { cat:'havhas', q:'🐝 The bees _____ built a nest in our mailbox!', opts:['have','has','are','did'], ans:0, hint:'Mấy con ong xây tổ trong hộp thư!', explain:'The bees = They → have' },
+  { cat:'v3', q:'🎯 He has _____ the ball through the window! (hit)', opts:['hitted','hit','hitting','hits'], ans:1, hint:'Anh ấy đá bóng vỡ cửa sổ!', explain:'hit → hit → hit (không đổi!)' },
+  { cat:'signal', q:'🍕 Have you _____ put pineapple on pizza?', opts:['ever','never','already','just'], ans:0, hint:'Bạn đã bao giờ cho dứa lên pizza chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'sinfor', q:'🐌 The snail has crawled _____ this morning!', opts:['since','for','from','during'], ans:0, hint:'Con ốc sên bò từ sáng!', explain:'"this morning" = mốc → since' },
+  { cat:'vs', q:'🎈 The balloon _____ away 2 seconds ago!', opts:['has flown','flew','have flown','fly'], ans:1, hint:'Bóng bay mất 2 giây trước!', explain:'"2 seconds ago" → Past Simple' },
+  { cat:'havhas', q:'🧑‍🚒 The firefighter _____ rescued the cat from the tree!', opts:['have','has','is','did'], ans:1, hint:'Lính cứu hỏa đã cứu mèo trên cây!', explain:'The firefighter = He → has' },
+  { cat:'v3', q:'🏈 They have _____ the game! (win)', opts:['won','winned','win','winning'], ans:0, hint:'Họ đã thắng trận đấu!', explain:'win → won → won' },
+  { cat:'neg', q:'🐸 The frog _____ jumped out of the box yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Con ếch chưa nhảy ra khỏi hộp!', explain:'The frog = It → hasn\'t' },
+  { cat:'signal', q:'🎁 I have _____ opened my birthday present!', opts:['already','yet','ever','never'], ans:0, hint:'Tôi ĐÃ mở quà sinh nhật rồi!', explain:'already = đã... rồi' },
+  { cat:'sinfor', q:'🐓 The rooster has crowed _____ 4:30 AM!', opts:['since','for','from','at'], ans:0, hint:'Con gà trống gáy từ 4:30 sáng!', explain:'"4:30 AM" = mốc → since' },
+  { cat:'vs', q:'🦎 A lizard _____ across my keyboard just now!', opts:['has run','ran','have run','runs'], ans:0, hint:'Thằn lằn vừa chạy qua bàn phím!', explain:'"just now" → Present Perfect' },
+  { cat:'ques', q:'🧲 _____ you ever stuck a magnet on your nose?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ dán nam châm lên mũi?', explain:'You → Have' },
+  { cat:'havhas', q:'🦃 The turkey _____ escaped before Thanksgiving!', opts:['have','has','is','did'], ans:1, hint:'Con gà tây trốn trước lễ Tạ Ơn!', explain:'The turkey = It → has' },
+  { cat:'v3', q:'🧊 The water has _____ into ice! (freeze)', opts:['froze','frozen','freezed','freezing'], ans:1, hint:'Nước đã đóng thành đá!', explain:'freeze → froze → frozen' },
+  { cat:'signal', q:'🐍 She has _____ touched a snake! Eww!', opts:['never','ever','just','already'], ans:0, hint:'Cô ấy CHƯA BAO GIỜ sờ rắn!', explain:'never = chưa bao giờ' },
+  { cat:'sinfor', q:'🦟 The mosquitoes have buzzed _____ an hour!', opts:['since','for','from','during'], ans:1, hint:'Muỗi vo ve cả tiếng rồi!', explain:'"an hour" = khoảng thời gian → for' },
+  { cat:'vs', q:'🐄 The cow _____ on my foot at the farm yesterday!', opts:['has stepped','stepped','have stepped','steps'], ans:1, hint:'Con bò dẫm lên chân tôi hôm qua!', explain:'"yesterday" → Past Simple' },
+  { cat:'neg', q:'🎸 He _____ learned to play guitar yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Anh ấy chưa học được guitar!', explain:'He → hasn\'t' },
+  { cat:'havhas', q:'🐧 The penguins _____ stolen our fish!', opts:['have','has','are','did'], ans:0, hint:'Mấy con chim cánh cụt ăn trộm cá!', explain:'The penguins = They → have' },
+  { cat:'v3', q:'💤 He has _____ through the entire movie! (sleep)', opts:['slept','sleeped','sleep','sleeping'], ans:0, hint:'Anh ấy ngủ suốt cả phim!', explain:'sleep → slept → slept' },
+  { cat:'ques', q:'🎢 _____ she ever screamed on a roller coaster?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ la hét trên tàu lượn?', explain:'She → Has' },
+  { cat:'signal', q:'🍳 He hasn\'t cooked breakfast _____.', opts:['already','just','yet','never'], ans:2, hint:'Anh ấy CHƯA nấu bữa sáng.', explain:'yet = chưa (câu phủ định)' },
+  { cat:'sinfor', q:'🧹 We have cleaned the house _____ 3 hours!', opts:['since','for','from','during'], ans:1, hint:'Chúng tôi dọn nhà 3 tiếng rồi!', explain:'"3 hours" = khoảng thời gian → for' },
+  { cat:'vs', q:'🐛 A caterpillar _____ into a butterfly! So beautiful!', opts:['has turned','turned','have turned','turns'], ans:0, hint:'Sâu biến thành bướm! (kết quả ảnh hưởng)', explain:'Kết quả còn hiện tại → Present Perfect' },
+  { cat:'havhas', q:'🧑‍⚕️ The doctor _____ told me to eat more vegetables!', opts:['have','has','is','did'], ans:1, hint:'Bác sĩ bảo tôi ăn nhiều rau hơn!', explain:'The doctor = He/She → has' },
+  { cat:'v3', q:'🌋 The volcano has _____ again! Run! (erupt)', opts:['erupted','erupt','erupting','erupts'], ans:0, hint:'Núi lửa lại phun trào! Chạy!', explain:'erupt → erupted → erupted (quy tắc)' },
+  { cat:'neg', q:'🎪 They _____ set up the circus tent yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Họ chưa dựng xong lều xiếc!', explain:'They → haven\'t' },
+  { cat:'signal', q:'🐞 A ladybug has _____ landed on my nose!', opts:['just','yet','ever','never'], ans:0, hint:'Con bọ rùa VỪA đậu lên mũi tôi!', explain:'just = vừa mới' },
+  { cat:'sinfor', q:'🏥 She has been in the hospital _____ Friday!', opts:['since','for','from','during'], ans:0, hint:'Cô ấy nằm viện từ thứ Sáu!', explain:'"Friday" = mốc → since' },
+  { cat:'vs', q:'🎻 He _____ the violin at the concert last Saturday!', opts:['has played','played','have played','plays'], ans:1, hint:'Anh ấy chơi violin ở buổi hòa nhạc thứ Bảy!', explain:'"last Saturday" → Past Simple' },
+  { cat:'ques', q:'🐋 _____ they ever seen a real whale?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ thấy cá voi thật chưa?', explain:'They → Have' },
+  { cat:'havhas', q:'🦉 An owl _____ moved into our attic!', opts:['have','has','is','did'], ans:1, hint:'Con cú dọn vào gác mái nhà tôi!', explain:'An owl = It → has' },
+  { cat:'v3', q:'📱 She has _____ her phone in the toilet! (drop)', opts:['dropped','droped','drop','dropping'], ans:0, hint:'Cô ấy làm rơi điện thoại vào toilet!', explain:'drop → dropped → dropped' },
+  { cat:'signal', q:'🧀 The mouse has _____ found the cheese!', opts:['already','yet','never','ever'], ans:0, hint:'Con chuột ĐÃ tìm thấy phô mai!', explain:'already = đã... rồi' },
+  { cat:'sinfor', q:'⛈️ It has rained _____ last night!', opts:['since','for','from','during'], ans:0, hint:'Trời mưa từ tối qua!', explain:'"last night" = mốc → since' },
+  { cat:'vs', q:'🧑‍🏫 She _____ never been late for school.', opts:['has','did','was','is'], ans:0, hint:'Cô ấy chưa bao giờ đi học muộn.', explain:'never → Present Perfect' },
+  { cat:'neg', q:'🦊 The fox _____ caught the chicken yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Con cáo chưa bắt được gà!', explain:'The fox = It → hasn\'t' },
+  { cat:'havhas', q:'👯 My twin sisters _____ switched places again!', opts:['have','has','are','did'], ans:0, hint:'Hai chị em sinh đôi đổi chỗ lại!', explain:'My twin sisters = They → have' },
+  { cat:'v3', q:'🏠 We have _____ our house blue! (paint)', opts:['painted','paint','painting','paints'], ans:0, hint:'Chúng tôi sơn nhà màu xanh!', explain:'paint → painted → painted (quy tắc)' },
+  { cat:'ques', q:'🐜 _____ an ant ever bitten you?', opts:['Have','Has','Did','Does'], ans:1, hint:'Kiến đã bao giờ cắn bạn chưa?', explain:'An ant = It → Has' },
+  { cat:'signal', q:'🏠 Have you _____ sleepwalked at night?', opts:['ever','never','already','just'], ans:0, hint:'Bạn đã bao giờ mộng du chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'sinfor', q:'🎃 They have decorated the house _____ 2 days!', opts:['since','for','from','during'], ans:1, hint:'Họ trang trí nhà 2 ngày rồi!', explain:'"2 days" = khoảng thời gian → for' },
+  { cat:'vs', q:'🐱 The cat _____ the goldfish at 3 PM today!', opts:['has eaten','ate','have eaten','eats'], ans:1, hint:'Con mèo ăn cá vàng lúc 3 giờ chiều!', explain:'"at 3 PM today" = thời điểm cụ thể → Past Simple' },
+  { cat:'havhas', q:'🦀 A crab _____ pinched my toe at the beach!', opts:['have','has','is','did'], ans:1, hint:'Con cua kẹp ngón chân tôi!', explain:'A crab = It → has' },
+  { cat:'v3', q:'🗝️ Someone has _____ the key! (hide)', opts:['hid','hidden','hided','hiding'], ans:1, hint:'Ai đó đã giấu chìa khóa!', explain:'hide → hid → hidden' },
+  { cat:'neg', q:'🌺 The flowers _____ bloomed yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Hoa chưa nở!', explain:'The flowers = They → haven\'t' },
+  { cat:'signal', q:'🧲 I have _____ seen such a big spider!', opts:['never','ever','just','already'], ans:0, hint:'Tôi CHƯA BAO GIỜ thấy nhện to thế!', explain:'never = chưa bao giờ' },
+  { cat:'sinfor', q:'🎧 He has listened to music _____ he got home!', opts:['since','for','from','while'], ans:0, hint:'Anh ấy nghe nhạc từ khi về nhà!', explain:'"he got home" = mốc → since' },
+  { cat:'vs', q:'🐢 The turtle _____ the race! Nobody expected it!', opts:['has won','won','have won','wins'], ans:0, hint:'Rùa thắng cuộc đua! (kết quả ảnh hưởng)', explain:'Kết quả bất ngờ → Present Perfect' },
+  { cat:'havhas', q:'🧑‍🍳 My dad _____ burned the toast for the 5th time!', opts:['have','has','is','did'], ans:1, hint:'Bố tôi cháy bánh mì lần thứ 5!', explain:'My dad = He → has' },
+  { cat:'v3', q:'💡 She has _____ a brilliant idea! (have)', opts:['had','haved','have','having'], ans:0, hint:'Cô ấy có ý tưởng tuyệt vời!', explain:'have → had → had' },
+  { cat:'ques', q:'🦷 _____ the tooth fairy ever visited your house?', opts:['Have','Has','Did','Does'], ans:1, hint:'Tiên răng đã bao giờ đến nhà bạn?', explain:'The tooth fairy = She → Has' },
+  { cat:'vs', q:'🎨 I _____ this picture when I was 5 years old.', opts:['have drawn','drew','has drawn','draw'], ans:1, hint:'Tôi vẽ bức tranh này lúc 5 tuổi.', explain:'"when I was 5" → Past Simple' },
+  { cat:'neg', q:'🚀 The rocket _____ launched yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Tên lửa chưa phóng!', explain:'The rocket = It → hasn\'t' },
+  { cat:'havhas', q:'🐸 The frogs _____ taken over the garden!', opts:['have','has','are','did'], ans:0, hint:'Mấy con ếch chiếm cả vườn!', explain:'The frogs = They → have' },
+  { cat:'v3', q:'🎤 He has _____ in the school choir! (sing)', opts:['sang','sung','singed','singing'], ans:1, hint:'Anh ấy đã hát trong dàn đồng ca!', explain:'sing → sang → sung' },
+  { cat:'sinfor', q:'🏕️ We have camped here _____ 4 nights!', opts:['since','for','from','during'], ans:1, hint:'Chúng tôi cắm trại 4 đêm rồi!', explain:'"4 nights" = khoảng thời gian → for' },
+  { cat:'signal', q:'🎡 They have _____ ridden the Ferris wheel 5 times!', opts:['already','yet','ever','never'], ans:0, hint:'Họ ĐÃ đi đu quay 5 lần rồi!', explain:'already = đã... rồi' },
+  { cat:'ques', q:'🌮 _____ we ever tried Mexican food?', opts:['Have','Has','Did','Are'], ans:0, hint:'Chúng ta đã bao giờ thử đồ Mexico?', explain:'We → Have' },
+  { cat:'vs', q:'🎭 She _____ in 3 school plays so far this year.', opts:['has acted','acted','have acted','acts'], ans:0, hint:'Cô ấy đóng 3 vở kịch năm nay.', explain:'"so far" → Present Perfect' },
+  { cat:'neg', q:'🧩 I _____ finished this puzzle yet! It\'s so hard!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Tôi chưa xong puzzle! Khó quá!', explain:'I → haven\'t' },
+  { cat:'havhas', q:'🐕‍🦺 The rescue dog _____ found the lost hiker!', opts:['have','has','is','did'], ans:1, hint:'Chó cứu hộ tìm thấy người đi lạc!', explain:'The rescue dog = It → has' },
+  { cat:'v3', q:'🏆 Our team has _____ first place! (get)', opts:['got','gotten','getted','getting'], ans:1, hint:'Đội chúng tôi đạt giải nhất!', explain:'get → got → gotten' },
+
+  // === COVER ALL REMAINING HORRIBLE LIST VERBS ===
+  { cat:'v3', q:'👻 He has _____ a ghost since yesterday! (be)', opts:['been','was','be','being'], ans:0, hint:'Anh ấy làm ma từ hôm qua!', explain:'be → was/were → been' },
+  { cat:'v3', q:'🤦 She has _____ her homework 3 times today! (do)', opts:['did','done','doed','doing'], ans:1, hint:'Cô ấy làm bài tập 3 lần hôm nay!', explain:'do → did → done' },
+  { cat:'v3', q:'🐜 Ants have _____ into our kitchen again! (come)', opts:['came','come','comed','coming'], ans:1, hint:'Kiến lại bò vào bếp nữa!', explain:'come → came → come' },
+  { cat:'v3', q:'🤫 He has _____ a bad word in class! (say)', opts:['said','say','sayed','saying'], ans:0, hint:'Anh ấy nói bậy trong lớp!', explain:'say → said → said' },
+  { cat:'v3', q:'🤥 She has _____ everyone my secret! (tell)', opts:['told','telled','tell','telling'], ans:0, hint:'Cô ấy kể bí mật tôi cho mọi người!', explain:'tell → told → told' },
+  { cat:'v3', q:'👂 Have you _____ that strange noise at night? (hear)', opts:['heard','heared','hear','hearing'], ans:0, hint:'Bạn có nghe tiếng lạ ban đêm không?', explain:'hear → heard → heard' },
+  { cat:'v3', q:'👀 I have _____ a rainbow today! (see)', opts:['saw','seen','seed','seeing'], ans:1, hint:'Tôi đã thấy cầu vồng hôm nay!', explain:'see → saw → seen' },
+  { cat:'v3', q:'👃 He has _____ something terrible in the fridge! (smell)', opts:['smelt','smelled','smell','smelling'], ans:0, hint:'Anh ấy ngửi thấy mùi kinh khủng trong tủ lạnh!', explain:'smell → smelt → smelt' },
+  { cat:'v3', q:'💸 That toy has _____ me all my pocket money! (cost)', opts:['cost','costed','costs','costing'], ans:0, hint:'Món đồ chơi đó tốn hết tiền tiêu vặt!', explain:'cost → cost → cost (không đổi!)' },
+  { cat:'v3', q:'✂️ She has _____ her own hair! It looks funny! (cut)', opts:['cut','cutted','cuts','cutting'], ans:0, hint:'Cô ấy tự cắt tóc! Trông buồn cười!', explain:'cut → cut → cut (không đổi!)' },
+  { cat:'v3', q:'🤕 He has _____ his knee again! (hurt)', opts:['hurt','hurted','hurts','hurting'], ans:0, hint:'Anh ấy lại đau đầu gối!', explain:'hurt → hurt → hurt (không đổi!)' },
+  { cat:'v3', q:'🐶 Mom has _____ me keep the puppy! (let)', opts:['let','letted','lets','letting'], ans:0, hint:'Mẹ cho tôi nuôi chó con!', explain:'let → let → let (không đổi!)' },
+  { cat:'v3', q:'🧸 Someone has _____ a teddy bear in my bag! (put)', opts:['put','putted','puts','putting'], ans:0, hint:'Ai đó nhét gấu bông vào cặp tôi!', explain:'put → put → put (không đổi!)' },
+  { cat:'v3', q:'📖 She has _____ that book 5 times! (read)', opts:['read','readed','reads','reading'], ans:0, hint:'Cô ấy đọc cuốn sách đó 5 lần!', explain:'read → read → read (phát âm khác!)' },
+  { cat:'v3', q:'🚪 The wind has _____ all the doors! (shut)', opts:['shut','shutted','shuts','shutting'], ans:0, hint:'Gió đóng sập hết cửa!', explain:'shut → shut → shut (không đổi!)' },
+  { cat:'v3', q:'🍦 He has _____ the biggest ice cream! (choose)', opts:['chose','chosen','choosed','choosing'], ans:1, hint:'Anh ấy đã chọn cây kem to nhất!', explain:'choose → chose → chosen' },
+  { cat:'v3', q:'🚗 Grandma has _____ into the wrong parking lot! (drive)', opts:['drove','driven','drived','driving'], ans:1, hint:'Bà lái xe vào sai bãi đỗ!', explain:'drive → drove → driven' },
+  { cat:'v3', q:'🎁 Santa has _____ me socks again! (give)', opts:['gave','given','gived','giving'], ans:1, hint:'Ông già Noel lại tặng tôi tất!', explain:'give → gave → given' },
+  { cat:'v3', q:'😇 She has _____ me for breaking her toy! (forgive)', opts:['forgave','forgiven','forgived','forgiving'], ans:1, hint:'Cô ấy tha thứ cho tôi vì làm hỏng đồ chơi!', explain:'forgive → forgave → forgiven' },
+  { cat:'v3', q:'🐎 Have you ever _____ a horse? (ride)', opts:['rode','ridden','rided','riding'], ans:1, hint:'Bạn đã bao giờ cưỡi ngựa chưa?', explain:'ride → rode → ridden' },
+  { cat:'v3', q:'🌅 The sun has already _____ ! Time for school! (rise)', opts:['rose','risen','rised','rising'], ans:1, hint:'Mặt trời đã mọc! Đi học thôi!', explain:'rise → rose → risen' },
+  { cat:'v3', q:'🫨 The earthquake has _____ the whole building! (shake)', opts:['shook','shaken','shaked','shaking'], ans:1, hint:'Động đất rung cả tòa nhà!', explain:'shake → shook → shaken' },
+  { cat:'v3', q:'⏰ The alarm has _____ up the whole neighborhood! (wake)', opts:['woke','woken','waked','waking'], ans:1, hint:'Chuông báo đánh thức cả xóm!', explain:'wake → woke → woken' },
+  { cat:'v3', q:'✏️ He has _____ his name on every desk! (write)', opts:['wrote','written','writed','writing'], ans:1, hint:'Anh ấy viết tên lên mọi bàn học!', explain:'write → wrote → written' },
+  { cat:'v3', q:'🌧️ It has _____ to rain during our picnic! (begin)', opts:['began','begun','beginned','beginning'], ans:1, hint:'Trời bắt đầu mưa giữa buổi picnic!', explain:'begin → began → begun' },
+  { cat:'v3', q:'🥛 The cat has _____ all the milk! (drink)', opts:['drank','drunk','drinked','drinking'], ans:1, hint:'Con mèo uống hết sữa!', explain:'drink → drank → drunk' },
+  { cat:'v3', q:'🐒 The monkey has _____ from tree to tree! (swing)', opts:['swang','swung','swinged','swinging'], ans:1, hint:'Con khỉ đu từ cây này sang cây khác!', explain:'swing → swung → swung' },
+  { cat:'v3', q:'🌬️ The storm has _____ the roof off our house! (blow)', opts:['blew','blown','blowed','blowing'], ans:1, hint:'Bão thổi bay mái nhà!', explain:'blow → blew → blown' },
+  { cat:'v3', q:'🎨 She has _____ a picture of her cat! (draw)', opts:['drew','drawn','drawed','drawing'], ans:1, hint:'Cô ấy vẽ tranh con mèo!', explain:'draw → drew → drawn' },
+  { cat:'v3', q:'🌱 My sunflower has _____ taller than me! (grow)', opts:['grew','grown','growed','growing'], ans:1, hint:'Hoa hướng dương mọc cao hơn tôi!', explain:'grow → grew → grown' },
+  { cat:'v3', q:'🤷 I have _____ this answer all along! (know)', opts:['knew','known','knowed','knowing'], ans:1, hint:'Tôi biết đáp án từ đầu!', explain:'know → knew → known' },
+  { cat:'v3', q:'🎂 She has _____ a cake for the party! (bring)', opts:['brought','bringed','brung','bringing'], ans:0, hint:'Cô ấy mang bánh đến tiệc!', explain:'bring → brought → brought' },
+  { cat:'v3', q:'🐹 He has _____ a hamster without telling Mom! (buy)', opts:['bought','buyed','buy','buying'], ans:0, hint:'Anh ấy mua hamster mà không nói mẹ!', explain:'buy → bought → bought' },
+  { cat:'v3', q:'⚾ She has _____ the ball with one hand! (catch)', opts:['caught','catched','catch','catching'], ans:0, hint:'Cô ấy bắt bóng bằng một tay!', explain:'catch → caught → caught' },
+  { cat:'v3', q:'🤺 The knights have _____ the dragon! (fight)', opts:['fought','fighted','fight','fighting'], ans:0, hint:'Các hiệp sĩ đã chiến đấu với rồng!', explain:'fight → fought → fought' },
+  { cat:'v3', q:'📚 She has _____ English for 10 years! (teach)', opts:['taught','teached','teach','teaching'], ans:0, hint:'Cô ấy dạy tiếng Anh 10 năm rồi!', explain:'teach → taught → taught' },
+  { cat:'v3', q:'🧠 I have _____ about this problem all day! (think)', opts:['thought','thinked','think','thinking'], ans:0, hint:'Tôi nghĩ về bài toán cả ngày!', explain:'think → thought → thought' },
+  { cat:'v3', q:'🧍 He has _____ in line for 2 hours! (stand)', opts:['stood','standed','stand','standing'], ans:0, hint:'Anh ấy đứng xếp hàng 2 tiếng!', explain:'stand → stood → stood' },
+  { cat:'v3', q:'🤔 She has finally _____ the math problem! (understand)', opts:['understood','understanded','understand','understanding'], ans:0, hint:'Cô ấy cuối cùng hiểu bài toán!', explain:'understand → understood → understood' },
+  { cat:'v3', q:'🩸 His nose has _____ all over his shirt! (bleed)', opts:['bled','bleeded','bleed','bleeding'], ans:0, hint:'Mũi anh ấy chảy máu đầy áo!', explain:'bleed → bled → bled' },
+  { cat:'v3', q:'🐠 She has _____ the fish 3 times today! (feed)', opts:['fed','feeded','feed','feeding'], ans:0, hint:'Cô ấy cho cá ăn 3 lần hôm nay!', explain:'feed → fed → fed' },
+  { cat:'v3', q:'🤢 I have _____ sick since lunch! (feel)', opts:['felt','feeled','feel','feeling'], ans:0, hint:'Tôi thấy khó chịu từ bữa trưa!', explain:'feel → felt → felt' },
+  { cat:'v3', q:'🐛 He has _____ a caterpillar as a pet! (keep)', opts:['kept','keeped','keep','keeping'], ans:0, hint:'Anh ấy nuôi sâu bướm làm thú cưng!', explain:'keep → kept → kept' },
+  { cat:'v3', q:'👽 She has _____ a real alien! (meet)', opts:['met','meeted','meet','meeting'], ans:0, hint:'Cô ấy gặp người ngoài hành tinh thật!', explain:'meet → met → met' },
+  { cat:'v3', q:'🧹 Mom has _____ a spider under my bed! (sweep)', opts:['swept','sweeped','sweep','sweeping'], ans:0, hint:'Mẹ quét được nhện dưới giường tôi!', explain:'sweep → swept → swept' },
+  { cat:'v3', q:'🏰 They have _____ a castle out of cardboard! (build)', opts:['built','builded','build','building'], ans:0, hint:'Họ xây lâu đài bằng bìa carton!', explain:'build → built → built' },
+  { cat:'v3', q:'💰 He has _____ me his favorite comic book! (lend)', opts:['lent','lended','lend','lending'], ans:0, hint:'Anh ấy cho tôi mượn truyện tranh yêu thích!', explain:'lend → lent → lent' },
+  { cat:'v3', q:'✉️ She has _____ a love letter to the wrong person! (send)', opts:['sent','sended','send','sending'], ans:0, hint:'Cô ấy gửi nhầm thư tình!', explain:'send → sent → sent' },
+  { cat:'v3', q:'🛍️ We have _____ all our money on candy! (spend)', opts:['spent','spended','spend','spending'], ans:0, hint:'Chúng tôi tiêu hết tiền vào kẹo!', explain:'spend → spent → spent' },
+  { cat:'v3', q:'🔥 He has _____ the toast again! (burn)', opts:['burnt','burned','burn','burning'], ans:0, hint:'Anh ấy lại cháy bánh mì nướng!', explain:'burn → burnt → burnt' },
+  { cat:'v3', q:'💭 I have _____ about flying every night! (dream)', opts:['dreamt','dreamed','dream','dreaming'], ans:0, hint:'Tôi mơ thấy bay mỗi đêm!', explain:'dream → dreamt → dreamt' },
+  { cat:'v3', q:'🎓 She has _____ to ride a unicycle! (learn)', opts:['learnt','learned','learn','learning'], ans:0, hint:'Cô ấy đã học xe đạp một bánh!', explain:'learn → learnt → learnt' },
+  { cat:'v3', q:'🕯️ Someone has _____ 100 candles on the cake! (light)', opts:['lit','lighted','light','lighting'], ans:0, hint:'Ai đó thắp 100 nến trên bánh!', explain:'light → lit → lit' },
+  { cat:'v3', q:'😤 What has he _____ by that rude comment? (mean)', opts:['meant','meaned','mean','meaning'], ans:0, hint:'Anh ấy muốn nói gì qua lời thô lỗ đó?', explain:'mean → meant → meant' },
+  { cat:'v3', q:'🏀 He has _____ the ball into the neighbor\'s yard! (shoot)', opts:['shot','shooted','shoot','shooting'], ans:0, hint:'Anh ấy bắn bóng sang sân hàng xóm!', explain:'shoot → shot → shot' },
+  { cat:'v3', q:'🪑 The cat has _____ on my homework all day! (sit)', opts:['sat','sitted','sit','sitting'], ans:0, hint:'Con mèo ngồi lên bài tập cả ngày!', explain:'sit → sat → sat' },
+  { cat:'v3', q:'🔤 He has _____ his name wrong on the test! (spell)', opts:['spelt','spelled','spell','spelling'], ans:0, hint:'Anh ấy viết sai tên mình trong bài kiểm tra!', explain:'spell → spelt → spelt' },
+  { cat:'v3', q:'🦋 The caterpillar has _____ a butterfly! (become)', opts:['became','become','becomed','becoming'], ans:1, hint:'Sâu bướm đã biến thành bướm!', explain:'become → became → become' },
+  { cat:'v3', q:'💎 She has _____ a diamond in the garden! (find)', opts:['found','finded','find','finding'], ans:0, hint:'Cô ấy tìm thấy kim cương ngoài vườn!', explain:'find → found → found' },
+  { cat:'v3', q:'🖼️ He has _____ his underwear on the door! (hang)', opts:['hung','hanged','hang','hanging'], ans:0, hint:'Anh ấy treo quần lót lên cửa!', explain:'hang → hung → hung' },
+  { cat:'v3', q:'🐍 She has _____ a snake and she\'s not even scared! (hold)', opts:['held','holded','hold','holding'], ans:0, hint:'Cô ấy cầm con rắn mà không sợ!', explain:'hold → held → held' },
+  { cat:'v3', q:'🥚 The chicken has _____ an egg on my chair! (lay)', opts:['laid','layed','lay','laying'], ans:0, hint:'Con gà đẻ trứng trên ghế tôi!', explain:'lay → laid → laid' },
+  { cat:'v3', q:'💵 He has _____ $100 for a rubber duck! (pay)', opts:['paid','payed','pay','paying'], ans:0, hint:'Anh ấy trả $100 cho con vịt cao su!', explain:'pay → paid → paid' },
+  { cat:'v3', q:'🏃 The chicken has _____ across the road! (run)', opts:['ran','run','runned','running'], ans:1, hint:'Con gà chạy qua đường!', explain:'run → ran → run' },
+  { cat:'v3', q:'🧊 He has _____ ice to the penguins at the zoo! (sell)', opts:['sold','selled','sell','selling'], ans:0, hint:'Anh ấy bán đá cho chim cánh cụt ở sở thú!', explain:'sell → sold → sold' },
+  { cat:'v3', q:'🔦 The sun has _____ through the clouds! (shine)', opts:['shone','shined','shine','shining'], ans:0, hint:'Mặt trời chiếu qua mây!', explain:'shine → shone → shone' },
+  { cat:'v3', q:'🐛 She has _____ me the biggest bug ever! (show)', opts:['showed','shown','show','showing'], ans:1, hint:'Cô ấy cho tôi xem con bọ to nhất!', explain:'show → showed → shown' },
+  { cat:'v3', q:'👗 He has _____ his shirt inside out all day! (wear)', opts:['wore','worn','weared','wearing'], ans:1, hint:'Anh ấy mặc áo trái cả ngày!', explain:'wear → wore → worn' },
+
+  // === MORE HAVE/HAS ===
+  { cat:'havhas', q:'🦋 The butterfly _____ landed on my finger!', opts:['have','has','is','did'], ans:1, hint:'Bướm đậu lên ngón tay tôi!', explain:'The butterfly = It → has' },
+  { cat:'havhas', q:'🐸 The frogs _____ jumped into the pond!', opts:['have','has','are','did'], ans:0, hint:'Mấy con ếch nhảy xuống ao!', explain:'The frogs = They → have' },
+  { cat:'havhas', q:'👨‍🍳 The chef _____ cooked something amazing!', opts:['have','has','is','did'], ans:1, hint:'Đầu bếp nấu món ngon!', explain:'The chef = He → has' },
+  { cat:'havhas', q:'🎸 The band _____ played 3 songs already!', opts:['have','has','are','did'], ans:0, hint:'Ban nhạc đã chơi 3 bài!', explain:'The band = They → have' },
+  { cat:'havhas', q:'🐢 The turtle _____ reached the finish line!', opts:['have','has','is','did'], ans:1, hint:'Con rùa đã đến vạch đích!', explain:'The turtle = It → has' },
+  { cat:'havhas', q:'👧 My sister _____ lost her phone again!', opts:['have','has','is','did'], ans:1, hint:'Chị tôi lại mất điện thoại!', explain:'My sister = She → has' },
+  { cat:'havhas', q:'🐜 The ants _____ invaded our picnic!', opts:['have','has','are','did'], ans:0, hint:'Lũ kiến xâm chiếm bữa picnic!', explain:'The ants = They → have' },
+  { cat:'havhas', q:'🧑‍🎓 The students _____ finished their exam!', opts:['have','has','are','did'], ans:0, hint:'Các học sinh đã hoàn thành bài thi!', explain:'The students = They → have' },
+  { cat:'havhas', q:'🌊 The wave _____ knocked me over!', opts:['have','has','is','did'], ans:1, hint:'Sóng đánh ngã tôi!', explain:'The wave = It → has' },
+  { cat:'havhas', q:'🐝 A bee _____ stung me on my ear!', opts:['have','has','is','did'], ans:1, hint:'Con ong đốt tai tôi!', explain:'A bee = It → has' },
+  { cat:'havhas', q:'🧑‍🤝‍🧑 My friends _____ come to my party!', opts:['have','has','are','did'], ans:0, hint:'Bạn bè đã đến tiệc!', explain:'My friends = They → have' },
+  { cat:'havhas', q:'🦊 The fox _____ hidden in the barn!', opts:['have','has','is','did'], ans:1, hint:'Con cáo trốn trong chuồng!', explain:'The fox = It → has' },
+  { cat:'havhas', q:'🍕 Someone _____ eaten my last slice!', opts:['have','has','is','did'], ans:1, hint:'Ai đó ăn miếng pizza cuối!', explain:'Someone = He/She → has' },
+  { cat:'havhas', q:'🐑 The sheep _____ escaped from the farm!', opts:['have','has','are','did'], ans:0, hint:'Mấy con cừu trốn khỏi trang trại!', explain:'The sheep (nhiều con) = They → have' },
+  { cat:'havhas', q:'👴 Grandpa _____ told me this story before.', opts:['have','has','is','did'], ans:1, hint:'Ông đã kể tôi chuyện này trước đây.', explain:'Grandpa = He → has' },
+
+  // === MORE SIGNAL WORDS ===
+  { cat:'signal', q:'🎁 She has _____ received her birthday gift!', opts:['just','yet','ever','never'], ans:0, hint:'Cô ấy VỪA nhận quà sinh nhật!', explain:'just = vừa mới' },
+  { cat:'signal', q:'🦁 Have they _____ been to a safari?', opts:['ever','never','already','just'], ans:0, hint:'Họ đã bao giờ đi safari chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🧹 I haven\'t cleaned my room _____!', opts:['already','just','yet','never'], ans:2, hint:'Tôi CHƯA dọn phòng!', explain:'yet = chưa (câu phủ định)' },
+  { cat:'signal', q:'🍿 We have _____ watched that movie 3 times!', opts:['already','yet','ever','never'], ans:0, hint:'Chúng tôi ĐÃ xem phim đó 3 lần!', explain:'already = đã... rồi' },
+  { cat:'signal', q:'🎢 He has _____ been afraid of roller coasters.', opts:['never','ever','just','already'], ans:0, hint:'Anh ấy CHƯA BAO GIỜ sợ tàu lượn.', explain:'never = chưa bao giờ' },
+  { cat:'signal', q:'🍰 Has Mom _____ tried this recipe before?', opts:['ever','never','already','just'], ans:0, hint:'Mẹ đã bao giờ thử công thức này chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🎯 He has _____ scored 100 points!', opts:['just','yet','ever','never'], ans:0, hint:'Anh ấy VỪA ghi 100 điểm!', explain:'just = vừa mới' },
+  { cat:'signal', q:'🐶 The puppy hasn\'t eaten _____!', opts:['already','just','yet','never'], ans:2, hint:'Chó con CHƯA ăn!', explain:'yet = chưa (câu phủ định)' },
+  { cat:'signal', q:'🌍 Have you _____ traveled to another country?', opts:['ever','never','just','already'], ans:0, hint:'Bạn đã bao giờ đi nước ngoài chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'📱 She has _____ broken 5 phones this year!', opts:['already','yet','ever','never'], ans:0, hint:'Cô ấy ĐÃ làm vỡ 5 điện thoại năm nay!', explain:'already = đã... rồi' },
+  { cat:'signal', q:'🦷 I have _____ had a cavity in my life!', opts:['never','ever','just','already'], ans:0, hint:'Tôi CHƯA BAO GIỜ bị sâu răng!', explain:'never = chưa bao giờ' },
+  { cat:'signal', q:'🎬 The movie hasn\'t started _____.', opts:['already','just','yet','never'], ans:2, hint:'Phim CHƯA bắt đầu.', explain:'yet = chưa (câu phủ định)' },
+  { cat:'signal', q:'🧊 The ice cream has _____ melted! Quick!', opts:['just','yet','ever','never'], ans:0, hint:'Kem VỪA tan! Nhanh lên!', explain:'just = vừa mới' },
+  { cat:'signal', q:'🏠 Have you _____ lived in a different city?', opts:['ever','never','already','just'], ans:0, hint:'Bạn đã bao giờ sống ở thành phố khác?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🎒 They have _____ packed their bags!', opts:['already','yet','ever','never'], ans:0, hint:'Họ ĐÃ đóng gói xong!', explain:'already = đã... rồi' },
+
+  // === MORE SINCE/FOR ===
+  { cat:'sinfor', q:'🎮 He has played video games _____ 5 hours!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy chơi game 5 tiếng!', explain:'"5 hours" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🌧️ It has rained _____ Tuesday!', opts:['since','for','from','during'], ans:0, hint:'Trời mưa từ thứ Ba!', explain:'"Tuesday" = mốc → since' },
+  { cat:'sinfor', q:'📚 She has studied English _____ 3 years!', opts:['since','for','from','during'], ans:1, hint:'Cô ấy học tiếng Anh 3 năm!', explain:'"3 years" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🏠 We have lived here _____ 2020!', opts:['since','for','from','during'], ans:0, hint:'Chúng tôi sống ở đây từ 2020!', explain:'"2020" = mốc → since' },
+  { cat:'sinfor', q:'🐕 The dog has barked _____ this morning!', opts:['since','for','from','during'], ans:0, hint:'Con chó sủa từ sáng nay!', explain:'"this morning" = mốc → since' },
+  { cat:'sinfor', q:'😴 He has slept _____ 10 hours!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy ngủ 10 tiếng!', explain:'"10 hours" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🎹 She has practiced piano _____ she was 5!', opts:['since','for','from','when'], ans:0, hint:'Cô ấy tập piano từ khi 5 tuổi!', explain:'"she was 5" = mốc → since' },
+  { cat:'sinfor', q:'🏊 They have swum _____ 2 hours!', opts:['since','for','from','during'], ans:1, hint:'Họ bơi 2 tiếng rồi!', explain:'"2 hours" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🤒 She has had a fever _____ yesterday!', opts:['since','for','from','during'], ans:0, hint:'Cô ấy sốt từ hôm qua!', explain:'"yesterday" = mốc → since' },
+  { cat:'sinfor', q:'📺 He has watched TV _____ 4 hours!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy xem TV 4 tiếng!', explain:'"4 hours" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🏫 She has been a teacher _____ 2015!', opts:['since','for','from','during'], ans:0, hint:'Cô ấy làm giáo viên từ 2015!', explain:'"2015" = mốc → since' },
+  { cat:'sinfor', q:'🎸 He has played guitar _____ a long time!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy chơi guitar lâu rồi!', explain:'"a long time" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🌸 The flowers have bloomed _____ spring started!', opts:['since','for','from','when'], ans:0, hint:'Hoa nở từ khi xuân đến!', explain:'"spring started" = mốc → since' },
+  { cat:'sinfor', q:'🧸 She has kept that doll _____ 8 years!', opts:['since','for','from','during'], ans:1, hint:'Cô ấy giữ búp bê đó 8 năm!', explain:'"8 years" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🚗 He has driven _____ he turned 18!', opts:['since','for','from','when'], ans:0, hint:'Anh ấy lái xe từ khi 18 tuổi!', explain:'"he turned 18" = mốc → since' },
+
+  // === MORE VS PAST SIMPLE ===
+  { cat:'vs', q:'🎂 She _____ 10 candles on her cake last birthday!', opts:['has blown','blew','have blown','blows'], ans:1, hint:'Cô ấy thổi 10 nến sinh nhật trước!', explain:'"last birthday" → Past Simple' },
+  { cat:'vs', q:'📖 He _____ already read this book 3 times.', opts:['has','did','was','is'], ans:0, hint:'Anh ấy đã đọc sách này 3 lần rồi.', explain:'already → Present Perfect' },
+  { cat:'vs', q:'🎃 They _____ trick-or-treating last Halloween!', opts:['have gone','went','has gone','go'], ans:1, hint:'Họ đi xin kẹo Halloween năm trước!', explain:'"last Halloween" → Past Simple' },
+  { cat:'vs', q:'🏆 Our team _____ never lost a game this season!', opts:['has','did','was','is'], ans:0, hint:'Đội chưa bao giờ thua mùa này!', explain:'never → Present Perfect' },
+  { cat:'vs', q:'🐍 A snake _____ into our house two days ago!', opts:['has crawled','crawled','have crawled','crawls'], ans:1, hint:'Con rắn bò vào nhà 2 ngày trước!', explain:'"two days ago" → Past Simple' },
+  { cat:'vs', q:'🎵 She _____ sung in 5 concerts so far!', opts:['has','did','was','is'], ans:0, hint:'Cô ấy hát 5 buổi hòa nhạc đến nay!', explain:'"so far" → Present Perfect' },
+  { cat:'vs', q:'⚡ The power _____ out at midnight last night!', opts:['has gone','went','have gone','goes'], ans:1, hint:'Mất điện lúc nửa đêm hôm qua!', explain:'"at midnight last night" → Past Simple' },
+  { cat:'vs', q:'🎨 She _____ just finished painting the fence!', opts:['has','did','was','is'], ans:0, hint:'Cô ấy vừa sơn xong hàng rào!', explain:'just → Present Perfect' },
+  { cat:'vs', q:'📝 He _____ the test two hours ago.', opts:['has taken','took','have taken','takes'], ans:1, hint:'Anh ấy làm bài kiểm tra 2 tiếng trước.', explain:'"two hours ago" → Past Simple' },
+  { cat:'vs', q:'🌍 I _____ visited 10 countries in my life!', opts:['have','did','was','am'], ans:0, hint:'Tôi đã đi 10 nước trong đời!', explain:'"in my life" → Present Perfect' },
+  { cat:'vs', q:'🎄 We _____ a Christmas tree last December.', opts:['have bought','bought','has bought','buy'], ans:1, hint:'Chúng tôi mua cây Noel tháng 12 trước.', explain:'"last December" → Past Simple' },
+  { cat:'vs', q:'🏊 She _____ swum across the lake before!', opts:['has','did','was','is'], ans:0, hint:'Cô ấy đã bơi qua hồ trước đây!', explain:'"before" → Present Perfect' },
+  { cat:'vs', q:'🐶 The dog _____ away from home yesterday!', opts:['has run','ran','have run','runs'], ans:1, hint:'Con chó chạy khỏi nhà hôm qua!', explain:'"yesterday" → Past Simple' },
+  { cat:'vs', q:'🎤 He _____ never performed on stage before.', opts:['has','did','was','is'], ans:0, hint:'Anh ấy chưa bao giờ biểu diễn trên sân khấu.', explain:'never → Present Perfect' },
+  { cat:'vs', q:'🧪 The scientist _____ a new element in 2023!', opts:['has discovered','discovered','have discovered','discovers'], ans:1, hint:'Nhà khoa học phát hiện nguyên tố mới năm 2023!', explain:'"in 2023" → Past Simple' },
+
+  // === MORE NEGATIVE ===
+  { cat:'neg', q:'🎯 They _____ scored a goal yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Họ chưa ghi bàn!', explain:'They → haven\'t' },
+  { cat:'neg', q:'📱 She _____ called me back yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Cô ấy chưa gọi lại!', explain:'She → hasn\'t' },
+  { cat:'neg', q:'🍳 I _____ eaten breakfast yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Tôi chưa ăn sáng!', explain:'I → haven\'t' },
+  { cat:'neg', q:'📝 He _____ done his homework yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Anh ấy chưa làm bài tập!', explain:'He → hasn\'t' },
+  { cat:'neg', q:'🧹 We _____ cleaned the house yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Chúng tôi chưa dọn nhà!', explain:'We → haven\'t' },
+  { cat:'neg', q:'🐕 The dog _____ come home yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Con chó chưa về nhà!', explain:'The dog = It → hasn\'t' },
+  { cat:'neg', q:'🎁 They _____ opened their presents yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Họ chưa mở quà!', explain:'They → haven\'t' },
+  { cat:'neg', q:'🌺 The roses _____ bloomed yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Hoa hồng chưa nở!', explain:'The roses = They → haven\'t' },
+  { cat:'neg', q:'✈️ The plane _____ landed yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Máy bay chưa hạ cánh!', explain:'The plane = It → hasn\'t' },
+  { cat:'neg', q:'👨‍🍳 Dad _____ finished cooking yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Bố chưa nấu xong!', explain:'Dad = He → hasn\'t' },
+  { cat:'neg', q:'🎬 The movie _____ ended yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Phim chưa kết thúc!', explain:'The movie = It → hasn\'t' },
+  { cat:'neg', q:'🐈 The kittens _____ learned to climb yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Mấy chú mèo con chưa biết leo!', explain:'The kittens = They → haven\'t' },
+
+  // === MORE QUESTIONS ===
+  { cat:'ques', q:'🎂 _____ she ever made a cake from scratch?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ tự làm bánh chưa?', explain:'She → Has' },
+  { cat:'ques', q:'🌊 _____ you ever surfed on big waves?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ lướt sóng to chưa?', explain:'You → Have' },
+  { cat:'ques', q:'🐪 _____ he ever ridden a camel?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy đã bao giờ cưỡi lạc đà chưa?', explain:'He → Has' },
+  { cat:'ques', q:'🍜 _____ they ever eaten sushi?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ ăn sushi chưa?', explain:'They → Have' },
+  { cat:'ques', q:'🎹 _____ she ever played the piano?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ chơi piano chưa?', explain:'She → Has' },
+  { cat:'ques', q:'🏔️ _____ you ever climbed a mountain?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ leo núi chưa?', explain:'You → Have' },
+  { cat:'ques', q:'🐘 _____ he ever seen an elephant in real life?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy đã bao giờ thấy voi thật chưa?', explain:'He → Has' },
+  { cat:'ques', q:'🎭 _____ they ever acted in a play?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ diễn kịch chưa?', explain:'They → Have' },
+  { cat:'ques', q:'🐴 _____ she ever fed a horse?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ cho ngựa ăn chưa?', explain:'She → Has' },
+  { cat:'ques', q:'🛸 _____ you ever dreamt about aliens?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ mơ thấy người ngoài hành tinh?', explain:'You → Have' },
+  { cat:'ques', q:'🏰 _____ he ever visited a real castle?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy đã bao giờ thăm lâu đài thật chưa?', explain:'He → Has' },
+  { cat:'ques', q:'🎪 _____ they ever been to a circus?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ đi xem xiếc chưa?', explain:'They → Have' },
+
+  // === MEGA EXPANSION: HAVE/HAS ===
+  { cat:'havhas', q:'🦜 The parrot _____ learned to say "hello"!', opts:['have','has','is','did'], ans:1, hint:'Con vẹt đã học nói "hello"!', explain:'The parrot = It → has' },
+  { cat:'havhas', q:'🐇 The rabbits _____ dug holes everywhere!', opts:['have','has','are','did'], ans:0, hint:'Mấy con thỏ đào lỗ khắp nơi!', explain:'The rabbits = They → have' },
+  { cat:'havhas', q:'🧑‍🚀 The astronaut _____ returned from space!', opts:['have','has','is','did'], ans:1, hint:'Phi hành gia đã trở về từ vũ trụ!', explain:'The astronaut = He → has' },
+  { cat:'havhas', q:'🐠 The goldfish _____ grown bigger!', opts:['have','has','is','did'], ans:1, hint:'Con cá vàng đã lớn hơn!', explain:'The goldfish = It → has' },
+  { cat:'havhas', q:'👩‍🏫 The teachers _____ given us no homework!', opts:['have','has','are','did'], ans:0, hint:'Các cô giáo không cho bài tập!', explain:'The teachers = They → have' },
+  { cat:'havhas', q:'🦅 The eagle _____ caught a fish!', opts:['have','has','is','did'], ans:1, hint:'Đại bàng bắt được cá!', explain:'The eagle = It → has' },
+  { cat:'havhas', q:'👶 The babies _____ fallen asleep!', opts:['have','has','are','did'], ans:0, hint:'Các em bé đã ngủ!', explain:'The babies = They → have' },
+  { cat:'havhas', q:'🧙 The wizard _____ cast a spell on the frog!', opts:['have','has','is','did'], ans:1, hint:'Phù thủy niệm chú con ếch!', explain:'The wizard = He → has' },
+  { cat:'havhas', q:'🐻‍❄️ The polar bears _____ swum across the river!', opts:['have','has','are','did'], ans:0, hint:'Gấu Bắc Cực bơi qua sông!', explain:'The polar bears = They → have' },
+  { cat:'havhas', q:'👨‍✈️ The pilot _____ landed the plane safely!', opts:['have','has','is','did'], ans:1, hint:'Phi công hạ cánh an toàn!', explain:'The pilot = He → has' },
+  { cat:'havhas', q:'🐛 The caterpillars _____ eaten all the leaves!', opts:['have','has','are','did'], ans:0, hint:'Sâu bướm ăn hết lá!', explain:'The caterpillars = They → have' },
+  { cat:'havhas', q:'🦸 The superhero _____ saved the city!', opts:['have','has','is','did'], ans:1, hint:'Siêu anh hùng cứu thành phố!', explain:'The superhero = He → has' },
+  { cat:'havhas', q:'🐓 The rooster _____ woken up the whole farm!', opts:['have','has','is','did'], ans:1, hint:'Con gà trống đánh thức cả trang trại!', explain:'The rooster = It → has' },
+  { cat:'havhas', q:'👯 The dancers _____ performed beautifully!', opts:['have','has','are','did'], ans:0, hint:'Các vũ công biểu diễn tuyệt vời!', explain:'The dancers = They → have' },
+  { cat:'havhas', q:'🐙 The octopus _____ escaped from the tank!', opts:['have','has','is','did'], ans:1, hint:'Bạch tuộc trốn khỏi bể!', explain:'The octopus = It → has' },
+
+  // === MEGA EXPANSION: SIGNAL WORDS ===
+  { cat:'signal', q:'🎮 He has _____ beaten the final boss!', opts:['just','yet','ever','never'], ans:0, hint:'Anh ấy VỪA hạ boss cuối!', explain:'just = vừa mới' },
+  { cat:'signal', q:'🦈 Have you _____ seen a shark in real life?', opts:['ever','never','already','just'], ans:0, hint:'Bạn đã bao giờ thấy cá mập ngoài đời?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🧪 The experiment hasn\'t worked _____.', opts:['already','just','yet','never'], ans:2, hint:'Thí nghiệm CHƯA thành công.', explain:'yet = chưa (câu phủ định)' },
+  { cat:'signal', q:'🎤 She has _____ performed on TV!', opts:['already','yet','ever','never'], ans:0, hint:'Cô ấy ĐÃ biểu diễn trên TV!', explain:'already = đã... rồi' },
+  { cat:'signal', q:'🐊 I have _____ been so scared in my life!', opts:['never','ever','just','already'], ans:0, hint:'Tôi CHƯA BAO GIỜ sợ đến thế!', explain:'never = chưa bao giờ' },
+  { cat:'signal', q:'🚀 The rocket has _____ launched!', opts:['just','yet','ever','never'], ans:0, hint:'Tên lửa VỪA phóng!', explain:'just = vừa mới' },
+  { cat:'signal', q:'🍔 Has he _____ tried a hamburger?', opts:['ever','never','already','just'], ans:0, hint:'Anh ấy đã bao giờ ăn hamburger chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🛒 They haven\'t bought the groceries _____.', opts:['already','just','yet','never'], ans:2, hint:'Họ CHƯA mua đồ.', explain:'yet = chưa (câu phủ định)' },
+  { cat:'signal', q:'🏅 He has _____ won 3 gold medals!', opts:['already','yet','ever','never'], ans:0, hint:'Anh ấy ĐÃ giành 3 huy chương vàng!', explain:'already = đã... rồi' },
+  { cat:'signal', q:'🎻 Has she _____ played the violin?', opts:['ever','never','already','just'], ans:0, hint:'Cô ấy đã bao giờ chơi violin chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🐍 I have _____ touched a snake!', opts:['never','ever','just','already'], ans:0, hint:'Tôi CHƯA BAO GIỜ sờ rắn!', explain:'never = chưa bao giờ' },
+  { cat:'signal', q:'🏗️ They have _____ built the new bridge!', opts:['just','yet','ever','never'], ans:0, hint:'Họ VỪA xây xong cầu mới!', explain:'just = vừa mới' },
+  { cat:'signal', q:'📮 The postman hasn\'t come _____.', opts:['already','just','yet','never'], ans:2, hint:'Bưu tá CHƯA đến.', explain:'yet = chưa (câu phủ định)' },
+  { cat:'signal', q:'🎓 She has _____ graduated from university!', opts:['already','yet','ever','never'], ans:0, hint:'Cô ấy ĐÃ tốt nghiệp đại học!', explain:'already = đã... rồi' },
+  { cat:'signal', q:'🏄 Have they _____ tried surfing?', opts:['ever','never','already','just'], ans:0, hint:'Họ đã bao giờ thử lướt sóng chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🎂 The cake has _____ arrived! Let\'s eat!', opts:['just','yet','ever','never'], ans:0, hint:'Bánh VỪA đến! Ăn thôi!', explain:'just = vừa mới' },
+  { cat:'signal', q:'🛫 Have you _____ flown in a helicopter?', opts:['ever','never','already','just'], ans:0, hint:'Bạn đã bao giờ bay trực thăng chưa?', explain:'ever = đã bao giờ (câu hỏi)' },
+  { cat:'signal', q:'🎪 We have _____ seen such an amazing show!', opts:['never','ever','just','already'], ans:0, hint:'Chúng tôi CHƯA BAO GIỜ xem show hay thế!', explain:'never = chưa bao giờ' },
+  { cat:'signal', q:'🍩 He hasn\'t finished his donut _____.', opts:['already','just','yet','never'], ans:2, hint:'Anh ấy CHƯA ăn xong donut.', explain:'yet = chưa (câu phủ định)' },
+  { cat:'signal', q:'🐶 The vet has _____ checked the puppies!', opts:['already','yet','ever','never'], ans:0, hint:'Bác sĩ thú y ĐÃ khám xong chó con!', explain:'already = đã... rồi' },
+
+  // === MEGA EXPANSION: SINCE/FOR ===
+  { cat:'sinfor', q:'🎵 He has listened to this song _____ 2 hours!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy nghe bài này 2 tiếng!', explain:'"2 hours" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🐕 We have had this dog _____ Christmas!', opts:['since','for','from','during'], ans:0, hint:'Chúng tôi nuôi chó từ Giáng sinh!', explain:'"Christmas" = mốc → since' },
+  { cat:'sinfor', q:'📱 She has used this phone _____ 2 years!', opts:['since','for','from','during'], ans:1, hint:'Cô ấy dùng điện thoại này 2 năm!', explain:'"2 years" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🏫 He has been at school _____ 7 AM!', opts:['since','for','from','during'], ans:0, hint:'Anh ấy ở trường từ 7 giờ sáng!', explain:'"7 AM" = mốc → since' },
+  { cat:'sinfor', q:'🎮 They have played this game _____ ages!', opts:['since','for','from','during'], ans:1, hint:'Họ chơi game này lâu lắm!', explain:'"ages" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🤧 I have had a cold _____ Monday!', opts:['since','for','from','during'], ans:0, hint:'Tôi bị cảm từ thứ Hai!', explain:'"Monday" = mốc → since' },
+  { cat:'sinfor', q:'🎸 She has played in the band _____ 6 months!', opts:['since','for','from','during'], ans:1, hint:'Cô ấy chơi trong ban nhạc 6 tháng!', explain:'"6 months" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🌙 He has been awake _____ midnight!', opts:['since','for','from','during'], ans:0, hint:'Anh ấy thức từ nửa đêm!', explain:'"midnight" = mốc → since' },
+  { cat:'sinfor', q:'📚 They have read _____ 30 minutes!', opts:['since','for','from','during'], ans:1, hint:'Họ đọc sách 30 phút!', explain:'"30 minutes" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🐈 The cat has slept _____ lunchtime!', opts:['since','for','from','during'], ans:0, hint:'Con mèo ngủ từ giờ ăn trưa!', explain:'"lunchtime" = mốc → since' },
+  { cat:'sinfor', q:'⚽ He has trained _____ 3 weeks!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy tập luyện 3 tuần!', explain:'"3 weeks" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🏥 She has worked at the hospital _____ 2019!', opts:['since','for','from','during'], ans:0, hint:'Cô ấy làm việc ở bệnh viện từ 2019!', explain:'"2019" = mốc → since' },
+  { cat:'sinfor', q:'🎻 He has practiced violin _____ an hour and a half!', opts:['since','for','from','during'], ans:1, hint:'Anh ấy tập violin 1 tiếng rưỡi!', explain:'"an hour and a half" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🌞 The sun has shone _____ early morning!', opts:['since','for','from','during'], ans:0, hint:'Mặt trời chiếu từ sáng sớm!', explain:'"early morning" = mốc → since' },
+  { cat:'sinfor', q:'🏋️ She has exercised _____ 45 minutes!', opts:['since','for','from','during'], ans:1, hint:'Cô ấy tập thể dục 45 phút!', explain:'"45 minutes" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'🎭 They have rehearsed _____ last weekend!', opts:['since','for','from','during'], ans:0, hint:'Họ tập kịch từ cuối tuần trước!', explain:'"last weekend" = mốc → since' },
+  { cat:'sinfor', q:'🛏️ The baby has napped _____ 2 hours!', opts:['since','for','from','during'], ans:1, hint:'Em bé ngủ trưa 2 tiếng!', explain:'"2 hours" = khoảng thời gian → for' },
+  { cat:'sinfor', q:'❄️ It has snowed _____ yesterday afternoon!', opts:['since','for','from','during'], ans:0, hint:'Tuyết rơi từ chiều hôm qua!', explain:'"yesterday afternoon" = mốc → since' },
+
+  // === MEGA EXPANSION: VS PAST SIMPLE ===
+  { cat:'vs', q:'🎸 He _____ guitar at the talent show last week!', opts:['has played','played','have played','plays'], ans:1, hint:'Anh ấy chơi guitar ở hội tài năng tuần trước!', explain:'"last week" → Past Simple' },
+  { cat:'vs', q:'🏊 She _____ never swum in the ocean before.', opts:['has','did','was','is'], ans:0, hint:'Cô ấy chưa bao giờ bơi ở biển.', explain:'never → Present Perfect' },
+  { cat:'vs', q:'🎃 We _____ pumpkins for Halloween in October.', opts:['have carved','carved','has carved','carve'], ans:1, hint:'Chúng tôi khắc bí ngô vào tháng 10.', explain:'"in October" → Past Simple' },
+  { cat:'vs', q:'📚 I _____ already finished reading this book!', opts:['have','did','was','am'], ans:0, hint:'Tôi đã đọc xong cuốn sách này rồi!', explain:'already → Present Perfect' },
+  { cat:'vs', q:'⚡ Lightning _____ the big tree in the park yesterday!', opts:['has hit','hit','have hit','hits'], ans:1, hint:'Sét đánh cây lớn hôm qua!', explain:'"yesterday" → Past Simple' },
+  { cat:'vs', q:'🎤 She _____ just won the singing competition!', opts:['has','did','was','is'], ans:0, hint:'Cô ấy vừa thắng cuộc thi hát!', explain:'just → Present Perfect' },
+  { cat:'vs', q:'🦕 Dinosaurs _____ millions of years ago.', opts:['have lived','lived','has lived','live'], ans:1, hint:'Khủng long sống hàng triệu năm trước.', explain:'"millions of years ago" → Past Simple' },
+  { cat:'vs', q:'🎯 He _____ scored 3 goals so far this match!', opts:['has','did','was','is'], ans:0, hint:'Anh ấy ghi 3 bàn trong trận này!', explain:'"so far" → Present Perfect' },
+  { cat:'vs', q:'🚂 The train _____ at 9 AM this morning.', opts:['has left','left','have left','leaves'], ans:1, hint:'Tàu khởi hành lúc 9 giờ sáng.', explain:'"at 9 AM this morning" = thời điểm cụ thể → Past Simple' },
+  { cat:'vs', q:'🏆 Our school _____ won this trophy 5 times!', opts:['has','did','was','is'], ans:0, hint:'Trường đã thắng cúp này 5 lần!', explain:'"5 times" (không xác định) → Present Perfect' },
+  { cat:'vs', q:'🎁 She _____ me a present on my birthday last year.', opts:['has given','gave','have given','gives'], ans:1, hint:'Cô ấy tặng quà sinh nhật năm ngoái.', explain:'"last year" → Past Simple' },
+  { cat:'vs', q:'🐟 I _____ caught 10 fish today!', opts:['have','did','was','am'], ans:0, hint:'Tôi câu được 10 con cá hôm nay!', explain:'"today" (chưa kết thúc) → Present Perfect' },
+  { cat:'vs', q:'🧊 The lake _____ over during the ice age.', opts:['has frozen','froze','have frozen','freezes'], ans:1, hint:'Hồ đóng băng thời kỳ băng hà.', explain:'"during the ice age" → Past Simple' },
+  { cat:'vs', q:'🌈 It _____ rained 3 times this week!', opts:['has','did','was','is'], ans:0, hint:'Trời mưa 3 lần tuần này!', explain:'"this week" (chưa kết thúc) → Present Perfect' },
+  { cat:'vs', q:'🐈 The cat _____ a mouse and brought it inside just now!', opts:['has caught','caught','have caught','catches'], ans:0, hint:'Mèo vừa bắt chuột mang vào nhà!', explain:'"just now" → Present Perfect' },
+  { cat:'vs', q:'🏰 They _____ that castle 500 years ago.', opts:['have built','built','has built','build'], ans:1, hint:'Họ xây lâu đài 500 năm trước.', explain:'"500 years ago" → Past Simple' },
+  { cat:'vs', q:'👨‍🍳 Dad _____ cooked dinner for us many times.', opts:['has','did','was','is'], ans:0, hint:'Bố nấu cơm cho chúng tôi nhiều lần.', explain:'"many times" → Present Perfect' },
+  { cat:'vs', q:'🎊 We _____ a big party for New Year\'s Eve in December.', opts:['have had','had','has had','have'], ans:1, hint:'Chúng tôi tổ chức tiệc giao thừa tháng 12.', explain:'"in December" → Past Simple' },
+
+  // === MEGA EXPANSION: NEGATIVE ===
+  { cat:'neg', q:'🧊 The ice cream _____ melted yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Kem chưa tan!', explain:'The ice cream = It → hasn\'t' },
+  { cat:'neg', q:'🐦 The birds _____ migrated yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Chim chưa di cư!', explain:'The birds = They → haven\'t' },
+  { cat:'neg', q:'🧑‍🎓 He _____ graduated yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Anh ấy chưa tốt nghiệp!', explain:'He → hasn\'t' },
+  { cat:'neg', q:'🍕 We _____ ordered the pizza yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Chúng tôi chưa đặt pizza!', explain:'We → haven\'t' },
+  { cat:'neg', q:'🌙 The sun _____ set yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Mặt trời chưa lặn!', explain:'The sun = It → hasn\'t' },
+  { cat:'neg', q:'📦 The package _____ arrived yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Gói hàng chưa đến!', explain:'The package = It → hasn\'t' },
+  { cat:'neg', q:'🎹 She _____ practiced piano yet today!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Cô ấy chưa tập piano hôm nay!', explain:'She → hasn\'t' },
+  { cat:'neg', q:'🧹 The kids _____ tidied their rooms yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Bọn trẻ chưa dọn phòng!', explain:'The kids = They → haven\'t' },
+  { cat:'neg', q:'🦷 I _____ brushed my teeth yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Tôi chưa đánh răng!', explain:'I → haven\'t' },
+  { cat:'neg', q:'🚌 The bus _____ arrived yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Xe buýt chưa đến!', explain:'The bus = It → hasn\'t' },
+  { cat:'neg', q:'🐕 You _____ walked the dog yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Bạn chưa dắt chó đi dạo!', explain:'You → haven\'t' },
+  { cat:'neg', q:'🎨 The artist _____ finished the painting yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Họa sĩ chưa vẽ xong!', explain:'The artist = He → hasn\'t' },
+  { cat:'neg', q:'🌺 Spring _____ come yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Mùa xuân chưa đến!', explain:'Spring = It → hasn\'t' },
+  { cat:'neg', q:'📧 They _____ replied to my email yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Họ chưa trả lời email!', explain:'They → haven\'t' },
+  { cat:'neg', q:'🎬 He _____ seen the new movie yet!', opts:["hasn't","haven't","didn't","doesn't"], ans:0, hint:'Anh ấy chưa xem phim mới!', explain:'He → hasn\'t' },
+  { cat:'neg', q:'🏠 We _____ moved to the new house yet!', opts:["haven't","hasn't","didn't","don't"], ans:0, hint:'Chúng tôi chưa chuyển nhà mới!', explain:'We → haven\'t' },
+
+  // === MEGA EXPANSION: QUESTIONS ===
+  { cat:'ques', q:'🎢 _____ you ever been on a roller coaster?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ đi tàu lượn chưa?', explain:'You → Have' },
+  { cat:'ques', q:'🐊 _____ he ever held a crocodile?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy đã bao giờ cầm cá sấu chưa?', explain:'He → Has' },
+  { cat:'ques', q:'🍣 _____ they ever cooked Japanese food?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ nấu đồ Nhật chưa?', explain:'They → Have' },
+  { cat:'ques', q:'🎿 _____ she ever tried skiing?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ trượt tuyết chưa?', explain:'She → Has' },
+  { cat:'ques', q:'🐍 _____ you ever touched a snake?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ sờ rắn chưa?', explain:'You → Have' },
+  { cat:'ques', q:'🎸 _____ he ever played in a band?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy đã bao giờ chơi trong ban nhạc?', explain:'He → Has' },
+  { cat:'ques', q:'🌋 _____ they ever seen a volcano?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ thấy núi lửa chưa?', explain:'They → Have' },
+  { cat:'ques', q:'🐫 _____ she ever ridden a camel?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ cưỡi lạc đà chưa?', explain:'She → Has' },
+  { cat:'ques', q:'🎭 _____ you ever performed on stage?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ diễn trên sân khấu?', explain:'You → Have' },
+  { cat:'ques', q:'🏕️ _____ he ever slept in a tent?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy đã bao giờ ngủ trong lều?', explain:'He → Has' },
+  { cat:'ques', q:'🌊 _____ they ever gone scuba diving?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ lặn biển chưa?', explain:'They → Have' },
+  { cat:'ques', q:'🦁 _____ she ever fed a lion?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ cho sư tử ăn?', explain:'She → Has' },
+  { cat:'ques', q:'🎻 _____ you ever heard a live orchestra?', opts:['Have','Has','Did','Are'], ans:0, hint:'Bạn đã bao giờ nghe nhạc giao hưởng?', explain:'You → Have' },
+  { cat:'ques', q:'🚁 _____ he ever flown in a helicopter?', opts:['Have','Has','Did','Does'], ans:1, hint:'Anh ấy đã bao giờ bay trực thăng?', explain:'He → Has' },
+  { cat:'ques', q:'🧗 _____ they ever climbed a rock wall?', opts:['Have','Has','Did','Are'], ans:0, hint:'Họ đã bao giờ leo tường đá chưa?', explain:'They → Have' },
+  { cat:'ques', q:'🐬 _____ she ever swum with dolphins?', opts:['Have','Has','Did','Does'], ans:1, hint:'Cô ấy đã bao giờ bơi cùng cá heo?', explain:'She → Has' },
+
+  // === MORE V3 WITH LESS COMMON VERBS ===
+  { cat:'v3', q:'🧤 She has _____ her gloves on the bus! (leave)', opts:['left','leaved','leave','leaving'], ans:0, hint:'Cô ấy để quên găng tay trên xe buýt!', explain:'leave → left → left' },
+  { cat:'v3', q:'🎯 He has _____ the target perfectly! (hit)', opts:['hitted','hit','hitting','hits'], ans:1, hint:'Anh ấy bắn trúng đích!', explain:'hit → hit → hit (không đổi!)' },
+  { cat:'v3', q:'📸 She has _____ 200 photos on the trip! (take)', opts:['took','taken','taked','taking'], ans:1, hint:'Cô ấy chụp 200 ảnh trong chuyến đi!', explain:'take → took → taken' },
+  { cat:'v3', q:'🎤 They have _____ that song together! (sing)', opts:['sang','sung','singed','singing'], ans:1, hint:'Họ đã hát bài đó cùng nhau!', explain:'sing → sang → sung' },
+  { cat:'v3', q:'🧊 The milk has _____ in the fridge! (freeze)', opts:['froze','frozen','freezed','freezing'], ans:1, hint:'Sữa đóng đá trong tủ lạnh!', explain:'freeze → froze → frozen' },
+  { cat:'v3', q:'🗣️ He has _____ to the principal! (speak)', opts:['spoke','spoken','speaked','speaking'], ans:1, hint:'Anh ấy đã nói chuyện với hiệu trưởng!', explain:'speak → spoke → spoken' },
+  { cat:'v3', q:'🏃 The thief has _____ away! (run)', opts:['ran','run','runned','running'], ans:1, hint:'Tên trộm đã chạy mất!', explain:'run → ran → run' },
+  { cat:'v3', q:'📖 I have _____ this chapter 3 times! (read)', opts:['read','readed','reads','reading'], ans:0, hint:'Tôi đọc chương này 3 lần!', explain:'read → read → read (phát âm khác!)' },
+  { cat:'v3', q:'🎁 Grandma has _____ us cookies! (bring)', opts:['brought','bringed','brung','bringing'], ans:0, hint:'Bà mang cho chúng tôi bánh quy!', explain:'bring → brought → brought' },
+  { cat:'v3', q:'🧠 He has _____ of a great plan! (think)', opts:['thought','thinked','think','thinking'], ans:0, hint:'Anh ấy nghĩ ra kế hoạch tuyệt vời!', explain:'think → thought → thought' },
+];
+
+const ppCatNames = {
+  'havhas':'Have / Has', 'v3':'Past Participle (V3)',
+  'sinfor':'Since / For', 'signal':'Already / Just / Yet / Ever / Never',
+  'vs':'Present Perfect vs Past Simple', 'neg':'Phủ định (Negative)',
+  'ques':'Câu hỏi (Questions)', 'all':'Tất cả'
+};
+const ppCatIcons = {
+  'havhas':'🔵', 'v3':'🟣', 'sinfor':'🟢', 'signal':'🟠',
+  'vs':'🩷', 'neg':'🔴', 'ques':'🩵', 'all':'💎'
+};
+
+let ppState = { questions:[], current:0, score:0, answers:[], selectedCat:'all', answered:false };
+
+function showPresentPerfectQuiz() {
+  let html = '<div style="text-align:left;margin-bottom:10px"><button class="back-btn" onclick="goHome()">← Home</button></div>' +
+    '<div style="text-align:center;padding-bottom:20px;">' +
+    '<div style="font-size:3rem;margin-bottom:10px">💎</div>' +
+    '<h2 style="color:white;margin:0 0 5px">Present Perfect Tense</h2>' +
+    '<p style="color:rgba(255,255,255,0.8);margin:0 0 20px">have/has + V3 — Trộn tất cả dạng bài!</p>' +
+    '</div>';
+  
+  html += '<div class="level-cards">' +
+    '<div class="level-card easy" onclick="ppStartQuiz(5)">' +
+    '<div class="level-icon">🌱</div>' +
+    '<div class="level-info"><div class="level-name">Nhanh</div>' +
+    '<div class="level-desc">Luyện tập nhẹ nhàng</div></div>' +
+    '<div class="level-time">5 câu • 3 phút</div></div>' +
+
+    '<div class="level-card medium" onclick="ppStartQuiz(8)">' +
+    '<div class="level-icon">🌿</div>' +
+    '<div class="level-info"><div class="level-name">Vừa phải</div>' +
+    '<div class="level-desc">Ôn tập cơ bản</div></div>' +
+    '<div class="level-time">8 câu • 5 phút</div></div>' +
+
+    '<div class="level-card hard" onclick="ppStartQuiz(10)">' +
+    '<div class="level-icon">🌳</div>' +
+    '<div class="level-info"><div class="level-name">Thử thách</div>' +
+    '<div class="level-desc">Kiểm tra kiến thức</div></div>' +
+    '<div class="level-time">10 câu • 8 phút</div></div>' +
+
+    '<div class="level-card" onclick="ppStartQuiz(15)" style="border-color:#9C27B0">' +
+    '<div class="level-icon">🏆</div>' +
+    '<div class="level-info"><div class="level-name" style="color:#7B1FA2">Siêu sao</div>' +
+    '<div class="level-desc">Dành cho cao thủ!</div></div>' +
+    '<div class="level-time">15 câu • 12 phút</div></div>' +
+
+    '<div class="level-card" onclick="ppStartQuiz(20)" style="border-color:#FF6D00;background:linear-gradient(135deg,#FFF8E1,#FFECB3)">' +
+    '<div class="level-icon">🔥</div>' +
+    '<div class="level-info"><div class="level-name" style="color:#E65100">Huyền thoại</div>' +
+    '<div class="level-desc">Boss cuối đây rồi! 👾</div></div>' +
+    '<div class="level-time">20 câu • 15 phút</div></div>' +
+
+    '<div class="level-card" onclick="ppStartQuiz(30)" style="border-color:#D50000;background:linear-gradient(135deg,#FFEBEE,#FFCDD2)">' +
+    '<div class="level-icon">💀</div>' +
+    '<div class="level-info"><div class="level-name" style="color:#B71C1C">Bất khả chiến bại</div>' +
+    '<div class="level-desc">Chỉ dành cho người dũng cảm! ⚔️</div></div>' +
+    '<div class="level-time">30 câu • 20 phút</div></div>' +
+    '</div>';
+
+  // Growth mindset motivation
+  var ppMotivMessages = [
+    '💪 Mỗi lần luyện tập là mỗi lần não bộ mạnh hơn!',
+    '🌱 Sai không sao — đó là cách con học được!',
+    '🔥 Con không cần hoàn hảo, chỉ cần cố gắng mỗi ngày!',
+    '🧠 Não con đang tạo thêm kết nối mỗi khi con luyện tập!',
+    '⭐ Điều quan trọng không phải là điểm số — mà là sự nỗ lực!',
+    '🚀 Mỗi câu hỏi là một bước tiến — dù đúng hay sai!',
+    '🌈 Con đã dũng cảm khi bấm vào đây — bắt đầu thôi!',
+    '🎯 Luyện tập đều đặn quan trọng hơn làm đúng hết!',
+    '💡 Khi con thấy khó, nghĩa là não con đang lớn lên!',
+    '🏃 Không ai giỏi ngay từ đầu — tất cả đều nhờ luyện tập!'
+  ];
+  var ppMotiv = ppMotivMessages[Math.floor(Math.random() * ppMotivMessages.length)];
+  html += '<div style="text-align:center;margin-top:15px;padding:14px;background:rgba(255,255,255,0.15);border-radius:15px;color:white;font-size:0.95rem">' +
+    ppMotiv + '</div>';
+
+  document.getElementById('quizArea').innerHTML = html;
+  showScreen('quizScreen');
+}
+
+function ppStartQuiz(numQ) {
+  let pool = [...ppQuestions];
+  
+  // Shuffle
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  
+  ppState.questions = pool.slice(0, Math.min(numQ, pool.length));
+  ppState.current = 0;
+  ppState.score = 0;
+  ppState.answers = [];
+  ppState.answered = false;
+  
+  ppRenderQuestion();
+}
+
+function ppRenderQuestion() {
+  if (ppState.current >= ppState.questions.length) {
+    ppShowResult();
+    return;
+  }
+  
+  let q = ppState.questions[ppState.current];
+  let total = ppState.questions.length;
+  
+  // Extract emoji from start of question
+  let qText = q.q;
+  let sceneEmoji = '';
+  let emojiMatch = qText.match(/^([\u{1F000}-\u{1FFFF}][\u{FE00}-\u{FE0F}]?[\u{200D}]?[\u{1F000}-\u{1FFFF}]?|[\u{2600}-\u{27BF}]|[\u{1F300}-\u{1F9FF}]+)\s*/u);
+  if (emojiMatch) {
+    sceneEmoji = emojiMatch[1];
+    qText = qText.slice(emojiMatch[0].length);
+  }
+  
+  // Build sentence with blank
+  let sentence = qText.replace('_____', '<span class="pp-blank" id="ppBlank">?</span>');
+  
+  // Progress dots
+  let dotsHtml = '';
+  for (let i = 0; i < total; i++) {
+    let dotClass = 'dot';
+    if (i < ppState.current) dotClass += ' done';
+    else if (i === ppState.current) dotClass += ' active';
+    dotsHtml += '<div class="' + dotClass + '"></div>';
+  }
+  
+  let html = '<div class="progress-header">' +
+    '<button class="back-btn" onclick="goHome()">← Home</button>' +
+    '<div class="progress-dots">' + dotsHtml + '</div>' +
+    '<div class="star-count">⭐ ' + ppState.score + '</div>' +
+    '</div>' +
+    '<div class="story-scene">';
+  
+  if (sceneEmoji) {
+    html += '<div class="scene-image">' + sceneEmoji + '</div>';
+  }
+  
+  html += '<div class="scene-text">' + sentence + '</div>' +
+    '<div class="choice-buttons" id="ppChoices">';
+  
+  q.opts.forEach((opt, i) => {
+    html += '<button class="choice-btn" onclick="ppAnswer(' + i + ')" id="ppOpt' + i + '">' + opt + '</button>';
+  });
+  
+  html += '</div><div id="ppFeedback"></div></div>';
+  
+  document.getElementById('quizArea').innerHTML = html;
+  showScreen('quizScreen');
+}
+
+function ppAnswer(idx) {
+  if (ppState.answered) return;
+  ppState.answered = true;
+  
+  let q = ppState.questions[ppState.current];
+  let correct = idx === q.ans;
+  
+  if (correct) {
+    ppState.score++;
+    playSound('correct');
+  } else {
+    playSound('wrong');
+  }
+  
+  ppState.answers.push({ q: q, chosen: idx, correct: correct });
+  
+  // Show answer in blank
+  let blank = document.getElementById('ppBlank');
+  if (blank) {
+    blank.textContent = q.opts[correct ? idx : q.ans];
+    blank.className = correct ? 'pp-filled' : 'pp-filled pp-filled-wrong';
+  }
+  
+  // Highlight buttons
+  let chosen = document.getElementById('ppOpt' + idx);
+  if (chosen) chosen.classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    let correctBtn = document.getElementById('ppOpt' + q.ans);
+    if (correctBtn) correctBtn.classList.add('correct');
+  }
+  
+  // Disable all buttons
+  q.opts.forEach((_, i) => {
+    let btn = document.getElementById('ppOpt' + i);
+    if (btn) btn.disabled = true;
+  });
+  
+  // Feedback
+  let fb = document.getElementById('ppFeedback');
+  let total = ppState.questions.length;
+  
+  let feedbackHtml = '<div class="feedback-box ' + (correct ? 'correct' : 'wrong') + '">' +
+    '<div class="feedback-emoji">' + (correct ? '🎉' : '💪') + '</div>' +
+    '<div class="feedback-text">' + (correct ? '✅ Chính xác!' : '❌ Chưa đúng!') + '</div>' +
+    '<div class="feedback-tip" style="text-align:left;line-height:1.6">💡 ' + q.explain + '</div>';
+  
+  if (!correct) {
+    feedbackHtml += '<div style="margin-top:10px;padding:12px;background:#E8F5E9;border-radius:10px;color:#2E7D32;font-weight:600">' +
+      '✅ Đáp án đúng: <strong>' + q.opts[q.ans] + '</strong></div>';
+  }
+  
+  feedbackHtml += '<button class="next-btn" onclick="ppNext()">' +
+    (ppState.current < total - 1 ? 'Tiếp theo →' : 'Xem kết quả 🏆') +
+    '</button></div>';
+  
+  fb.innerHTML = feedbackHtml;
+  
+  if (correct) {
+    try { showConfetti(); } catch(e) {}
+  }
+}
+
+function ppNext() {
+  ppState.current++;
+  ppState.answered = false;
+  ppRenderQuestion();
+}
+
+function ppShowResult() {
+  let total = ppState.questions.length;
+  let score = ppState.score;
+  let pct = Math.round(score / total * 100);
+  
+  // Save best score
+  let best = parseInt(localStorage.getItem('ppBestScore') || '0');
+  if (pct > best) {
+    localStorage.setItem('ppBestScore', pct);
+  }
+  
+  let stars = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : pct >= 50 ? '⭐' : '💪';
+  let ppMsgs90 = ['Sự kiên trì của con có kết quả rồi! 🎉','Con đã nỗ lực hết mình! 🎉','Luyện tập chăm chỉ, con tiến bộ thấy rõ! 🎉'];let ppMsgs70 = ['Con đang tiến bộ từng ngày! 👏','Mỗi lần luyện, con lại vững hơn! 👏','Cố gắng của con thật đáng khen! 👏'];let ppMsgs50 = ['Con đã dũng cảm thử sức! 📚','Sai là để hiểu hơn, con làm tốt rồi! 📚','Luyện thêm, con sẽ nhớ lâu hơn! 📚'];let ppMsgsLow = ['Kiên nhẫn luyện thêm, con sẽ tiến bộ! 💪','Mỗi câu sai là cơ hội để nhớ! 💪','Đừng bỏ cuộc, con đang trên đường tiến bộ! 💪'];let message = pct >= 90 ? ppMsgs90[Math.floor(Math.random()*3)] : pct >= 70 ? ppMsgs70[Math.floor(Math.random()*3)] : pct >= 50 ? ppMsgs50[Math.floor(Math.random()*3)] : ppMsgsLow[Math.floor(Math.random()*3)];
+  
+  let wrongCount = total - score;
+  
+  let html = '<div style="text-align:center;padding-bottom:15px">' +
+    '<div style="font-size:3rem;margin-bottom:10px">💎</div>' +
+    '<h2 style="color:white;margin:0">Kết quả</h2></div>';
+  
+  html += '<div class="pp-result-card">' +
+    '<div class="pp-result-stars">' + stars + '</div>' +
+    '<div class="pp-result-score">' + pct + '%</div>' +
+    '<div class="pp-result-label">' + message + '</div>' +
+    '<div class="pp-result-detail">' +
+    '<div class="rd-item"><div class="rd-num" style="color:#4CAF50">' + score + '</div><div class="rd-label">Đúng ✅</div></div>' +
+    '<div class="rd-item"><div class="rd-num" style="color:#F44336">' + wrongCount + '</div><div class="rd-label">Sai ❌</div></div>' +
+    '<div class="rd-item"><div class="rd-num" style="color:#00BCD4">' + total + '</div><div class="rd-label">Tổng</div></div>' +
+    '</div>';
+
+  // Review wrong answers
+  let wrongAnswers = ppState.answers.filter(a => !a.correct);
+  if (wrongAnswers.length > 0) {
+    html += '<div style="text-align:left;margin-top:20px"><h3 style="margin:0 0 12px;color:#333">📝 Ôn lại câu sai:</h3>';
+    wrongAnswers.forEach(a => {
+      html += '<div class="pp-review-item rv-wrong">' +
+        '<div class="rv-q">' + a.q.q + '</div>' +
+        '<div class="rv-a">❌ Bạn chọn: <b>' + a.q.opts[a.chosen] + '</b> → ✅ Đáp án: <b>' + a.q.opts[a.q.ans] + '</b></div>' +
+        '<div class="rv-a" style="color:#888;margin-top:3px">💡 ' + a.q.explain + '</div></div>';
+    });
+    html += '</div>';
+  }
+  
+  html += '<div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">' +
+    '<button style="padding:12px 28px;border-radius:25px;border:none;background:linear-gradient(135deg,#00BCD4,#009688);color:white;font-size:1rem;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif" onclick="showPresentPerfectQuiz()">🔄 Làm lại</button>' +
+    '<button style="padding:12px 28px;border-radius:25px;border:none;background:linear-gradient(135deg,#FF9800,#F57C00);color:white;font-size:1rem;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif" onclick="goHome()">🏠 Về trang chủ</button>' +
+    '</div></div>';
+  
+  document.getElementById('quizArea').innerHTML = html;
+  
+  if (pct >= 70) { try { showConfetti(); } catch(e) {} }
+  playSound('complete');
+  
+  // Save to mistake tracking
+  ppState.answers.filter(a => !a.correct).forEach(a => {
+    try {
+      let mistakes = JSON.parse(localStorage.getItem('mistakes') || '[]');
+      mistakes.push({
+        date: new Date().toLocaleDateString('vi-VN'),
+        type: 'Present Perfect',
+        question: a.q.q,
+        yourAnswer: a.q.opts[a.chosen],
+        correctAnswer: a.q.opts[a.q.ans]
+      });
+      if (mistakes.length > 100) mistakes = mistakes.slice(-100);
+      localStorage.setItem('mistakes', JSON.stringify(mistakes));
+    } catch(e) {}
+  });
 }
 </script>
 </body>
